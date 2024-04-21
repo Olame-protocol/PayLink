@@ -50,43 +50,60 @@ contract GlobalPayment{
         _;
     }
     
-    function createGlobalPaymentLink(string memory _link) external {
-        globalPaymentLinks[_link] = GlobalPaymentLink({
-            creator: msg.sender,
-            link: _link
-        });
-        
-        emit GlobalPaymentLinkCreated(_link, msg.sender);
-        
+    function createGlobalPaymentLink(string memory linkID) external {
+        require(IERC20(cUsdTokenAddress).balanceOf(msg.sender) >= 2e18, "Insufficient Balance");
         // Transfer 2 cUSD to deployer as link generation fee
-        IERC20(cUsdTokenAddress).transferFrom(msg.sender, deployer, 2 * 10**18); // Assuming cUSD has 18 decimals
-    }
-    
-    function contributeToGlobalPaymentLink(string memory _link, uint256 _amount) external {
-        IERC20(cUsdTokenAddress).transferFrom(msg.sender, globalPaymentLinks[_link].creator, _amount);
+        IERC20(cUsdTokenAddress).transferFrom(msg.sender, deployer, 2e18); // Assuming cUSD has 18 decimals
 
-        emit ContributionAdded(_link, msg.sender, _amount);
+        globalPaymentLinks[linkID] = GlobalPaymentLink({
+            creator: msg.sender,
+            link: linkID
+        });
+                
+        emit GlobalPaymentLinkCreated(linkID, msg.sender);
     }
     
-    function createFixedPaymentLink(string memory _link, uint256 _amount) external {
-        
-        fixedPaymentLinks[_link] = FixedPaymentLink({
+    function contributeToGlobalPaymentLink(string memory linkID, uint256 _amount) external {
+        IERC20(cUsdTokenAddress).transferFrom(msg.sender, globalPaymentLinks[linkID].creator, _amount);
+
+        emit ContributionAdded(linkID, msg.sender, _amount);
+    }
+    
+    function createFixedPaymentLink(string memory linkID, uint256 _amount) external {
+        require(IERC20(cUsdTokenAddress).balanceOf(msg.sender) >= _amount, "Insufficient Balance");
+        IERC20(cUsdTokenAddress).transferFrom(msg.sender, deployer, (_amount*10)/100); 
+
+        fixedPaymentLinks[linkID] = FixedPaymentLink({
             creator: msg.sender,
-            link: _link,
+            link: linkID,
             amount: _amount,
             paid: false
         });
         // Transfer 2 cUSD to deployer as link generation fee
-        IERC20(cUsdTokenAddress).transferFrom(msg.sender, deployer, 2 * 10**18); // Assuming cUSD has 18 decimals
 
-        emit FixedPaymentLinkCreated(_link, msg.sender, _amount);
+        emit FixedPaymentLinkCreated(linkID, msg.sender, _amount);
     }
     
-    function PayFixedPaymentLink(string memory _link, uint256 _amount) external {
-        require(!fixedPaymentLinks[_link].paid, "Link already paid");
-        IERC20(cUsdTokenAddress).transferFrom(msg.sender, fixedPaymentLinks[_link].creator, _amount);
+    function PayFixedPaymentLink(string memory linkID) external {
+        require(!fixedPaymentLinks[linkID].paid, "Link already paid");
+        IERC20(cUsdTokenAddress).transferFrom(msg.sender, fixedPaymentLinks[linkID].creator, fixedPaymentLinks[linkID].amount);
 
-        emit ContributionAdded(_link, msg.sender, _amount);
+        emit ContributionAdded(linkID, msg.sender, fixedPaymentLinks[linkID].amount);
     }
     
 }
+
+
+// Creation of Global payment link
+// The following details must be required:
+// - servie/purpose,creator, - date of creation, - link, - the transion hash
+
+// ================when contributing to Global/Fixed pay=====
+//  - creator, contributor's address, - the amount, transaction hash, date(timpestamp)
+
+
+// Functions and params
+// 1. createGlobalPaymentLink // Param: linkID
+// 2. contributeToGlobalPaymentLink // Param: linkID, amount
+// 3. createFixedPaymentLink // Param: linkID, amount
+// 4. PayFixedPaymentLink // Param: linkID

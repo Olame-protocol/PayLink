@@ -24,4 +24,5 @@ main().catch((error) => {
     console.error(error);
     process.exitCode = 1;
 });
-// GlobalPayment deployed to 0x42C35cDcd2E7315a9C729B202aE5Fc4daBc82fDf
+
+// GlobalPayment deployed to 0x51A570E5E009D1b6BAd4891Cd8D0e28630140bA1
