@@ -256,7 +256,7 @@ export default function Payments() {
                   </div>
                 );
               })}
-              {/* {JSON.stringify(error)} */}
+              {JSON.stringify(error)}
             </div>
           </div>
         </div>
