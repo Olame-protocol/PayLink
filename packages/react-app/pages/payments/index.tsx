@@ -36,8 +36,7 @@ export default function Payments() {
   const [activeLinkTab, setActiveLinkTab] = useState<Tab2>("Paid");
   const generatedLink =
     "https://react-icons.github.io/react-icons/search/#q=dash";
-  const { createPaymentLink, isPending, isSuccess, error } =
-    useCreatePaymentLink();
+  const { createPaymentLink, isPending } = useCreatePaymentLink();
   const {
     approveER20,
     isPending: ERC20ApprovalPending,
@@ -256,7 +255,6 @@ export default function Payments() {
                   </div>
                 );
               })}
-              {JSON.stringify(error)}
             </div>
           </div>
         </div>
