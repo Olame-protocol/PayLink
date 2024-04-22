@@ -13,6 +13,7 @@ import { format } from "path";
 import { retreivePaymentLinks } from "@/utils/supabase";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 
 export type Tab = "fixed" | "global";
 type Tab2 = "Paid" | "Unpaid";
@@ -35,7 +36,8 @@ export default function Payments() {
   const [activeLinkTab, setActiveLinkTab] = useState<Tab2>("Paid");
   const generatedLink =
     "https://react-icons.github.io/react-icons/search/#q=dash";
-  const { createPaymentLink, isPending, isSuccess } = useCreatePaymentLink();
+  const { createPaymentLink, isPending, isSuccess, error } =
+    useCreatePaymentLink();
   const {
     approveER20,
     isPending: ERC20ApprovalPending,
@@ -115,7 +117,9 @@ export default function Payments() {
         paymentLinkId: ulid(),
       });
       await retreiveGeneratedLinks();
+      toast.success("Link generated successfully");
     } catch (err) {
+      toast.error("Failed to generate a link");
     } finally {
       cleanUpFormData();
     }
@@ -252,6 +256,7 @@ export default function Payments() {
                   </div>
                 );
               })}
+              {JSON.stringify(error)}
             </div>
           </div>
         </div>

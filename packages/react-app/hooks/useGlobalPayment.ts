@@ -30,7 +30,7 @@ export const useCreatePaymentLink = () => {
 
   const createPaymentLink = useCallback(
     async (type: PaymentLinkType, data: PaymentLinkData<typeof type>) => {
-      if (!address) return;
+      if (!address || !window) return;
       try {
         setIsPending(true);
         const contract = await new Web3().contract(
@@ -111,7 +111,7 @@ export const useSendPayment = () => {
       type: "global" | "fixed",
       paymentLinkId: string
     ) => {
-      if (!address) return;
+      if (!address || !window) return;
       try {
         setIsPending(true);
         const contract = await new Web3().contract(

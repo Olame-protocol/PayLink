@@ -11,7 +11,7 @@ const RPC = "https://celo-mainnet.infura.io";
 export default class Web3 {
   public provider: JsonRpcProvider | BrowserProvider;
   constructor() {
-    this.provider = window.ethereum
+    this.provider = window.ethereum.isMiniPay
       ? new ethers.BrowserProvider(window.ethereum)
       : new ethers.JsonRpcProvider(RPC);
   }

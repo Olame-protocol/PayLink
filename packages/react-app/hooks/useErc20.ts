@@ -19,7 +19,7 @@ export const useApproveERC20Transaction = () => {
 
   const approveER20 = useCallback(
     async (amount: string) => {
-      if (!address) return;
+      if (!address || !window) return;
       try {
         setIsPending(true);
         const contract = await new Web3().contract(
