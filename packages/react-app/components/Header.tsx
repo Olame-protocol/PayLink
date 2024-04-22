@@ -1,14 +1,13 @@
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useConnect } from "wagmi";
 import { injected } from "wagmi/connectors";
 import { BsFillSendFill } from "react-icons/bs";
 import { FaLink } from "react-icons/fa6";
-import { MdDashboard } from "react-icons/md";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function Header() {
   const [hideConnectBtn, setHideConnectBtn] = useState(false);
@@ -20,7 +19,7 @@ export default function Header() {
       setHideConnectBtn(true);
       connect({ connector: injected({ target: "metaMask" }) });
     }
-  }, []);
+  }, [connect]);
 
   return (
     <Disclosure as="nav" className="bg-prosperity border-b border-black">
@@ -43,24 +42,24 @@ export default function Header() {
                 <div className="flex flex-shrink-0 items-center">
                   <h1 className="text-3xl font-extrabold text-gray-900">
                     {" "}
-                    <a href="/">PayLink</a>
+                    <Link href="/">PayLink</Link>
                   </h1>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8 text-lg ">
-                  <a
+                  <Link
                     href="/payments"
                     className="inline-flex items-center px-1 pt-1 font-normal text-gray-900"
                   >
                     <BsFillSendFill className="mr-1" />
                     Payments
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="/links"
                     className="inline-flex items-center px-1 pt-1 font-normal text-gray-900"
                   >
                     <FaLink className="mr-1" />
                     Links
-                  </a>
+                  </Link>
                   {/* <a
                     href="/dashboard"
                     className="inline-flex items-center px-1 pt-1 font-normal text-gray-900"
