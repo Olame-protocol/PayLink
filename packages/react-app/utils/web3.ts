@@ -6,10 +6,7 @@ import {
   ethers,
 } from "ethers";
 
-const RPC =
-  process.env.NODE_ENV === "production"
-    ? "https://celo-mainnet.infura.io"
-    : "https://alfajores-forno.celo-testnet.org";
+const RPC = "https://celo-mainnet.infura.io";
 
 export default class Web3 {
   public provider: JsonRpcProvider | BrowserProvider;
