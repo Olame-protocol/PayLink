@@ -228,8 +228,8 @@ export default function Payments() {
                     </p>
                     <div className="flex gap-2">
                       {copied &&
-                      generatedLink.toLowerCase() ===
-                        copiedLink.toLowerCase() ? (
+                      generatedLink?.toLowerCase() ===
+                        copiedLink?.toLowerCase() ? (
                         <IoCheckmarkDoneSharp className="text-velix-primary w-5 h-5 dark:text-velix-icon-dark" />
                       ) : (
                         <Copy

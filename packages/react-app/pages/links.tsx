@@ -83,7 +83,7 @@ export default function Links() {
               <div className="flex gap-2">
                 {copied &&
                 `${origin}/payments/${link.payment_link_id}?type=${activeTab}`.toLowerCase() ===
-                  copiedLink.toLowerCase() ? (
+                  copiedLink?.toLowerCase() ? (
                   <IoCheckmarkDoneSharp className="text-velix-primary w-5 h-5 dark:text-velix-icon-dark" />
                 ) : (
                   <Copy

@@ -29,6 +29,7 @@ const connectors = connectorsForWallets(
 const config = createConfig({
   connectors,
   chains: [celo, celoAlfajores],
+  ssr: true,
   transports: {
     [celo.id]: http(),
     [celoAlfajores.id]: http(),
