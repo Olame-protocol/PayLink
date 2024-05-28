@@ -1,6 +1,5 @@
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useEffect, useState } from "react";
 import { useConnect } from "wagmi";
 import { injected } from "wagmi/connectors";
@@ -8,6 +7,11 @@ import { BsFillSendFill } from "react-icons/bs";
 import { FaLink } from "react-icons/fa6";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import PayLinkLogo from "./ui/payLink/icons/PayLinkLogo";
+import WalletIcon from "./ui/payLink/icons/WalletIcon";
+import PaperLineIcon from "./ui/payLink/icons/PaperLineIcon";
+import LinkIcon from "./ui/payLink/icons/LinkIcon";
+import ChartIcon from "./ui/payLink/icons/ChartIcon";
 
 export default function Header() {
   const [hideConnectBtn, setHideConnectBtn] = useState(false);
@@ -22,11 +26,11 @@ export default function Header() {
   }, [connect]);
 
   return (
-    <Disclosure as="nav" className="bg-prosperity border-b border-black">
+    <Disclosure as="nav">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 justify-between">
+            <div className="relative flex justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button */}
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-black focus:outline-none focus:ring-1 focus:ring-inset focus:rounded-none focus:ring-black">
@@ -38,46 +42,48 @@ export default function Header() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center">
-                  <h1 className="text-3xl font-extrabold text-gray-900">
-                    {" "}
-                    <Link href="/">PayLink</Link>
-                  </h1>
-                </div>
-                <div className="hidden sm:ml-6 sm:flex sm:space-x-8 text-lg ">
+              <div className="flex justify-center py-10 gap-20 sm:items-stretch sm:justify-start">
+                <Link href="/">
+                  <PayLinkLogo />
+                </Link>
+
+                <div className="flex items-center gap-10">
                   <Link
                     href="/payments"
-                    className="inline-flex items-center px-1 pt-1 font-normal text-gray-900"
+                    className="inline-flex items-center gap-2 font-normal text-forest"
                   >
-                    <BsFillSendFill className="mr-1" />
+                    <WalletIcon />
                     Payments
                   </Link>
                   <Link
                     href="/links"
-                    className="inline-flex items-center px-1 pt-1 font-normal text-gray-900"
+                    className="inline-flex items-center gap-2 font-normal text-forest"
                   >
-                    <FaLink className="mr-1" />
+                    <LinkIcon />
                     Links
                   </Link>
-                  {/* <a
-                    href="/dashboard"
-                    className="inline-flex items-center px-1 pt-1 font-normal text-gray-900"
+
+                  <Link
+                    href="/links"
+                    className="inline-flex items-center gap-2 font-normal text-forest"
                   >
-                    <MdDashboard className="mr-1" />
+                    <PaperLineIcon />
+                    Invoices
+                  </Link>
+
+                  <Link
+                    href="/links"
+                    className="inline-flex items-center gap-2 font-normal text-forest"
+                  >
+                    <ChartIcon />
                     Dashboard
-                  </a> */}
+                  </Link>
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {!hideConnectBtn && (
-                  <ConnectButton
-                    showBalance={{
-                      smallScreen: true,
-                      largeScreen: false,
-                    }}
-                  />
-                )}
+                <button className="p-4 bg-forest text-green-petrolium font-semibold rounded-lg">
+                  Connect Wallet
+                </button>
               </div>
             </div>
           </div>
