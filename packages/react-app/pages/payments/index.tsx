@@ -131,91 +131,93 @@ export default function Payments() {
   };
 
   return (
-    <div>
-      <Section>
-        <div className="flex  justify-between gap-8">
-          <div className="text-left lg:w-1/2 px-5 mx-auto">
-            <div className="flex flex-col gap-2">
-              <h2 className="font-medium text-2xl pb-3">
-                {" "}
+    <Section className="bg-forest rounded-2xl mt-20">
+      <div className="flex justify-between gap-8 px-36 py-16">
+        <div className="text-left w-full mx-auto">
+          <div className="flex flex-col">
+            <div className="flex flex-col gap-5 mb-14">
+              <h2 className="font-black text-green-petrolium text-[2.5rem]">
                 Create a payment link
               </h2>
-              <div className="flex justify-start mb-4">
-                <button
-                  className={`px-4 py-2 mr-4 text-base font-semibold rounded ${
-                    activeTab === "fixed"
-                      ? "bg-blue-500 text-gray-50 "
-                      : "bg-gray-200 text-gray-700"
-                  }`}
-                  onClick={() => onSetActiveTab("fixed")}
-                >
-                  Fixed
-                </button>
-                <button
-                  className={`px-4 py-2 mr-4 text-base font-semibold rounded  ${
-                    activeTab === "global"
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 text-gray-700"
-                  }`}
-                  onClick={() => onSetActiveTab("global")}
-                >
-                  Global
-                </button>
-              </div>
-              {activeTab === "fixed" && (
-                <>
-                  <form className="flex flex-col gap-2 py-2">
+              <p className="text-white font-normal">
+                Generate payment links effortlessly and simplify transactions.
+              </p>
+            </div>
+
+            <div className="flex justify-start bg-white/[8%] p-4 rounded-lg text-xl mb-5">
+              <button
+                className={`py-5 px-12 rounded-lg mr-4 ${
+                  activeTab === "fixed"
+                    ? "bg-green-petrolium text-forest"
+                    : "text-white"
+                }`}
+                onClick={() => onSetActiveTab("fixed")}
+              >
+                Fixed
+              </button>
+              <button
+                className={`py-5 px-12 rounded-lg mr-4  ${
+                  activeTab === "global"
+                    ? "bg-green-petrolium text-forest"
+                    : "text-white"
+                }`}
+                onClick={() => onSetActiveTab("global")}
+              >
+                Global
+              </button>
+            </div>
+            {activeTab === "fixed" && (
+              <>
+                <form className="flex flex-col gap-5 py-2">
+                  <div className="flex flex-row max-md:flex-col gap-5 w-full">
                     <input
                       type="text"
                       value={formData.description}
                       name="description"
                       onChange={onFormtInputChange}
                       placeholder="Service"
-                      className="outline-none py-3 px-4 rounded-lg border-2 boder-gray-400  "
+                      className="outline-none px-5 rounded-lg w-full text-white py-8 bg-white/30"
                     />
-                    <div className="flex flex-row max-md:flex-col gap-2 w-full">
-                      <input
-                        type="number"
-                        name="amount"
-                        value={formData.amount}
-                        onChange={onFormtInputChange}
-                        placeholder="0.0cUSD"
-                        className="w-5/5 outline-none py-3 px-4 rounded-lg border-2 boder-gray-400  "
-                      />
-                      <button
-                        onClick={(e) => onGeneratePaymentLink(e, "fixed")}
-                        className="w-3/5 bg-prosperity text-gray-900 py-3 w-full px-4 rounded-lg font-medium text-lg"
-                      >
-                        {buttonTitle()}
-                      </button>
-                    </div>
-                  </form>
-                </>
-              )}
-              {activeTab === "global" && (
-                <>
-                  <form className="flex flex-col gap-2 py-2">
-                    <div className="flex flex-row max-md:flex-col gap-2 w-full">
-                      <input
-                        type="text"
-                        name="description"
-                        value={formData.description}
-                        onChange={onFormtInputChange}
-                        placeholder="Purpose"
-                        className="outline-none py-3 px-4 rounded-lg border-2 boder-gray-400  "
-                      />
-                      <button
-                        onClick={(e) => onGeneratePaymentLink(e, "global")}
-                        className="w-3/5 bg-prosperity text-gray-900 py-3 px-4 rounded-lg font-medium text-lg"
-                      >
-                        {buttonTitle()}
-                      </button>
-                    </div>
-                  </form>
-                </>
-              )}
-              <p className="text-2xl mb-2">Recently generated links</p>
-              {recentyGeneratedLinks.map((link) => {
+                    <input
+                      type="number"
+                      name="amount"
+                      value={formData.amount}
+                      onChange={onFormtInputChange}
+                      placeholder="0.0cUSD"
+                      className="w-5/5 outline-none py-3 px-4 rounded-lg text-white bg-white/30"
+                    />
+                  </div>
+                  <button
+                    onClick={(e) => onGeneratePaymentLink(e, "fixed")}
+                    className="bg-white text-forest py-8 w-full px-5 rounded-lg font-medium text-lg"
+                  >
+                    {buttonTitle()}
+                  </button>
+                </form>
+              </>
+            )}
+            {activeTab === "global" && (
+              <>
+                <form className="flex flex-col gap-5 py-2">
+                  <input
+                    type="text"
+                    name="description"
+                    value={formData.description}
+                    onChange={onFormtInputChange}
+                    placeholder="Purpose"
+                    className="outline-none text-white py-8 bg-white/30 px-5 rounded-lg"
+                  />
+                  <button
+                    onClick={(e) => onGeneratePaymentLink(e, "global")}
+                    className="bg-white text-forest py-8 w-full px-5 rounded-lg font-medium text-lg"
+                  >
+                    {buttonTitle()}
+                  </button>
+                </form>
+              </>
+            )}
+            {/* <p className="text-2xl mb-2">Recently generated links</p> */}
+            {/* {recentyGeneratedLinks.map((link) => {
                 return (
                   <div
                     key={link.id}
@@ -254,11 +256,10 @@ export default function Payments() {
                     </div>
                   </div>
                 );
-              })}
-            </div>
+              })} */}
           </div>
         </div>
-      </Section>
-    </div>
+      </div>
+    </Section>
   );
 }

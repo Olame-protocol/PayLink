@@ -1,3 +1,4 @@
+import { cn } from "@/utils/utils";
 import { ComponentProps, ReactNode } from "react";
 
 type SectionProps = ComponentProps<"section"> & {
@@ -5,9 +6,19 @@ type SectionProps = ComponentProps<"section"> & {
 };
 
 export default function Section({ children, ...props }: SectionProps) {
+  const { className: classname, ...rest } = props;
+
   return (
-    <section {...props}>
-      <div className="max-w-5xl xl:max-w-5xl m-auto  relative">{children}</div>
-    </section>
+    <div className="px-5">
+      <section
+        {...rest}
+        className={cn(
+          "mx-auto max-w-5xl w-full xl:max-w-7xl relative",
+          `${classname}`
+        )}
+      >
+        {children}
+      </section>
+    </div>
   );
 }

@@ -12,6 +12,7 @@ import WalletIcon from "./ui/payLink/icons/WalletIcon";
 import PaperLineIcon from "./ui/payLink/icons/PaperLineIcon";
 import LinkIcon from "./ui/payLink/icons/LinkIcon";
 import ChartIcon from "./ui/payLink/icons/ChartIcon";
+import Section from "./Section";
 
 export default function Header() {
   const [hideConnectBtn, setHideConnectBtn] = useState(false);
@@ -26,10 +27,10 @@ export default function Header() {
   }, [connect]);
 
   return (
-    <Disclosure as="nav">
+    <Disclosure className="!px-0" as="nav">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <Section>
             <div className="relative flex justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button */}
@@ -86,7 +87,7 @@ export default function Header() {
                 </button>
               </div>
             </div>
-          </div>
+          </Section>
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 pt-2 pb-4 flex flex-col gap-3">
