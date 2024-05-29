@@ -22,19 +22,16 @@ const Header = () => {
             <div className="absolute -right-10 -top-20">
               <LoveSvg className="w-[120px] h-[120px]" />
             </div>
-            <div className="rounded-[20px]  w-full max-h-[496px] overflow-hidden ">
+            <div className="rounded-[20px] w-full h-full max-h-[496px] overflow-hidden">
               <Image
                 src="https://res.cloudinary.com/dbhdpelno/image/upload/v1716997494/2e1367c63752fbedbb8fdadecee393b2_1_oo2pum.jpg"
                 width={1200}
                 height={496}
                 alt="Image of a person holding a phone"
-                className="w-full h-full object-top bg-top object-cover bg-cover bg-no-repeat"
+                className="w-full  h-[496px] object-center  object-cover bg-no-repeat"
               />
             </div>
-            <div
-              className="absolute -bottom-8 -left-8
-            "
-            >
+            <div className="absolute -bottom-8 -left-8">
               <PinSvg className="w-[73px] h-[73px]" />
             </div>
           </div>

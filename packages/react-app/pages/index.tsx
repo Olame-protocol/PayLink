@@ -1,4 +1,4 @@
-import Header from "@/components/LandinPage/Header";
+import LandingPage from "@/components/LandinPage";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
@@ -31,7 +31,7 @@ export default function Home() {
       ) : (
         <div>No Wallet Connected</div>
       )} */}
-      <Header />
+      <LandingPage />
     </>
   );
 }

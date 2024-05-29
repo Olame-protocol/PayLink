@@ -1,7 +1,4 @@
-import {
-  RainbowKitProvider,
-  connectorsForWallets,
-} from "@rainbow-me/rainbowkit";
+import { RainbowKitProvider, connectorsForWallets } from "@rainbow-me/rainbowkit";
 import { injectedWallet } from "@rainbow-me/rainbowkit/wallets";
 import "@rainbow-me/rainbowkit/styles.css";
 import type { AppProps } from "next/app";
@@ -23,7 +20,7 @@ const connectors = connectorsForWallets(
   {
     appName: "PayLink",
     projectId: "044601f65212332475a09bc14ceb3c34",
-  }
+  },
 );
 
 const config = createConfig({
