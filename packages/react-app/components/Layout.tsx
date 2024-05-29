@@ -8,7 +8,7 @@ interface Props {
 const Layout: FC<Props> = ({ children }) => {
   return (
     <>
-      <div className="overflow-hidden flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen">
         <Navbar />
         {children}
         {/* <Footer /> */}
