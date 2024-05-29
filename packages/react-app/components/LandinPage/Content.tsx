@@ -23,8 +23,8 @@ const ContentSection = () => {
           <p className="leading-[70px] relative font-sans font-black text-[64px]">
             The fastest secured <br />
             way to share love{" "}
-            <span className="absolute bottom-0 right-10 -rotate-45">
-              <PinSvg className="w-6 h-6" />
+            <span className="absolute bottom-0 right-6 -rotate-[20deg]">
+              <PinSvg className="w-10 h-10" />
             </span>
           </p>
           <p className="text-2xl font-thin">
