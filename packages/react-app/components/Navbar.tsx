@@ -13,11 +13,13 @@ import PaperLineIcon from "./ui/payLink/icons/PaperLineIcon";
 import LinkIcon from "./ui/payLink/icons/LinkIcon";
 import ChartIcon from "./ui/payLink/icons/ChartIcon";
 import Section from "./Section";
+import clsx from "clsx";
 
-export default function Header() {
+export default function Navbar() {
   const [hideConnectBtn, setHideConnectBtn] = useState(false);
   const { connect } = useConnect();
-  const { asPath } = useRouter();
+  const { asPath, pathname } = useRouter();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     if (window.ethereum && window.ethereum.isMiniPay) {
@@ -27,7 +29,7 @@ export default function Header() {
   }, [connect]);
 
   return (
-    <Disclosure className="!px-0" as="nav">
+    <Disclosure className={clsx(isHome ? "bg-forest" : "bg-green-petrolium", "!px-0 top-0 w-full")} as="nav">
       {({ open }) => (
         <>
           <Section>
@@ -36,55 +38,41 @@ export default function Header() {
                 {/* Mobile menu button */}
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-black focus:outline-none focus:ring-1 focus:ring-inset focus:rounded-none focus:ring-black">
                   <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                  )}
+                  {open ? <XMarkIcon className="block h-6 w-6" aria-hidden="true" /> : <Bars3Icon className="block h-6 w-6" aria-hidden="true" />}
                 </Disclosure.Button>
               </div>
               <div className="flex justify-center py-10 gap-20 sm:items-stretch sm:justify-start">
                 <Link href="/">
-                  <PayLinkLogo />
+                  <PayLinkLogo className={clsx(isHome ? "text-green-petrolium" : "text-forest")} />
                 </Link>
 
-                <div className="flex items-center gap-10">
-                  <Link
-                    href="/payments"
-                    className="inline-flex items-center gap-2 font-normal text-forest"
-                  >
+                <div className={clsx(isHome ? "text-green-petrolium" : "text-forest", "flex items-center gap-10")}>
+                  <Link href="/payments" className="inline-flex items-center gap-2 font-normal">
                     <WalletIcon />
                     Payments
                   </Link>
-                  <Link
-                    href="/links"
-                    className="inline-flex items-center gap-2 font-normal text-forest"
-                  >
+                  <Link href="/links" className="inline-flex items-center gap-2 font-normal">
                     <LinkIcon />
                     Links
                   </Link>
 
-                  <Link
-                    href="/links"
-                    className="inline-flex items-center gap-2 font-normal text-forest"
-                  >
+                  <Link href="/links" className="inline-flex items-center gap-2 font-normal">
                     <PaperLineIcon />
                     Invoices
                   </Link>
 
-                  <Link
-                    href="/links"
-                    className="inline-flex items-center gap-2 font-normal text-forest"
-                  >
+                  <Link href="/links" className="inline-flex items-center gap-2 font-normal">
                     <ChartIcon />
                     Dashboard
                   </Link>
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button className="p-4 bg-forest text-green-petrolium font-semibold rounded-lg">
-                  Connect Wallet
-                </button>
+                {isHome ? (
+                  <button className="px-6 py-4 bg-white text-forest font-semibold rounded-lg">Connect Wallet</button>
+                ) : (
+                  <button className="p-4 bg-forest text-green-petrolium font-semibold rounded-lg">Connect Wallet</button>
+                )}
               </div>
             </div>
           </Section>
@@ -95,9 +83,7 @@ export default function Header() {
                 as="a"
                 href="/payments"
                 className={`border-l-4 inline-flex items-center  py-2 pl-3 pr-4 text-base font-medium text-black ${
-                  asPath.includes("/payments")
-                    ? "border-black"
-                    : "border-transparent"
+                  asPath.includes("/payments") ? "border-black" : "border-transparent"
                 }`}
               >
                 <BsFillSendFill className="mr-1" />
@@ -107,9 +93,7 @@ export default function Header() {
                 as="a"
                 href="/links"
                 className={`border-l-4 inline-flex items-center  py-2 pl-3 pr-4 text-base font-medium text-black ${
-                  asPath.includes("/links")
-                    ? "border-black"
-                    : "border-transparent"
+                  asPath.includes("/links") ? "border-black" : "border-transparent"
                 }`}
               >
                 <FaLink className="mr-1" />
