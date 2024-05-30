@@ -1,3 +1,15 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["jsx-a11y/recommended"],
+  "rules": {
+    "additional-rule": "warn"
+  },
+  "plugins": ["jsx-a11y"],
+  "overrides": [
+    {
+      "files": ["**/*.ts?(x)"],
+      "rules": {
+        "additional-typescript-only-rule": "warn"
+      }
+    }
+  ]
 }
