@@ -35,7 +35,7 @@ const ContentSection = () => {
           </p>
         </div>
       </div>
-      <div>
+      <div className="lg:mt-0 mt-[40px]">
         <WhyPayLink />
       </div>
     </Section>
@@ -77,7 +77,7 @@ const CardsComponent = ({ card }: { card: (typeof whyPayLinkDataset)[0] }) => {
 const WhyPayLink = () => {
   return (
     <div className="flex flex-col">
-      <div className="border relative z-0 lg:hidden flex rounded-3xl overflow-hidden">
+      <div className="relative z-0 lg:hidden flex  rounded-t-3xl overflow-hidden">
         <Image
           src="https://res.cloudinary.com/dbhdpelno/image/upload/v1717006885/f2f3b012bbb05e5a391b76d42f12e64a_qbfjul.jpg"
           width={400}
@@ -97,7 +97,7 @@ const WhyPayLink = () => {
             </div>
           </div>
         </div>
-        <div className="border hidden lg:flex rounded-3xl overflow-hidden">
+        <div className="hidden lg:flex rounded-3xl overflow-hidden">
           <Image
             src="https://res.cloudinary.com/dbhdpelno/image/upload/v1717006885/f2f3b012bbb05e5a391b76d42f12e64a_qbfjul.jpg"
             width={400}
