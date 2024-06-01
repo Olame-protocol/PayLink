@@ -2,11 +2,13 @@ import React from "react";
 import Section from "../Section";
 import PinSvg from "../ui/payLink/icons/PinSvg";
 import Image from "next/image";
-
+import { FaFaceSmileBeam } from "react-icons/fa6";
+import { IoIosLock } from "react-icons/io";
+import { IoRocket } from "react-icons/io5";
 const ContentSection = () => {
   return (
     <Section>
-      <div className="flex min-h-[600px] justify-between items-center">
+      <div className="flex flex-col lg:flex-row min-h-[600px] justify-between items-center">
         <div className="w-[400px] flex items-center justify-center h-[400px]">
           <div className="z-50">
             <Image
@@ -19,21 +21,21 @@ const ContentSection = () => {
           </div>
           <div className=" h-[300px] w-[400px] z-10 bg-green-petrolium/30 blur-xl rounded-full absolute ">1</div>
         </div>
-        <div className="flex flex-col gap-y-8">
-          <p className="leading-[70px] relative font-sans font-black text-[64px]">
+        <div className="flex flex-col gap-y-4 lg:text-start text-center lg:gap-y-8">
+          <p className="lg:leading-[70px]  relative font-sans font-black text-[24px] lg:text-[64px]">
             The fastest secured <br />
             way to share love{" "}
-            <span className="absolute bottom-0 right-6 -rotate-[20deg]">
-              <PinSvg className="w-10 h-10" />
+            <span className="absolute md:bottom-0 bottom-1 lg:right-6 -rotate-[20deg]">
+              <PinSvg className="w-4 h-4 lg:w-10 lg:h-10" />
             </span>
           </p>
-          <p className="text-2xl font-thin">
+          <p className="lg:text-2xl text-sm font-thin">
             The best way to move world’s money max ease
             <br /> Full speed, just one click, <span className="font-bold">generate the link.</span>
           </p>
         </div>
       </div>
-      <div>
+      <div className="lg:mt-0 mt-[40px]">
         <WhyPayLink />
       </div>
     </Section>
@@ -46,54 +48,27 @@ const whyPayLinkDataset = [
   {
     title: "Security",
     description: "We ensure that transactions are secure",
-    icon: (
-      <svg width="35" height="39" viewBox="0 0 35 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M6.25 12C6.25 9.01631 7.43526 6.15483 9.54505 4.04505C11.6548 1.93526 14.5163 0.75 17.5 0.75C20.4837 0.75 23.3452 1.93526 25.455 4.04505C27.5647 6.15483 28.75 9.01631 28.75 12H30.625C31.6196 12 32.5734 12.3951 33.2766 13.0984C33.9799 13.8016 34.375 14.7554 34.375 15.75V34.5C34.375 35.4946 33.9799 36.4484 33.2766 37.1516C32.5734 37.8549 31.6196 38.25 30.625 38.25H4.375C3.38044 38.25 2.42661 37.8549 1.72335 37.1516C1.02009 36.4484 0.625 35.4946 0.625 34.5V15.75C0.625 14.7554 1.02009 13.8016 1.72335 13.0984C2.42661 12.3951 3.38044 12 4.375 12H6.25ZM17.5 4.5C19.4891 4.5 21.3968 5.29018 22.8033 6.6967C24.2098 8.10322 25 10.0109 25 12H10C10 10.0109 10.7902 8.10322 12.1967 6.6967C13.6032 5.29018 15.5109 4.5 17.5 4.5ZM21.25 23.25C21.25 23.9082 21.0767 24.5549 20.7476 25.1249C20.4184 25.695 19.9451 26.1684 19.375 26.4975V28.875C19.375 29.3723 19.1775 29.8492 18.8258 30.2008C18.4742 30.5525 17.9973 30.75 17.5 30.75C17.0027 30.75 16.5258 30.5525 16.1742 30.2008C15.8225 29.8492 15.625 29.3723 15.625 28.875V26.4975C14.9101 26.0847 14.3515 25.4476 14.0356 24.685C13.7197 23.9223 13.6643 23.0768 13.8779 22.2794C14.0916 21.4821 14.5624 20.7775 15.2172 20.275C15.8721 19.7724 16.6745 19.5 17.5 19.5C18.4946 19.5 19.4484 19.8951 20.1516 20.5984C20.8549 21.3016 21.25 22.2554 21.25 23.25Z"
-          fill="#0E3A36"
-        />
-      </svg>
-    ),
+    icon: <IoIosLock className="lg:w-36 lg:h-36 w-4 h-4" />,
   },
   {
     title: "Ease of Use",
     description: "Simplifying the payment process.",
-    icon: (
-      <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M19.5 0.75C29.8556 0.75 38.25 9.14438 38.25 19.5C38.25 29.8556 29.8556 38.25 19.5 38.25C9.14438 38.25 0.75 29.8556 0.75 19.5C0.75 9.14438 9.14438 0.75 19.5 0.75ZM23.22 23.7188C22.2262 24.5963 20.9269 25.125 19.5 25.125C18.1297 25.1275 16.806 24.6271 15.78 23.7188C15.407 23.3895 14.9186 23.222 14.4221 23.2529C13.9256 23.2839 13.4617 23.5108 13.1325 23.8838C12.8033 24.2567 12.6357 24.7452 12.6667 25.2417C12.6976 25.7382 12.9245 26.202 13.2975 26.5312C14.9494 27.9881 17.1225 28.875 19.5 28.875C21.7845 28.8781 23.991 28.0444 25.7025 26.5312C26.0755 26.202 26.3024 25.7382 26.3333 25.2417C26.3643 24.7452 26.1967 24.2567 25.8675 23.8838C25.5383 23.5108 25.0744 23.2839 24.5779 23.2529C24.0814 23.222 23.593 23.3895 23.22 23.7188ZM12.9375 12C10.8994 12 9.26625 13.275 8.44875 14.91C8.23384 15.3378 8.19068 15.8315 8.32813 16.2901C8.46557 16.7486 8.7732 17.1373 9.18796 17.3763C9.60273 17.6153 10.0932 17.6866 10.5589 17.5757C11.0246 17.4647 11.4301 17.1798 11.6925 16.7794L11.8013 16.59C12.105 15.9825 12.57 15.75 12.9375 15.75C13.2563 15.75 13.6538 15.9281 13.9519 16.38L14.0737 16.59C14.2988 17.0306 14.6889 17.3644 15.1591 17.5186C15.6292 17.6728 16.1412 17.635 16.5835 17.4133C17.0259 17.1917 17.3626 16.8041 17.5205 16.3352C17.6784 15.8663 17.6445 15.354 17.4263 14.91C16.6069 13.275 14.9756 12 12.9375 12ZM26.0625 12C24.0244 12 22.3931 13.275 21.5737 14.91C21.3588 15.3378 21.3157 15.8315 21.4531 16.2901C21.5906 16.7486 21.8982 17.1373 22.313 17.3763C22.7277 17.6153 23.2182 17.6866 23.6839 17.5757C24.1496 17.4647 24.5551 17.1798 24.8175 16.7794L24.9263 16.59C25.23 15.9825 25.695 15.75 26.0625 15.75C26.3813 15.75 26.7788 15.9281 27.0769 16.38L27.1988 16.59C27.3079 16.8121 27.4599 17.0104 27.6461 17.1734C27.8322 17.3365 28.0488 17.461 28.2833 17.54C28.5178 17.6189 28.7656 17.6507 29.0125 17.6334C29.2593 17.6161 29.5003 17.5501 29.7215 17.4393C29.9428 17.3284 30.1399 17.1749 30.3015 16.9875C30.4631 16.8001 30.586 16.5825 30.6631 16.3474C30.7402 16.1123 30.7701 15.8642 30.7509 15.6175C30.7317 15.3708 30.6638 15.1304 30.5512 14.91C29.7337 13.275 28.1006 12 26.0625 12Z"
-          fill="#0E3A36"
-        />
-      </svg>
-    ),
+    icon: <FaFaceSmileBeam className="lg:w-36 lg:h-36 w-4 h-4" />,
   },
   {
     title: "Rapid transaction",
     description: "Paylink enables instant settlements",
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M30.0593 0.18434L30.5374 0.24434C31.8012 0.418715 33.4737 0.65309 34.4206 1.60184C35.1968 2.37621 35.4949 3.63621 35.6731 4.76121L35.7781 5.48496C36.0143 7.19122 36.0762 9.42621 35.6731 11.9087C34.8781 16.8081 32.2699 22.6543 25.7206 27.1806C25.6849 27.5331 25.6831 27.8893 25.6906 28.2456L25.7093 28.7781C25.7393 29.5975 25.7693 30.4168 25.5406 31.2118C25.1843 32.4493 23.9149 33.265 22.7281 33.85L22.1468 34.1256L21.3968 34.4556C19.9943 35.0518 18.1006 35.6631 16.9137 34.4743C16.2012 33.7637 15.9087 32.7212 15.6706 31.6843L15.5824 31.2962C15.4832 30.8062 15.358 30.3218 15.2074 29.845C15.1137 29.5712 15.0124 29.2918 14.9037 29.0106C14.784 29.1575 14.657 29.2983 14.5231 29.4325C13.8762 30.0793 12.9106 30.5312 12.1156 30.8481C11.2474 31.1912 10.2649 31.4912 9.35556 31.7387L8.88869 31.8625L7.99431 32.0856L7.18431 32.2731L6.21494 32.4793L5.60931 32.5975C5.30727 32.6534 4.99615 32.635 4.7028 32.5439C4.40945 32.4528 4.14266 32.2917 3.92546 32.0744C3.70825 31.8572 3.54714 31.5905 3.45602 31.2971C3.3649 31.0037 3.34651 30.6926 3.40244 30.3906L3.56369 29.5825L3.85244 28.2737L4.08494 27.3175L4.26119 26.6425C4.50869 25.735 4.80869 24.7525 5.15369 23.8862C5.46869 23.0893 5.92056 22.1237 6.56744 21.4768L6.71744 21.3325L6.59744 21.2837C6.27699 21.1619 5.95242 21.0512 5.62431 20.9518L5.10494 20.7925C3.80369 20.3987 2.41244 19.975 1.54806 19.1087C0.498063 18.0606 0.852438 16.465 1.35869 15.1375L1.56494 14.6237L1.89681 13.8737L2.17244 13.2925C2.75744 12.1075 3.57306 10.8381 4.81056 10.4818C5.46681 10.2943 6.14931 10.2831 6.83556 10.3018L7.24806 10.315C7.78431 10.3337 8.31869 10.3543 8.84181 10.3037C13.3681 3.75246 19.2143 1.14434 24.1137 0.34934C26.0791 0.02698 28.079 -0.0285211 30.0593 0.18434ZM11.6618 23.95C11.3667 23.7315 11.014 23.6045 10.6474 23.5845C10.2808 23.5645 9.91642 23.6524 9.59931 23.8375L9.39306 23.9762L9.21869 24.1318L8.98431 24.4281C8.49681 25.1331 8.21931 26.1081 8.00369 27.0193L7.80119 27.8968L7.70556 28.2962L8.06369 28.21L8.84744 28.03C9.93119 27.7768 11.1331 27.4487 11.8718 26.7831C12.193 26.462 12.3868 26.0353 12.4171 25.5822C12.4475 25.1291 12.3123 24.6803 12.0368 24.3193L11.8831 24.1431L11.8381 24.1L11.6618 23.95ZM25.1299 10.8737C24.7818 10.5254 24.3684 10.2491 23.9135 10.0606C23.4585 9.87204 22.9709 9.77495 22.4784 9.77487C21.9859 9.77478 21.4983 9.87169 21.0433 10.0601C20.5882 10.2485 20.1748 10.5246 19.8265 10.8728C19.4782 11.2209 19.2019 11.6343 19.0134 12.0893C18.8248 12.5442 18.7277 13.0318 18.7277 13.5243C18.7276 14.0168 18.8245 14.5044 19.0129 14.9595C19.2012 15.4145 19.4774 15.8279 19.8256 16.1762C20.5287 16.8796 21.4825 17.2749 22.4771 17.2751C23.4717 17.2752 24.4256 16.8803 25.129 16.1772C25.8324 15.474 26.2277 14.5202 26.2278 13.5256C26.228 12.531 25.8331 11.5771 25.1299 10.8737Z"
-          fill="#0E3A36"
-        />
-      </svg>
-    ),
+    icon: <IoRocket className="lg:w-36 lg:h-36 w-4 h-4" />,
   },
 ];
 
 const CardsComponent = ({ card }: { card: (typeof whyPayLinkDataset)[0] }) => {
   return (
-    <div className="flex items-stretch gap-x-10">
-      <div className="p-4 rounded-[15px] flex items-center justify-center w-[80px] bg-forest/10">{card.icon}</div>
-      <div className="flex flex-col justify-between gap-y-2">
-        <p className="text-[32px] font-bold">{card.title}</p>
-        <p className="font-thin text-2xl">{card.description}</p>
+    <div className="flex items-stretch gap-x-4 lg:gap-x-10">
+      <div className=" rounded-md md:rounded-[15px] flex items-center justify-center w-[40px] lg:h-[80px] lg:w-[80px] bg-forest/10">{card.icon}</div>
+      <div className="flex flex-col justify-between lg:gap-y-2">
+        <p className="lg:text-[32px] font-bold">{card.title}</p>
+        <p className="font-thin text-xs lg:text-2xl">{card.description}</p>
       </div>
     </div>
   );
@@ -101,25 +76,36 @@ const CardsComponent = ({ card }: { card: (typeof whyPayLinkDataset)[0] }) => {
 
 const WhyPayLink = () => {
   return (
-    <div className="bg-green-petrolium min-h-[666px] text-forest py-10 px-10 flex justify-evenly gap-x-10 rounded-[20px]">
-      <div className="flex flex-col justify-evenly gap-y-9">
-        <h1 className="text-[64px] font-bold">Why PayLink</h1>
-        <div>
-          <div className="space-y-8">
-            {whyPayLinkDataset.map((card, index) => (
-              <CardsComponent key={index} card={card} />
-            ))}
-          </div>
-        </div>
-      </div>
-      <div className="border rounded-3xl overflow-hidden">
+    <div className="flex flex-col">
+      <div className="relative z-0 lg:hidden flex  rounded-t-3xl overflow-hidden">
         <Image
           src="https://res.cloudinary.com/dbhdpelno/image/upload/v1717006885/f2f3b012bbb05e5a391b76d42f12e64a_qbfjul.jpg"
           width={400}
           height={900}
-          className="object-cover h-full object-center"
+          className="object-cover scale-125 h-full object-center"
           alt="Image of a person holding a phone"
         />
+      </div>
+      <div className="bg-green-petrolium relative z-50 -mt-[30px] lg:min-h-[666px] text-forest py-10 px-6 lg:px-10 flex flex-col lg:flex-row justify-evenly gap-x-10 rounded-[20px]">
+        <div className="flex flex-col justify-evenly gap-y-5 lg:gap-y-9">
+          <h1 className="lg:text-[64px] text-[24px] font-bold">Why PayLink</h1>
+          <div>
+            <div className=" space-y-4 lg:space-y-8">
+              {whyPayLinkDataset.map((card, index) => (
+                <CardsComponent key={index} card={card} />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="hidden lg:flex rounded-3xl overflow-hidden">
+          <Image
+            src="https://res.cloudinary.com/dbhdpelno/image/upload/v1717006885/f2f3b012bbb05e5a391b76d42f12e64a_qbfjul.jpg"
+            width={400}
+            height={900}
+            className="object-cover h-full object-center"
+            alt="Image of a person holding a phone"
+          />
+        </div>
       </div>
     </div>
   );
