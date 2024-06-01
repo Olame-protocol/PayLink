@@ -6,7 +6,7 @@ import Image from "next/image";
 const ContentSection = () => {
   return (
     <Section>
-      <div className="flex min-h-[600px] justify-between items-center">
+      <div className="flex flex-col lg:flex-row min-h-[600px] justify-between items-center">
         <div className="w-[400px] flex items-center justify-center h-[400px]">
           <div className="z-50">
             <Image
@@ -19,15 +19,15 @@ const ContentSection = () => {
           </div>
           <div className=" h-[300px] w-[400px] z-10 bg-green-petrolium/30 blur-xl rounded-full absolute ">1</div>
         </div>
-        <div className="flex flex-col gap-y-8">
-          <p className="leading-[70px] relative font-sans font-black text-[64px]">
+        <div className="flex flex-col gap-y-4 lg:text-start text-center lg:gap-y-8">
+          <p className="lg:leading-[70px]  relative font-sans font-black text-[24px] lg:text-[64px]">
             The fastest secured <br />
             way to share love{" "}
-            <span className="absolute bottom-0 right-6 -rotate-[20deg]">
-              <PinSvg className="w-10 h-10" />
+            <span className="absolute md:bottom-0 bottom-1 lg:right-6 -rotate-[20deg]">
+              <PinSvg className="w-4 h-4 lg:w-10 lg:h-10" />
             </span>
           </p>
-          <p className="text-2xl font-thin">
+          <p className="lg:text-2xl text-sm font-thin">
             The best way to move world’s money max ease
             <br /> Full speed, just one click, <span className="font-bold">generate the link.</span>
           </p>

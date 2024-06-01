@@ -28,7 +28,7 @@ const Header = () => {
                 width={1200}
                 height={496}
                 alt="Image of a person holding a phone"
-                className="w-full  md:h-[496px] object-bottom md:object-center  object-cover bg-no-repeat"
+                className="w-full  lg:h-[496px] object-bottom md:object-center  object-cover bg-no-repeat"
               />
             </div>
             <div className="absolute -bottom-2 md:-bottom-8 -left-4 md:-left-8">
