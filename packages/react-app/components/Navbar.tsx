@@ -36,32 +36,39 @@ export default function Navbar() {
             <div className="relative flex justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button */}
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-black focus:outline-none focus:ring-1 focus:ring-inset focus:rounded-none focus:ring-black">
+                {/* <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-black focus:outline-none focus:ring-1 focus:ring-inset focus:rounded-none focus:ring-black">
                   <span className="sr-only">Open main menu</span>
                   {open ? <XMarkIcon className="block h-6 w-6" aria-hidden="true" /> : <Bars3Icon className="block h-6 w-6" aria-hidden="true" />}
-                </Disclosure.Button>
+                </Disclosure.Button> */}
               </div>
-              <div className="flex justify-center py-10 gap-20 sm:items-stretch sm:justify-start">
+              <div className="flex justify-center py-5 lg:py-10 gap-20 sm:items-stretch sm:justify-start">
                 <Link href="/">
-                  <PayLinkLogo className={clsx(isHome ? "text-green-petrolium" : "text-forest")} />
+                  <PayLinkLogo className={clsx(isHome ? "text-green-petrolium" : "text-forest", "w-[171px] h-[45px] max-lg:w-[100px]")} />
                 </Link>
 
-                <div className={clsx(isHome ? "text-green-petrolium" : "text-forest", "flex items-center gap-10")}>
-                  <Link href="/payments" className="inline-flex items-center gap-2 font-normal">
+                <div
+                  className={clsx(
+                    isHome
+                      ? "text-green-petrolium hidden lg:flex"
+                      : "text-forest max-lg:fixed bottom-0 right-0 left-0 w-full z-10 max-lg:justify-between max-lg:py-4 max-lg:px-5 bg-green-petrolium",
+                    "flex items-center gap-10",
+                  )}
+                >
+                  <Link href="/payments" className="inline-flex max-lg:flex max-lg:flex-col items-center gap-2 font-normal">
                     <WalletIcon />
                     Payments
                   </Link>
-                  <Link href="/links" className="inline-flex items-center gap-2 font-normal">
+                  <Link href="/links" className="inline-flex max-lg:flex max-lg:flex-col items-center gap-2 font-normal">
                     <LinkIcon />
                     Links
                   </Link>
 
-                  <Link href="/links" className="inline-flex items-center gap-2 font-normal">
+                  <Link href="/links" className="inline-flex max-lg:flex max-lg:flex-col items-center gap-2 font-normal">
                     <PaperLineIcon />
                     Invoices
                   </Link>
 
-                  <Link href="/links" className="inline-flex items-center gap-2 font-normal">
+                  <Link href="/links" className="inline-flex max-lg:flex max-lg:flex-col items-center gap-2 font-normal">
                     <ChartIcon />
                     Dashboard
                   </Link>

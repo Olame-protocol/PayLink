@@ -1,6 +1,7 @@
 import LandingPage from "@/components/LandinPage";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
+import Layout from "@/components/Layout";
 
 export default function Home() {
   const [userAddress, setUserAddress] = useState("");
@@ -31,7 +32,9 @@ export default function Home() {
       ) : (
         <div>No Wallet Connected</div>
       )} */}
-      <LandingPage />
+      <Layout>
+        <LandingPage />
+      </Layout>
     </>
   );
 }

@@ -14,6 +14,7 @@ import { retreivePaymentLinks } from "@/utils/supabase";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
+import Layout from "@/components/Layout";
 
 export type Tab = "fixed" | "global";
 type Tab2 = "Paid" | "Unpaid";
@@ -34,14 +35,9 @@ export default function Payments() {
   const [copiedLink, setCopiedLink] = useState("");
   const [activeTab, setActiveTab] = useState<Tab>("fixed");
   const [activeLinkTab, setActiveLinkTab] = useState<Tab2>("Paid");
-  const generatedLink =
-    "https://react-icons.github.io/react-icons/search/#q=dash";
+  const generatedLink = "https://react-icons.github.io/react-icons/search/#q=dash";
   const { createPaymentLink, isPending } = useCreatePaymentLink();
-  const {
-    approveER20,
-    isPending: ERC20ApprovalPending,
-    isSuccess: ERC20ApprovalSuccess,
-  } = useApproveERC20Transaction();
+  const { approveER20, isPending: ERC20ApprovalPending, isSuccess: ERC20ApprovalSuccess } = useApproveERC20Transaction();
   const { address } = useAccount();
   const [origin, setOrigin] = useState("");
 
@@ -49,9 +45,7 @@ export default function Payments() {
     description: "",
     amount: "",
   });
-  const [recentyGeneratedLinks, setRecentyGeneratedLinks] = useState<
-    SupabaseLinksRecord[]
-  >([]);
+  const [recentyGeneratedLinks, setRecentyGeneratedLinks] = useState<SupabaseLinksRecord[]>([]);
 
   const retreiveGeneratedLinks = useCallback(async () => {
     if (!address) return;
@@ -96,20 +90,13 @@ export default function Payments() {
     window.open(`${endPoint}`);
   };
 
-  const onGeneratePaymentLink = async (
-    e: MouseEvent<HTMLButtonElement>,
-    type: "global" | "fixed"
-  ) => {
+  const onGeneratePaymentLink = async (e: MouseEvent<HTMLButtonElement>, type: "global" | "fixed") => {
     e.preventDefault();
     if (type === "global" && !formData.description) return;
     if (type === "fixed" && !formData.amount && !formData.description) return;
 
     try {
-      await approveER20(
-        type === "global"
-          ? "2"
-          : ((Number(formData.amount) * 10) / 100).toFixed(1)
-      );
+      await approveER20(type === "global" ? "2" : ((Number(formData.amount) * 10) / 100).toFixed(1));
       await createPaymentLink(type, {
         amount: formData.amount,
         description: formData.description,
@@ -131,93 +118,76 @@ export default function Payments() {
   };
 
   return (
-    <Section className="bg-forest rounded-2xl mt-20">
-      <div className="flex justify-between gap-8 px-36 py-16">
-        <div className="text-left w-full mx-auto">
-          <div className="flex flex-col">
-            <div className="flex flex-col gap-5 mb-14">
-              <h2 className="font-black text-green-petrolium text-[2.5rem]">
-                Create a payment link
-              </h2>
-              <p className="text-white font-normal">
-                Generate payment links effortlessly and simplify transactions.
-              </p>
-            </div>
+    <Layout>
+      <Section className="bg-forest rounded-2xl mt-20">
+        <div className="flex justify-between gap-8 lg:px-36 px-5 py-5 lg:py-16">
+          <div className="text-left w-full mx-auto">
+            <div className="flex flex-col">
+              <div className="flex flex-col gap-5 mb-14">
+                <h2 className="font-black text-green-petrolium text-xl lg:text-[2.5rem]">Create a payment link</h2>
+                <p className="text-white font-normal">Generate payment links effortlessly and simplify transactions.</p>
+              </div>
 
-            <div className="flex justify-start bg-white/[8%] p-4 rounded-lg text-xl mb-5">
-              <button
-                className={`py-5 px-12 rounded-lg mr-4 ${
-                  activeTab === "fixed"
-                    ? "bg-green-petrolium text-forest"
-                    : "text-white"
-                }`}
-                onClick={() => onSetActiveTab("fixed")}
-              >
-                Fixed
-              </button>
-              <button
-                className={`py-5 px-12 rounded-lg mr-4  ${
-                  activeTab === "global"
-                    ? "bg-green-petrolium text-forest"
-                    : "text-white"
-                }`}
-                onClick={() => onSetActiveTab("global")}
-              >
-                Global
-              </button>
-            </div>
-            {activeTab === "fixed" && (
-              <>
-                <form className="flex flex-col gap-5 py-2">
-                  <div className="flex flex-row max-md:flex-col gap-5 w-full">
+              <div className="flex justify-start bg-white/[8%] p-4 rounded-lg text-lg lg:text-xl mb-5">
+                <button
+                  className={`lg:py-5 py-2 px-4 lg:px-12 rounded-lg mr-4 ${activeTab === "fixed" ? "bg-green-petrolium text-forest" : "text-white"}`}
+                  onClick={() => onSetActiveTab("fixed")}
+                >
+                  Fixed
+                </button>
+                <button
+                  className={`lg:py-5 py-2 px-4 lg:px-12 rounded-lg mr-4  ${activeTab === "global" ? "bg-green-petrolium text-forest" : "text-white"}`}
+                  onClick={() => onSetActiveTab("global")}
+                >
+                  Global
+                </button>
+              </div>
+              {activeTab === "fixed" && (
+                <>
+                  <form className="flex flex-col gap-5 py-2">
+                    <div className="flex flex-row max-md:flex-col gap-5 w-full">
+                      <input
+                        type="text"
+                        value={formData.description}
+                        name="description"
+                        onChange={onFormtInputChange}
+                        placeholder="Service"
+                        className="outline-none px-5 rounded-lg w-full text-white py-8 bg-white/30"
+                      />
+                      <input
+                        type="number"
+                        name="amount"
+                        value={formData.amount}
+                        onChange={onFormtInputChange}
+                        placeholder="0.0cUSD"
+                        className="w-5/5 outline-none py-3 px-4 rounded-lg text-white bg-white/30"
+                      />
+                    </div>
+                    <button onClick={(e) => onGeneratePaymentLink(e, "fixed")} className="bg-white text-forest py-5 lg:py-8 w-full px-5 rounded-lg font-medium text-lg">
+                      {buttonTitle()}
+                    </button>
+                  </form>
+                </>
+              )}
+              {activeTab === "global" && (
+                <>
+                  <form className="flex flex-col gap-5 py-2">
                     <input
                       type="text"
-                      value={formData.description}
                       name="description"
+                      value={formData.description}
                       onChange={onFormtInputChange}
-                      placeholder="Service"
-                      className="outline-none px-5 rounded-lg w-full text-white py-8 bg-white/30"
+                      placeholder="Purpose"
+                      className="outline-none text-white py-8 bg-white/30 px-5 rounded-lg"
                     />
-                    <input
-                      type="number"
-                      name="amount"
-                      value={formData.amount}
-                      onChange={onFormtInputChange}
-                      placeholder="0.0cUSD"
-                      className="w-5/5 outline-none py-3 px-4 rounded-lg text-white bg-white/30"
-                    />
-                  </div>
-                  <button
-                    onClick={(e) => onGeneratePaymentLink(e, "fixed")}
-                    className="bg-white text-forest py-8 w-full px-5 rounded-lg font-medium text-lg"
-                  >
-                    {buttonTitle()}
-                  </button>
-                </form>
-              </>
-            )}
-            {activeTab === "global" && (
-              <>
-                <form className="flex flex-col gap-5 py-2">
-                  <input
-                    type="text"
-                    name="description"
-                    value={formData.description}
-                    onChange={onFormtInputChange}
-                    placeholder="Purpose"
-                    className="outline-none text-white py-8 bg-white/30 px-5 rounded-lg"
-                  />
-                  <button
-                    onClick={(e) => onGeneratePaymentLink(e, "global")}
-                    className="bg-white text-forest py-8 w-full px-5 rounded-lg font-medium text-lg"
-                  >
-                    {buttonTitle()}
-                  </button>
-                </form>
-              </>
-            )}
-            {/* <p className="text-2xl mb-2">Recently generated links</p> */}
-            {/* {recentyGeneratedLinks.map((link) => {
+                    <button onClick={(e) => onGeneratePaymentLink(e, "global")} className="bg-white text-forest py-5 lg:py-8 w-full px-5 rounded-lg font-medium text-lg">
+                      {buttonTitle()}
+                    </button>
+                  </form>
+                </>
+              )}
+              {/* <p className="text-2xl mb-2">Recently generated links</p> */}
+              {/* {recentyGeneratedLinks.map((link) => {
                 return (
                   <div
                     key={link.id}
@@ -257,9 +227,10 @@ export default function Payments() {
                   </div>
                 );
               })} */}
+            </div>
           </div>
         </div>
-      </div>
-    </Section>
+      </Section>
+    </Layout>
   );
 }

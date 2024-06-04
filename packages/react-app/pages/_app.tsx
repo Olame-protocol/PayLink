@@ -3,7 +3,6 @@ import { injectedWallet } from "@rainbow-me/rainbowkit/wallets";
 import "@rainbow-me/rainbowkit/styles.css";
 import type { AppProps } from "next/app";
 import { http, WagmiProvider, createConfig } from "wagmi";
-import Layout from "../components/Layout";
 import "../styles/globals.css";
 import { celo, celoAlfajores } from "wagmi/chains";
 
@@ -41,9 +40,7 @@ function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
           <Toaster />
-          <Layout>
             <Component {...pageProps} />
-          </Layout>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

@@ -1,10 +1,11 @@
 import { FC, ReactNode } from "react";
-import Footer from "./Footer";
 import Navbar from "./Navbar";
 
 interface Props {
   children: ReactNode;
+  pageName?: string;
 }
+
 const Layout: FC<Props> = ({ children }) => {
   return (
     <>
