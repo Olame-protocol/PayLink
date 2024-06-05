@@ -1,10 +1,6 @@
 import { GLOBAL_PAYMENT_ABI } from "@/abi/GlobalPayment";
 import { GLOBAL_PAYMENT_CONTRACT_ADDRESS } from "@/utils/const";
-import {
-  saveFixedPaymentLinks,
-  saveGlobalPaymentLinks,
-  savePaymentRecord,
-} from "@/utils/supabase";
+import { saveFixedPaymentLinks, saveGlobalPaymentLinks, savePaymentRecord } from "@/utils/supabase";
 import Web3 from "@/utils/web3";
 import { ContractTransactionReceipt, parseUnits } from "ethers";
 import { useCallback, useState } from "react";
@@ -17,9 +13,7 @@ export type GlobalPaymentData = {
   description: string;
 };
 
-type PaymentLinkData<T extends PaymentLinkType> = T extends "global"
-  ? GlobalPaymentData
-  : GlobalPaymentData & { amount: string };
+type PaymentLinkData<T extends PaymentLinkType> = T extends "global" ? GlobalPaymentData : GlobalPaymentData & { amount: string };
 
 export const useCreatePaymentLink = () => {
   const [data, setData] = useState<any>(null);
@@ -33,20 +27,13 @@ export const useCreatePaymentLink = () => {
       if (!address || !window) return;
       try {
         setIsPending(true);
-        const contract = await new Web3().contract(
-          GLOBAL_PAYMENT_CONTRACT_ADDRESS,
-          GLOBAL_PAYMENT_ABI,
-          address
-        );
+        const contract = await new Web3().contract(GLOBAL_PAYMENT_CONTRACT_ADDRESS, GLOBAL_PAYMENT_ABI, address);
 
         let tx: any;
         if (type === "global") {
           tx = await contract.createGlobalPaymentLink(data.paymentLinkId);
         } else {
-          tx = await contract.createFixedPaymentLink(
-            data.paymentLinkId,
-            parseUnits((data as PaymentLinkData<"fixed">).amount)
-          );
+          tx = await contract.createFixedPaymentLink(data.paymentLinkId, parseUnits((data as PaymentLinkData<"fixed">).amount));
         }
         const txhash = (await tx.wait()) as ContractTransactionReceipt;
 
@@ -77,7 +64,7 @@ export const useCreatePaymentLink = () => {
         setIsPending(false);
       }
     },
-    [address]
+    [address],
   );
 
   const reset = useCallback(() => {
@@ -105,28 +92,16 @@ export const useSendPayment = () => {
   const { address } = useAccount();
 
   const transfer = useCallback(
-    async (
-      amount: string,
-      creatorWalletAddress: `0x${string}`,
-      type: "global" | "fixed",
-      paymentLinkId: string
-    ) => {
+    async (amount: string, creatorWalletAddress: `0x${string}`, type: "global" | "fixed", paymentLinkId: string) => {
       if (!address || !window) return;
       try {
         setIsPending(true);
-        const contract = await new Web3().contract(
-          GLOBAL_PAYMENT_CONTRACT_ADDRESS,
-          GLOBAL_PAYMENT_ABI,
-          address
-        );
+        const contract = await new Web3().contract(GLOBAL_PAYMENT_CONTRACT_ADDRESS, GLOBAL_PAYMENT_ABI, address);
         let tx: any;
         if (type === "fixed") {
           tx = await contract.PayFixedPaymentLink(paymentLinkId);
         } else {
-          tx = await contract.contributeToGlobalPaymentLink(
-            paymentLinkId,
-            parseUnits(amount)
-          );
+          tx = await contract.contributeToGlobalPaymentLink(paymentLinkId, parseUnits(amount));
         }
 
         const txhash = await tx.wait();
@@ -150,7 +125,7 @@ export const useSendPayment = () => {
         setIsPending(false);
       }
     },
-    [address]
+    [address],
   );
 
   const reset = useCallback(() => {

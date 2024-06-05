@@ -43,67 +43,44 @@ export default function Links() {
   };
 
   return (
-    <div className="lg:w-1/2 mx-auto px-5">
-      <div className="flex justify-start mb-4">
+    <div className="mx-auto px-5 lg:w-1/2">
+      <div className="mb-4 flex justify-start">
         <button
-          className={`px-4 py-2 mr-4 text-base font-semibold rounded ${
-            activeTab === "fixed"
-              ? "bg-blue-500 text-gray-50 "
-              : "bg-gray-200 text-gray-700"
-          }`}
+          className={`mr-4 rounded px-4 py-2 text-base font-semibold ${activeTab === "fixed" ? "bg-blue-500 text-gray-50" : "bg-gray-200 text-gray-700"}`}
           onClick={() => onSetActiveTab("fixed")}
         >
           Fixed
         </button>
         <button
-          className={`px-4 py-2 mr-4 text-base font-semibold rounded  ${
-            activeTab === "global"
-              ? "bg-blue-500 text-white"
-              : "bg-gray-200 text-gray-700"
-          }`}
+          className={`mr-4 rounded px-4 py-2 text-base font-semibold ${activeTab === "global" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"}`}
           onClick={() => onSetActiveTab("global")}
         >
           Global
         </button>
       </div>
 
-      <div className="flex flex-col gap-2 w-full mt-10">
-        <p className="text-2xl mb-7">Generated links</p>
+      <div className="mt-10 flex w-full flex-col gap-2">
+        <p className="mb-7 text-2xl">Generated links</p>
         {links.map((link) => {
           return (
-            <div
-              key={link.id}
-              className="flex gap-3 py-3 px-4 rounded-lg border-2 boder-gray-400 justify-between"
-            >
-              <p className="text-velix-primary dark:text-velix-dark-white text-blue-500 text-base underline">
-                {truncateString(
-                  `${origin}/payments/${link.payment_link_id}?type=${activeTab}`
-                )}
+            <div key={link.id} className="boder-gray-400 flex justify-between gap-3 rounded-lg border-2 px-4 py-3">
+              <p className="text-velix-primary dark:text-velix-dark-white text-base text-blue-500 underline">
+                {truncateString(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
               </p>
               <div className="flex gap-2">
-                {copied &&
-                `${origin}/payments/${link.payment_link_id}?type=${activeTab}`.toLowerCase() ===
-                  copiedLink?.toLowerCase() ? (
-                  <IoCheckmarkDoneSharp className="text-velix-primary w-5 h-5 dark:text-velix-icon-dark" />
+                {copied && `${origin}/payments/${link.payment_link_id}?type=${activeTab}`.toLowerCase() === copiedLink?.toLowerCase() ? (
+                  <IoCheckmarkDoneSharp className="text-velix-primary dark:text-velix-icon-dark h-5 w-5" />
                 ) : (
                   <Copy
                     role="button"
-                    onClick={() =>
-                      onCopyToClickboard(
-                        `${origin}/payments/${link.payment_link_id}?type=${activeTab}`
-                      )
-                    }
-                    className="text-velix-primary w-5 h-5 cursor-pointer dark:text-velix-icon-dark"
+                    onClick={() => onCopyToClickboard(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
+                    className="text-velix-primary dark:text-velix-icon-dark h-5 w-5 cursor-pointer"
                   />
                 )}
                 <FaArrowUpRightFromSquare
-                  onClick={() =>
-                    onViewLink(
-                      `${origin}/payments/${link.payment_link_id}?type=${activeTab}`
-                    )
-                  }
+                  onClick={() => onViewLink(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
                   role="button"
-                  className="text-velix-primary w-5 h-5 cursor-pointer dark:text-velix-icon-dark"
+                  className="text-velix-primary dark:text-velix-icon-dark h-5 w-5 cursor-pointer"
                 />
               </div>
             </div>

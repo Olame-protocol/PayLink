@@ -119,24 +119,24 @@ export default function Payments() {
 
   return (
     <Layout>
-      <Section className="bg-forest rounded-2xl mt-20">
-        <div className="flex justify-between gap-8 lg:px-36 px-5 py-5 lg:py-16">
-          <div className="text-left w-full mx-auto">
+      <Section className="mt-20 rounded-2xl bg-forest">
+        <div className="flex justify-between gap-8 px-5 py-5 lg:px-36 lg:py-16">
+          <div className="mx-auto w-full text-left">
             <div className="flex flex-col">
-              <div className="flex flex-col gap-5 mb-14">
-                <h2 className="font-black text-green-petrolium text-xl lg:text-[2.5rem]">Create a payment link</h2>
-                <p className="text-white font-normal">Generate payment links effortlessly and simplify transactions.</p>
+              <div className="mb-14 flex flex-col gap-5">
+                <h2 className="text-xl font-black text-green-petrolium lg:text-[2.5rem]">Create a payment link</h2>
+                <p className="font-normal text-white">Generate payment links effortlessly and simplify transactions.</p>
               </div>
 
-              <div className="flex justify-start bg-white/[8%] p-4 rounded-lg text-lg lg:text-xl mb-5">
+              <div className="mb-5 flex justify-start rounded-lg bg-white/[8%] p-4 text-lg lg:text-xl">
                 <button
-                  className={`lg:py-5 py-2 px-4 lg:px-12 rounded-lg mr-4 ${activeTab === "fixed" ? "bg-green-petrolium text-forest" : "text-white"}`}
+                  className={`mr-4 rounded-lg px-4 py-2 lg:px-12 lg:py-5 ${activeTab === "fixed" ? "bg-green-petrolium text-forest" : "text-white"}`}
                   onClick={() => onSetActiveTab("fixed")}
                 >
                   Fixed
                 </button>
                 <button
-                  className={`lg:py-5 py-2 px-4 lg:px-12 rounded-lg mr-4  ${activeTab === "global" ? "bg-green-petrolium text-forest" : "text-white"}`}
+                  className={`mr-4 rounded-lg px-4 py-2 lg:px-12 lg:py-5 ${activeTab === "global" ? "bg-green-petrolium text-forest" : "text-white"}`}
                   onClick={() => onSetActiveTab("global")}
                 >
                   Global
@@ -145,14 +145,14 @@ export default function Payments() {
               {activeTab === "fixed" && (
                 <>
                   <form className="flex flex-col gap-5 py-2">
-                    <div className="flex flex-row max-md:flex-col gap-5 w-full">
+                    <div className="flex w-full flex-row gap-5 max-md:flex-col">
                       <input
                         type="text"
                         value={formData.description}
                         name="description"
                         onChange={onFormtInputChange}
                         placeholder="Service"
-                        className="outline-none px-5 rounded-lg w-full text-white py-8 bg-white/30"
+                        className="w-full rounded-lg bg-white/30 px-5 py-8 text-white outline-none"
                       />
                       <input
                         type="number"
@@ -160,10 +160,10 @@ export default function Payments() {
                         value={formData.amount}
                         onChange={onFormtInputChange}
                         placeholder="0.0cUSD"
-                        className="w-5/5 outline-none py-3 px-4 rounded-lg text-white bg-white/30"
+                        className="w-5/5 rounded-lg bg-white/30 px-4 py-3 text-white outline-none"
                       />
                     </div>
-                    <button onClick={(e) => onGeneratePaymentLink(e, "fixed")} className="bg-white text-forest py-5 lg:py-8 w-full px-5 rounded-lg font-medium text-lg">
+                    <button onClick={(e) => onGeneratePaymentLink(e, "fixed")} className="w-full rounded-lg bg-white px-5 py-5 text-lg font-medium text-forest lg:py-8">
                       {buttonTitle()}
                     </button>
                   </form>
@@ -178,9 +178,9 @@ export default function Payments() {
                       value={formData.description}
                       onChange={onFormtInputChange}
                       placeholder="Purpose"
-                      className="outline-none text-white py-8 bg-white/30 px-5 rounded-lg"
+                      className="rounded-lg bg-white/30 px-5 py-8 text-white outline-none"
                     />
-                    <button onClick={(e) => onGeneratePaymentLink(e, "global")} className="bg-white text-forest py-5 lg:py-8 w-full px-5 rounded-lg font-medium text-lg">
+                    <button onClick={(e) => onGeneratePaymentLink(e, "global")} className="w-full rounded-lg bg-white px-5 py-5 text-lg font-medium text-forest lg:py-8">
                       {buttonTitle()}
                     </button>
                   </form>

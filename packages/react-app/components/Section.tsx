@@ -10,13 +10,7 @@ export default function Section({ children, ...props }: SectionProps) {
 
   return (
     <div className="px-5">
-      <section
-        {...rest}
-        className={cn(
-          "mx-auto max-w-5xl w-full xl:max-w-7xl relative",
-          `${classname}`
-        )}
-      >
+      <section {...rest} className={cn("relative mx-auto w-full max-w-5xl xl:max-w-7xl", `${classname}`)}>
         {children}
       </section>
     </div>

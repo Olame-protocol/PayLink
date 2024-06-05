@@ -40,7 +40,7 @@ const PaymentIdPage = ({ link, type }: { link: SupabaseLinksRecord; type: "fixed
     <Layout>
       <Section>
         <form className="flex flex-col gap-2 py-2">
-          <div className="flex flex-col gap-2 w-full lg:w-1/2 mx-auto px-5">
+          <div className="mx-auto flex w-full flex-col gap-2 px-5 lg:w-1/2">
             <input
               type="number"
               name="amount"
@@ -48,9 +48,9 @@ const PaymentIdPage = ({ link, type }: { link: SupabaseLinksRecord; type: "fixed
               value={type === "fixed" ? link?.amount : amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.0cUSD"
-              className="w-5/5 outline-none py-3 px-4 rounded-lg border-2 boder-gray-400  "
+              className="w-5/5 boder-gray-400 rounded-lg border-2 px-4 py-3 outline-none"
             />
-            <button onClick={(e) => onSendERC20(e)} className="bg-prosperity text-gray-900 py-3 px-4 rounded-lg font-medium text-lg">
+            <button onClick={(e) => onSendERC20(e)} className="rounded-lg bg-prosperity px-4 py-3 text-lg font-medium text-gray-900">
               {buttonTitle()}
             </button>
           </div>
