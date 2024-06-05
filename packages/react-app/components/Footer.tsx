@@ -29,26 +29,18 @@ const navigation = [
 
 export default function Footer() {
   return (
-    <footer className="mt-auto border-black border-t max-md:hidden">
-      <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
+    <footer className="mt-auto border-t border-black max-md:hidden">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex justify-center space-x-6 md:order-2">
           {navigation.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-black hover:text-forest"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a key={item.name} href={item.href} className="text-black hover:text-forest" target="_blank" rel="noopener noreferrer">
               <span className="sr-only">{item.name}</span>
               <item.icon className="h-6 w-6" aria-hidden="true" />
             </a>
           ))}
         </div>
         <div className="mt-8 md:order-1 md:mt-0">
-          <p className="text-center text-base text-black">
-            &copy; {new Date().getFullYear()} Developed with 🖤.
-          </p>
+          <p className="text-center text-base text-black">&copy; {new Date().getFullYear()} Developed with 🖤.</p>
         </div>
       </div>
     </footer>

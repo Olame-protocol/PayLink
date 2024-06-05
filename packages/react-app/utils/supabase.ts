@@ -15,7 +15,7 @@ export const saveGlobalPaymentLinks = async (
   data: GlobalPaymentData & {
     transactionHash: string;
     walletAddress: string;
-  }
+  },
 ) => {
   const result = await supabase.from(GLOBAL_PAYMENT_LINKS_TABLE_NAME).insert({
     payment_link_id: data.paymentLinkId,
@@ -28,31 +28,17 @@ export const saveGlobalPaymentLinks = async (
   return result;
 };
 
-export const retreivePaymentLinks = async (
-  type: "global" | "fixed",
-  walletAddress: string
-) => {
+export const retreivePaymentLinks = async (type: "global" | "fixed", walletAddress: string) => {
   const result = await supabase
-    .from(
-      type === "global"
-        ? GLOBAL_PAYMENT_LINKS_TABLE_NAME
-        : FIXED_PAYMENT_LINKS_TABLE_NAME
-    )
+    .from(type === "global" ? GLOBAL_PAYMENT_LINKS_TABLE_NAME : FIXED_PAYMENT_LINKS_TABLE_NAME)
     .select("*")
     .eq("owner", walletAddress);
   return result;
 };
 
-export const retreivePaymentLinksById = async (
-  paymentId: string,
-  type: "global" | "fixed"
-) => {
+export const retreivePaymentLinksById = async (paymentId: string, type: "global" | "fixed") => {
   return await supabase
-    .from(
-      type === "global"
-        ? GLOBAL_PAYMENT_LINKS_TABLE_NAME
-        : FIXED_PAYMENT_LINKS_TABLE_NAME
-    )
+    .from(type === "global" ? GLOBAL_PAYMENT_LINKS_TABLE_NAME : FIXED_PAYMENT_LINKS_TABLE_NAME)
     .select("*")
     .eq("payment_link_id", paymentId);
 };
@@ -65,29 +51,20 @@ export const savePaymentRecord = async (
     paymentLinkId: string;
     from: `0x${string}`;
     to: `0x${string}`;
-  }
+  },
 ) => {
-  return await supabase
-    .from(
-      type === "global" ? GLOBAL_PAYMENTS_TABLE_NAME : FIXED_PAYMENTS_TABLE_NAME
-    )
-    .insert({
-      amount: data.amount,
-      transaction_hash: data.transactionHash,
-      payment_link_id: data.paymentLinkId,
-      from: data.from,
-      to: data.to,
-    });
+  return await supabase.from(type === "global" ? GLOBAL_PAYMENTS_TABLE_NAME : FIXED_PAYMENTS_TABLE_NAME).insert({
+    amount: data.amount,
+    transaction_hash: data.transactionHash,
+    payment_link_id: data.paymentLinkId,
+    from: data.from,
+    to: data.to,
+  });
 };
 
-export const retreivePaymentRecord = async (
-  type: "global" | "fixed",
-  walletAddress: `0x${string}`
-) => {
+export const retreivePaymentRecord = async (type: "global" | "fixed", walletAddress: `0x${string}`) => {
   return await supabase
-    .from(
-      type === "global" ? GLOBAL_PAYMENTS_TABLE_NAME : FIXED_PAYMENTS_TABLE_NAME
-    )
+    .from(type === "global" ? GLOBAL_PAYMENTS_TABLE_NAME : FIXED_PAYMENTS_TABLE_NAME)
     .select("*")
     .eq("to", walletAddress);
 };
@@ -97,7 +74,7 @@ export const saveFixedPaymentLinks = async (
     transactionHash: string;
     walletAddress: string;
     amount: string;
-  }
+  },
 ) => {
   const result = await supabase.from(FIXED_PAYMENT_LINKS_TABLE_NAME).insert({
     payment_link_id: data.paymentLinkId,
@@ -111,16 +88,9 @@ export const saveFixedPaymentLinks = async (
   return result;
 };
 
-export const updatedPaymentLinkStatus = async (
-  type: "global" | "fixed",
-  paymentLinkId: string
-) => {
+export const updatedPaymentLinkStatus = async (type: "global" | "fixed", paymentLinkId: string) => {
   const result = await supabase
-    .from(
-      type === "global"
-        ? GLOBAL_PAYMENT_LINKS_TABLE_NAME
-        : FIXED_PAYMENT_LINKS_TABLE_NAME
-    )
+    .from(type === "global" ? GLOBAL_PAYMENT_LINKS_TABLE_NAME : FIXED_PAYMENT_LINKS_TABLE_NAME)
     .update({
       has_expired: true,
     })

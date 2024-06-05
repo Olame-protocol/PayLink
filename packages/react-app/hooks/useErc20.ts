@@ -1,8 +1,5 @@
 import { ERC20_ABI } from "@/abi/ERC20";
-import {
-  ERC20_CONTRACT_ADDRESS,
-  GLOBAL_PAYMENT_CONTRACT_ADDRESS,
-} from "@/utils/const";
+import { ERC20_CONTRACT_ADDRESS, GLOBAL_PAYMENT_CONTRACT_ADDRESS } from "@/utils/const";
 import Web3 from "@/utils/web3";
 import { useCallback, useState } from "react";
 import { useAccount } from "wagmi";
@@ -22,15 +19,8 @@ export const useApproveERC20Transaction = () => {
       if (!address || !window) return;
       try {
         setIsPending(true);
-        const contract = await new Web3().contract(
-          ERC20_CONTRACT_ADDRESS,
-          ERC20_ABI,
-          address
-        );
-        const tx = await contract.approve(
-          GLOBAL_PAYMENT_CONTRACT_ADDRESS,
-          parseUnits(amount)
-        );
+        const contract = await new Web3().contract(ERC20_CONTRACT_ADDRESS, ERC20_ABI, address);
+        const tx = await contract.approve(GLOBAL_PAYMENT_CONTRACT_ADDRESS, parseUnits(amount));
         const txhash = (await tx.wait()) as ContractTransactionReceipt;
         setData(txhash.hash);
         setError(null);
@@ -45,7 +35,7 @@ export const useApproveERC20Transaction = () => {
         setIsPending(false);
       }
     },
-    [address]
+    [address],
   );
 
   const reset = useCallback(() => {

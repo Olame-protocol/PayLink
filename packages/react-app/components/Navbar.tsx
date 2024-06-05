@@ -29,7 +29,7 @@ export default function Navbar() {
   }, [connect]);
 
   return (
-    <Disclosure className={clsx(isHome ? "bg-forest" : "bg-green-petrolium", "!px-0  top-0 w-full")} as="nav">
+    <Disclosure className={clsx(isHome ? "bg-forest" : "bg-green-petrolium", "top-0 w-full !px-0")} as="nav">
       {({ open }) => (
         <>
           <Section>
@@ -41,34 +41,34 @@ export default function Navbar() {
                   {open ? <XMarkIcon className="block h-6 w-6" aria-hidden="true" /> : <Bars3Icon className="block h-6 w-6" aria-hidden="true" />}
                 </Disclosure.Button> */}
               </div>
-              <div className="flex justify-center py-5 lg:py-10 gap-20 sm:items-stretch sm:justify-start">
+              <div className="flex justify-center gap-20 py-5 sm:items-stretch sm:justify-start lg:py-10">
                 <Link href="/">
-                  <PayLinkLogo className={clsx(isHome ? "text-green-petrolium" : "text-forest", "w-[171px] h-[45px] max-lg:w-[100px]")} />
+                  <PayLinkLogo className={clsx(isHome ? "text-green-petrolium" : "text-forest", "h-[45px] w-[171px] max-lg:w-[100px]")} />
                 </Link>
 
                 <div
                   className={clsx(
                     isHome
-                      ? "text-green-petrolium hidden lg:flex"
-                      : "text-forest max-lg:fixed bottom-0 right-0 left-0 w-full z-10 max-lg:justify-between max-lg:py-4 max-lg:px-5 bg-green-petrolium",
+                      ? "hidden text-green-petrolium lg:flex"
+                      : "bottom-0 left-0 right-0 z-10 w-full bg-green-petrolium text-forest max-lg:fixed max-lg:justify-between max-lg:px-5 max-lg:py-4",
                     "flex items-center gap-10",
                   )}
                 >
-                  <Link href="/payments" className="inline-flex max-lg:flex max-lg:flex-col items-center gap-2 font-normal">
+                  <Link href="/payments" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
                     <WalletIcon />
                     Payments
                   </Link>
-                  <Link href="/links" className="inline-flex max-lg:flex max-lg:flex-col items-center gap-2 font-normal">
+                  <Link href="/links" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
                     <LinkIcon />
                     Links
                   </Link>
 
-                  <Link href="/links" className="inline-flex max-lg:flex max-lg:flex-col items-center gap-2 font-normal">
+                  <Link href="/links" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
                     <PaperLineIcon />
                     Invoices
                   </Link>
 
-                  <Link href="/links" className="inline-flex max-lg:flex max-lg:flex-col items-center gap-2 font-normal">
+                  <Link href="/links" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
                     <ChartIcon />
                     Dashboard
                   </Link>
@@ -76,20 +76,20 @@ export default function Navbar() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {isHome ? (
-                  <button className="px-6 py-4 bg-white text-forest font-semibold rounded-lg">Connect Wallet</button>
+                  <button className="rounded-lg bg-white px-6 py-4 font-semibold text-forest">Connect Wallet</button>
                 ) : (
-                  <button className="p-4 bg-forest text-green-petrolium font-semibold rounded-lg">Connect Wallet</button>
+                  <button className="rounded-lg bg-forest p-4 font-semibold text-green-petrolium">Connect Wallet</button>
                 )}
               </div>
             </div>
           </Section>
 
           <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 pt-2 pb-4 flex flex-col gap-3">
+            <div className="flex flex-col gap-3 space-y-1 pb-4 pt-2">
               <Disclosure.Button
                 as="a"
                 href="/payments"
-                className={`border-l-4 inline-flex items-center  py-2 pl-3 pr-4 text-base font-medium text-black ${
+                className={`inline-flex items-center border-l-4 py-2 pl-3 pr-4 text-base font-medium text-black ${
                   asPath.includes("/payments") ? "border-black" : "border-transparent"
                 }`}
               >
@@ -99,7 +99,7 @@ export default function Navbar() {
               <Disclosure.Button
                 as="a"
                 href="/links"
-                className={`border-l-4 inline-flex items-center  py-2 pl-3 pr-4 text-base font-medium text-black ${
+                className={`inline-flex items-center border-l-4 py-2 pl-3 pr-4 text-base font-medium text-black ${
                   asPath.includes("/links") ? "border-black" : "border-transparent"
                 }`}
               >
