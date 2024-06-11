@@ -24,14 +24,6 @@ export default function Home() {
 
   return (
     <>
-      {/* <div className="h1">
-        There you go... a canvas for your next Celo project!
-      </div>
-      {isConnected ? (
-        <div className="h2 text-center">Your address: {userAddress}</div>
-      ) : (
-        <div>No Wallet Connected</div>
-      )} */}
       <Layout>
         <LandingPage />
       </Layout>

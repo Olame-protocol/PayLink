@@ -6,6 +6,8 @@ import Copy from "@/components/ui/payLink/icons/Copy";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { retreivePaymentLinks } from "@/utils/supabase";
 import { useAccount } from "wagmi";
+import Layout from "@/components/Layout";
+import Section from "@/components/Section";
 
 export default function Links() {
   const [activeTab, setActiveTab] = useState<Tab>("fixed");
@@ -43,27 +45,17 @@ export default function Links() {
   };
 
   return (
-    <div className="mx-auto px-5 lg:w-1/2">
-      <div className="mb-4 flex justify-start">
-        <button
-          className={`mr-4 rounded px-4 py-2 text-base font-semibold ${activeTab === "fixed" ? "bg-blue-500 text-gray-50" : "bg-gray-200 text-gray-700"}`}
-          onClick={() => onSetActiveTab("fixed")}
-        >
-          Fixed
-        </button>
-        <button
-          className={`mr-4 rounded px-4 py-2 text-base font-semibold ${activeTab === "global" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"}`}
-          onClick={() => onSetActiveTab("global")}
-        >
-          Global
-        </button>
-      </div>
+    <Layout>
+      <Section className="mt-20 rounded-2xl bg-forest min-h-96 px-5 py-5 lg:px-36 lg:py-16">
+        <div className="flex w-full flex-col gap-2">
+          <div className="flex flex-col gap-5">
+            <p className="text-xl font-black text-green-petrolium lg:text-[2.5rem]">Generated links</p>
+            <p className="font-normal text-white">Generate payment links effortlessly and simplify transactions.</p>
+          </div>
 
-      <div className="mt-10 flex w-full flex-col gap-2">
-        <p className="mb-7 text-2xl">Generated links</p>
-        {links.map((link) => {
-          return (
-            <div key={link.id} className="boder-gray-400 flex justify-between gap-3 rounded-lg border-2 px-4 py-3">
+          {links.map((link) => {
+            return (
+              <div key={link.id} className="boder-gray-400 flex justify-between gap-3 rounded-lg border-2 px-4 py-3">
               <p className="text-velix-primary dark:text-velix-dark-white text-base text-blue-500 underline">
                 {truncateString(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
               </p>
@@ -87,6 +79,7 @@ export default function Links() {
           );
         })}
       </div>
-    </div>
+    </Section>
+    </Layout>
   );
 }

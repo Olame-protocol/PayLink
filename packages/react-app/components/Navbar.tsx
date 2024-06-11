@@ -14,6 +14,7 @@ import LinkIcon from "./ui/payLink/icons/LinkIcon";
 import ChartIcon from "./ui/payLink/icons/ChartIcon";
 import Section from "./Section";
 import clsx from "clsx";
+import ConnectWalletButton from "@/components/ui/payLink/ConnectWalletButton";
 
 export default function Navbar() {
   const [hideConnectBtn, setHideConnectBtn] = useState(false);
@@ -78,7 +79,7 @@ export default function Navbar() {
                 {isHome ? (
                   <Link href="/payments" className="rounded-lg bg-white px-6 py-4 font-semibold text-forest">Launch app</Link>
                 ) : (
-                  <button className="rounded-lg bg-forest p-4 font-semibold text-green-petrolium">Connect Wallet</button>
+                  <ConnectWalletButton />
                 )}
               </div>
             </div>
