@@ -118,7 +118,7 @@ export default function Payments() {
   };
 
   return (
-    <Layout>
+    <Layout className="bg-green-petrolium">
       <Section className="mt-20 rounded-2xl bg-forest">
         <div className="flex justify-between gap-8 px-5 py-5 lg:px-36 lg:py-16">
           <div className="mx-auto w-full text-left">

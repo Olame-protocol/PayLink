@@ -1,18 +1,18 @@
 import { FC, ReactNode } from "react";
 import Navbar from "./Navbar";
+import { cn } from "@/utils/utils";
 
 interface Props {
   children: ReactNode;
-  pageName?: string;
+  className?: string;
 }
 
-const Layout: FC<Props> = ({ children }) => {
+const Layout: FC<Props> = ({ children, className = "" }) => {
   return (
     <>
-      <div className="flex min-h-screen flex-col">
+      <div className={cn("flex min-h-screen flex-col", className)}>
         <Navbar />
         {children}
-        {/* <Footer /> */}
       </div>
     </>
   );

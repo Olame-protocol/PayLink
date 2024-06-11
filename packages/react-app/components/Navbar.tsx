@@ -51,7 +51,7 @@ export default function Navbar() {
                   className={clsx(
                     isHome
                       ? "hidden text-green-petrolium lg:flex"
-                      : "bottom-0 left-0 right-0 z-10 w-full bg-green-petrolium text-forest max-lg:fixed max-lg:justify-between max-lg:px-5 max-lg:py-4",
+                      : "bottom-0 left-0 right-0 z-10 w-full bg-green-petrolium text-forest max-lg:justify-between max-lg:px-5 max-lg:py-4 max-md:fixed max-md:bg-[#C9F27E]",
                     "flex items-center gap-10",
                   )}
                 >
