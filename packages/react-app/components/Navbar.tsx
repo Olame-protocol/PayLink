@@ -58,17 +58,17 @@ export default function Navbar() {
                     <WalletIcon />
                     Payments
                   </Link>
-                  <Link href="/links" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
+                  <Link href="/#" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
                     <LinkIcon />
                     Links
                   </Link>
 
-                  <Link href="/links" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
+                  <Link href="/#" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
                     <PaperLineIcon />
                     Invoices
                   </Link>
 
-                  <Link href="/links" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
+                  <Link href="/#" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
                     <ChartIcon />
                     Dashboard
                   </Link>
@@ -98,7 +98,7 @@ export default function Navbar() {
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
-                href="/links"
+                href="#"
                 className={`inline-flex items-center border-l-4 py-2 pl-3 pr-4 text-base font-medium text-black ${
                   asPath.includes("/links") ? "border-black" : "border-transparent"
                 }`}
