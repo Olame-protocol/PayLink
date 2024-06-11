@@ -59,7 +59,7 @@ export default function Navbar() {
                     <WalletIcon />
                     Payments
                   </Link>
-                  <Link href="/#" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
+                  <Link href="/links" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
                     <LinkIcon />
                     Links
                   </Link>
@@ -77,7 +77,9 @@ export default function Navbar() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {isHome ? (
-                  <Link href="/payments" className="rounded-lg bg-white px-6 py-4 font-semibold text-forest">Launch app</Link>
+                  <Link href="/payments" className="rounded-lg bg-white px-6 py-4 font-semibold text-forest">
+                    Launch app
+                  </Link>
                 ) : (
                   <ConnectWalletButton />
                 )}

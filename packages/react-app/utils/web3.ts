@@ -1,6 +1,6 @@
 import { BrowserProvider, Interface, InterfaceAbi, JsonRpcProvider, ethers } from "ethers";
 
-const RPC = "https://celo-mainnet.infura.io";
+const RPC = process.env.NODE_ENV === "production" ? "https://celo-mainnet.infura.io" : "https://alfajores-forno.celo-testnet.org";
 
 export default class Web3 {
   public provider: JsonRpcProvider | BrowserProvider;

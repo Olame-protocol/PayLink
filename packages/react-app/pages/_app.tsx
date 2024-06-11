@@ -24,7 +24,7 @@ const connectors = connectorsForWallets(
 
 const config = createConfig({
   connectors,
-  chains: [celo, celoAlfajores],
+  chains: process.env.NODE_ENV === "production" ? [celo] : [celoAlfajores],
   ssr: true,
   transports: {
     [celo.id]: http(),
