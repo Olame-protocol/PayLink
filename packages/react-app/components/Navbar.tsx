@@ -76,7 +76,7 @@ export default function Navbar() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {isHome ? (
-                  <button className="rounded-lg bg-white px-6 py-4 font-semibold text-forest">Connect Wallet</button>
+                  <Link href="/payments" className="rounded-lg bg-white px-6 py-4 font-semibold text-forest">Launch app</Link>
                 ) : (
                   <button className="rounded-lg bg-forest p-4 font-semibold text-green-petrolium">Connect Wallet</button>
                 )}
