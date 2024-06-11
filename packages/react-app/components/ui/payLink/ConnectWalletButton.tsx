@@ -57,7 +57,7 @@ function ConnectWalletButton() {
                     onClick={openChainModal}
                     style={{ display: 'flex', alignItems: 'center' }}
                     type="button"
-                    className="rounded-lg bg-forest/20 p-4 text-sm font-semibold text-forest"
+                    className="rounded-lg bg-forest/20 p-4 text-sm text-forest"
                   >
                     {chain.hasIcon && (
                       <div
@@ -83,7 +83,12 @@ function ConnectWalletButton() {
                   </button>
 
                   <button onClick={openAccountModal} type="button" className="rounded-lg bg-forest/20 font-semibold p-4 text-sm text-forest">
-                    {account.displayName}
+                    {/*{account.displayName}*/}
+                   <span>
+                     {account.displayBalance
+                      ? ` (${account.displayBalance})`
+                      : ''}
+                   </span>
                   </button>
                 </div>
               );
