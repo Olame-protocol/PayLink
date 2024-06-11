@@ -3,6 +3,7 @@ import Section from "../Section";
 import Image from "next/image";
 import LoveSvg from "../ui/payLink/icons/LoveSvg";
 import PinSvg from "../ui/payLink/icons/PinSvg";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -16,7 +17,7 @@ const Header = () => {
             <p className="text-xs text-green-petrolium md:text-2xl">Simplifying digital payments, one click at a time</p>
           </div>
           <div>
-            <button className="rounded-lg bg-white px-10 py-4 text-sm font-semibold text-forest md:text-xl">Generate a link</button>
+            <Link href="/payments" className="rounded-lg bg-white px-10 py-4 text-sm font-semibold text-forest md:text-xl">Generate a link</Link>
           </div>
           <div className="relative">
             <div className="absolute -right-4 -top-5 md:-right-10 md:-top-20">
