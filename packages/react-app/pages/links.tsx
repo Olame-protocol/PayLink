@@ -46,7 +46,7 @@ export default function Links() {
 
   return (
     <Layout className="bg-green-petrolium">
-      <Section className="mt-20 min-h-96 rounded-2xl bg-forest px-5 py-5 lg:px-36 lg:py-16">
+      <Section className="mt-32 min-h-96 rounded-2xl bg-forest px-5 py-5 lg:px-36 lg:py-16">
         <div className="flex w-full flex-col gap-2">
           <div className="flex flex-col gap-5">
             <p className="text-xl font-black text-green-petrolium lg:text-[2.5rem]">Generated links</p>

@@ -11,7 +11,7 @@ export default function BusinessBranding() {
   }, []);
 
   return (
-    <div className="rounded-lg bg-white/[8%] px-16 py-5 max-md:px-5">
+    <div className="rounded-lg bg-white/[8%] px-5 py-5">
       <div className="flex items-center justify-between">
         <p className="text-base text-white">Your business branding</p>
         <button onClick={() => setBrandingUnwrapped((prev) => !prev)}>

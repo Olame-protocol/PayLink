@@ -52,8 +52,8 @@ export default function Invoices() {
   const [recentyGeneratedLinks, setRecentyGeneratedLinks] = useState<SupabaseLinksRecord[]>([]);
 
   return (
-    <Layout className="bg-green-petrolium">
-      <Section className="mt-20 rounded-2xl bg-forest">
+    <Layout className="bg-green-petrolium pb-20">
+      <Section className="mt-32 rounded-2xl bg-forest">
         <div className="flex justify-between gap-8 px-5 py-5 lg:px-36 lg:py-16">
           <div className="mx-auto w-full text-left">
             <div className="flex flex-col">
