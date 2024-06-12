@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <div className="mt-28 flex min-h-[85vh] w-full flex-col bg-forest pb-[6rem]">
+    <div className="mt-28 flex min-h-[85vh] w-full flex-col bg-forest pb-[6rem] max-md:mt-20">
       <Section>
         <div className="mt-[62px] flex flex-col space-y-8 text-center md:mt-[126px] md:space-y-14">
           <div>
