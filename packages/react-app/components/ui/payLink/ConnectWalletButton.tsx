@@ -1,36 +1,23 @@
 import React from "react";
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 function ConnectWalletButton() {
   return (
     <ConnectButton.Custom>
-      {({
-          account,
-          chain,
-          openAccountModal,
-          openChainModal,
-          openConnectModal,
-          authenticationStatus,
-          mounted,
-        }) => {
+      {({ account, chain, openAccountModal, openChainModal, openConnectModal, authenticationStatus, mounted }) => {
         // Note: If your app doesn't use authentication, you
         // can remove all 'authenticationStatus' checks
-        const ready = mounted && authenticationStatus !== 'loading';
-        const connected =
-          ready &&
-          account &&
-          chain &&
-          (!authenticationStatus ||
-            authenticationStatus === 'authenticated');
+        const ready = mounted && authenticationStatus !== "loading";
+        const connected = ready && account && chain && (!authenticationStatus || authenticationStatus === "authenticated");
 
         return (
           <div
             {...(!ready && {
-              'aria-hidden': true,
-              'style': {
+              "aria-hidden": true,
+              style: {
                 opacity: 0,
-                pointerEvents: 'none',
-                userSelect: 'none',
+                pointerEvents: "none",
+                userSelect: "none",
               },
             })}
           >
@@ -52,13 +39,8 @@ function ConnectWalletButton() {
               }
 
               return (
-                <div style={{ display: 'flex', gap: 12 }}>
-                  <button
-                    onClick={openChainModal}
-                    style={{ display: 'flex', alignItems: 'center' }}
-                    type="button"
-                    className="rounded-lg bg-forest/20 p-4 text-sm text-forest"
-                  >
+                <div style={{ display: "flex", gap: 12 }}>
+                  <button onClick={openChainModal} style={{ display: "flex", alignItems: "center" }} type="button" className="rounded-lg bg-forest/20 p-4 text-sm text-forest">
                     {chain.hasIcon && (
                       <div
                         style={{
@@ -66,29 +48,19 @@ function ConnectWalletButton() {
                           width: 12,
                           height: 12,
                           borderRadius: 999,
-                          overflow: 'hidden',
+                          overflow: "hidden",
                           marginRight: 4,
                         }}
                       >
-                        {chain.iconUrl && (
-                          <img
-                            alt={chain.name ?? 'Chain icon'}
-                            src={chain.iconUrl}
-                            style={{ width: 12, height: 12 }}
-                          />
-                        )}
+                        {chain.iconUrl && <img alt={chain.name ?? "Chain icon"} src={chain.iconUrl} style={{ width: 12, height: 12 }} />}
                       </div>
                     )}
                     {chain.name}
                   </button>
 
-                  <button onClick={openAccountModal} type="button" className="rounded-lg bg-forest/20 font-semibold p-4 text-sm text-forest">
+                  <button onClick={openAccountModal} type="button" className="rounded-lg bg-forest/20 p-4 text-sm font-semibold text-forest">
                     {/*{account.displayName}*/}
-                   <span>
-                     {account.displayBalance
-                      ? ` (${account.displayBalance})`
-                      : ''}
-                   </span>
+                    <span>{account.displayBalance ? ` (${account.displayBalance})` : ""}</span>
                   </button>
                 </div>
               );

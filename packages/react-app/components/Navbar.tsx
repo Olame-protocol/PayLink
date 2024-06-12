@@ -35,13 +35,7 @@ export default function Navbar() {
         <>
           <Section>
             <div className="relative flex justify-between">
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button */}
-                {/* <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-black focus:outline-none focus:ring-1 focus:ring-inset focus:rounded-none focus:ring-black">
-                  <span className="sr-only">Open main menu</span>
-                  {open ? <XMarkIcon className="block h-6 w-6" aria-hidden="true" /> : <Bars3Icon className="block h-6 w-6" aria-hidden="true" />}
-                </Disclosure.Button> */}
-              </div>
+              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden"></div>
               <div className="flex justify-center gap-20 py-5 sm:items-stretch sm:justify-start lg:py-10">
                 <Link href="/">
                   <PayLinkLogo className={clsx(isHome ? "text-green-petrolium" : "text-forest", "h-[45px] w-[171px] max-lg:w-[100px]")} />
@@ -64,7 +58,7 @@ export default function Navbar() {
                     Links
                   </Link>
 
-                  <Link href="/#" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
+                  <Link href="/invoices" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
                     <PaperLineIcon />
                     Invoices
                   </Link>

@@ -186,47 +186,6 @@ export default function Payments() {
                   </form>
                 </>
               )}
-              {/* <p className="text-2xl mb-2">Recently generated links</p> */}
-              {/* {recentyGeneratedLinks.map((link) => {
-                return (
-                  <div
-                    key={link.id}
-                    className="flex gap-3 py-3 px-4 rounded-lg border-2 boder-gray-400 justify-between"
-                  >
-                    <p className="text-velix-primary dark:text-velix-dark-white text-blue-500 text-base underline">
-                      {truncateString(
-                        `${origin}/payments/${link.payment_link_id}?type=${activeTab}`
-                      )}
-                    </p>
-                    <div className="flex gap-2">
-                      {copied &&
-                      generatedLink?.toLowerCase() ===
-                        copiedLink?.toLowerCase() ? (
-                        <IoCheckmarkDoneSharp className="text-velix-primary w-5 h-5 dark:text-velix-icon-dark" />
-                      ) : (
-                        <Copy
-                          role="button"
-                          onClick={() =>
-                            onCopyToClickboard(
-                              `${origin}/payments/${link.payment_link_id}?type=${activeTab}`
-                            )
-                          }
-                          className="text-velix-primary w-5 h-5 cursor-pointer dark:text-velix-icon-dark"
-                        />
-                      )}
-                      <FaArrowUpRightFromSquare
-                        onClick={() =>
-                          onViewLink(
-                            `${origin}/payments/${link.payment_link_id}?type=${activeTab}`
-                          )
-                        }
-                        role="button"
-                        className="text-velix-primary w-5 h-5 cursor-pointer dark:text-velix-icon-dark"
-                      />
-                    </div>
-                  </div>
-                );
-              })} */}
             </div>
           </div>
         </div>
