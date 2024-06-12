@@ -19,6 +19,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AddClientForm from "@/components/AddClientForm";
 import AddProductFrom from "@/components/AddProductFrom";
 import CreateInvoiceForm from "@/components/createInvoice";
+import ClientList from "@/components/ClientList";
 
 export type Tab = "fixed" | "global";
 
@@ -85,6 +86,23 @@ export default function Invoices() {
                     <CreateInvoiceForm />
                   </TabsContent>
                 </Tabs>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      <Section className="mb-10 mt-16 rounded-2xl bg-forest">
+        <div className="flex justify-between gap-8 px-5 py-5 lg:px-36 lg:py-16">
+          <div className="mx-auto w-full text-left">
+            <div className="flex flex-col">
+              <div className="mb-14 flex flex-col gap-5 max-md:mb-5 max-md:gap-2">
+                <h2 className="text-xl font-black text-green-petrolium lg:text-[2.5rem]">Your clients list</h2>
+                <p className="font-normal text-white">View all your clients list</p>
+              </div>
+
+              <div className="w-full overflow-x-auto">
+                <ClientList />
               </div>
             </div>
           </div>
