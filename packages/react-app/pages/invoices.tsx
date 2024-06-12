@@ -18,6 +18,7 @@ import Layout from "@/components/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AddClientForm from "@/components/AddClientForm";
 import AddProductFrom from "@/components/AddProductFrom";
+import CreateInvoiceForm from "@/components/createInvoice";
 
 export type Tab = "fixed" | "global";
 
@@ -79,6 +80,9 @@ export default function Invoices() {
                   </TabsContent>
                   <TabsContent value={tabList[1].toLowerCase()}>
                     <AddProductFrom />
+                  </TabsContent>
+                  <TabsContent value={tabList[2].toLowerCase()}>
+                    <CreateInvoiceForm />
                   </TabsContent>
                 </Tabs>
               </div>

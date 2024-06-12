@@ -6,12 +6,12 @@ function AddProductFrom() {
     <div className="w-full rounded-lg bg-white/[8%] p-5">
       <div className="flex w-full gap-5 max-md:flex-col">
         <div className="flex w-full flex-col gap-5">
-          <input name="productName" type="text" placeholder="Product name" className="rounded-lg bg-white/[10%] p-5 text-white outline-none" />
-          <input name="productQuantity" type="email" placeholder="Quantity" className="rounded-lg bg-white/[10%] p-5 text-white outline-none" />
+          <input name="productName" type="text" placeholder="Product name" className="rounded-lg bg-white/[6%] p-5 text-white outline-none" />
+          <input name="productQuantity" type="email" placeholder="Quantity" className="rounded-lg bg-white/[6%] p-5 text-white outline-none" />
         </div>
         <div className="flex w-full flex-col gap-5">
-          <input name="productPrice" type="number" placeholder="Price" className="rounded-lg bg-white/[10%] p-5 text-white outline-none" />
-          <input name="clientDescription" type="text" placeholder="Description" className="rounded-lg bg-white/[10%] p-5 text-white outline-none" />
+          <input name="productPrice" type="number" placeholder="Price" className="rounded-lg bg-white/[6%] p-5 text-white outline-none" />
+          <input name="clientDescription" type="text" placeholder="Description" className="rounded-lg bg-white/[6%] p-5 text-white outline-none" />
         </div>
       </div>
       <div className="mt-5 flex gap-5">
