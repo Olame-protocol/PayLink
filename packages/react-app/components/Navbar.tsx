@@ -30,7 +30,7 @@ export default function Navbar() {
   }, [connect]);
 
   return (
-    <Disclosure className={clsx(isHome ? "bg-forest" : "bg-green-petrolium", "fixed top-0 z-30 w-full !px-0")} as="nav">
+    <Disclosure className={clsx(isHome ? "bg-forest" : "bg-green-petrolium", "fixed top-0 z-50 w-full !px-0")} as="nav">
       {({ open }) => (
         <>
           <Section>

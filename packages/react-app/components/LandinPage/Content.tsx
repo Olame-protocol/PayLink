@@ -10,7 +10,7 @@ const ContentSection = () => {
     <Section>
       <div className="mt-16 flex flex-col items-center justify-between md:min-h-[600px] lg:flex-row">
         <div className="hidden items-center justify-center md:flex md:h-[400px] md:w-[400px]">
-          <div className="z-50 hidden md:flex">
+          <div className="z-20 hidden md:flex">
             <Image
               width={400}
               height={400}
@@ -86,7 +86,7 @@ const WhyPayLink = () => {
           alt="Image of a person holding a phone"
         />
       </div>
-      <div className="relative z-50 -mt-[30px] flex flex-col justify-evenly gap-x-10 rounded-[20px] bg-green-petrolium px-6 py-10 text-forest lg:min-h-[666px] lg:flex-row lg:px-10">
+      <div className="relative z-20 -mt-[30px] flex flex-col justify-evenly gap-x-10 rounded-[20px] bg-green-petrolium px-6 py-10 text-forest lg:min-h-[666px] lg:flex-row lg:px-10">
         <div className="flex flex-col justify-evenly gap-y-5 lg:gap-y-9">
           <h1 className="text-[24px] font-bold lg:text-[64px]">Why PayLink</h1>
           <div>
