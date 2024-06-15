@@ -5,7 +5,7 @@ import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { truncateString } from "@/utils/utils";
-import { useCreatePaymentLink } from "@/hooks/useGlobalPayment";
+import { useCreatePaymentLink } from "@/hooks/usePaylink";
 import { ulid } from "ulid";
 import { MouseEvent } from "react";
 import { useApproveERC20Transaction } from "@/hooks/useErc20";

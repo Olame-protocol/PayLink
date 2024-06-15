@@ -5,7 +5,7 @@ import { SupabaseLinksRecord } from ".";
 import Section from "@/components/Section";
 import { useApproveERC20Transaction } from "@/hooks/useErc20";
 import toast from "react-hot-toast";
-import { useSendPayment } from "@/hooks/useGlobalPayment";
+import { useSendPayment } from "@/hooks/usePaylink";
 import Layout from "@/components/Layout";
 
 const PaymentIdPage = ({ link, type }: { link: SupabaseLinksRecord; type: "fixed" | "global" }) => {

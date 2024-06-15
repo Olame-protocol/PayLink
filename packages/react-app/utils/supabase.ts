@@ -1,10 +1,13 @@
-import { GlobalPaymentData } from "@/hooks/useGlobalPayment";
-import { SupabaseClient, createClient } from "@supabase/supabase-js";
+import { GlobalPaymentData } from "@/hooks/usePaylink";
+import { createClient } from "@supabase/supabase-js";
+import { Client } from "./types";
 
 const FIXED_PAYMENT_LINKS_TABLE_NAME = "fixed_payment_links";
 const GLOBAL_PAYMENT_LINKS_TABLE_NAME = "global_payment_links";
 const FIXED_PAYMENTS_TABLE_NAME = "fixed_payments";
 const GLOBAL_PAYMENTS_TABLE_NAME = "global_payments";
+const PRODUCTS_TABLE_NAME = "products";
+const CLIENT_TABLE_NAME = "clients";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -96,4 +99,8 @@ export const updatedPaymentLinkStatus = async (type: "global" | "fixed", payment
     })
     .eq("payment_link_id", paymentLinkId);
   return result;
+};
+
+export const saveClient = async (client: Client) => {
+  return await supabase.from(CLIENT_TABLE_NAME).insert(client);
 };

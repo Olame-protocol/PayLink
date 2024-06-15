@@ -1,5 +1,5 @@
-import { GLOBAL_PAYMENT_ABI } from "@/abi/GlobalPayment";
-import { GLOBAL_PAYMENT_CONTRACT_ADDRESS } from "@/utils/const";
+import { PAYLINK_ABI } from "@/abi/paylink";
+import { PAYLINK_CONTRACT_ADDRESS } from "@/utils/const";
 import { saveFixedPaymentLinks, saveGlobalPaymentLinks, savePaymentRecord } from "@/utils/supabase";
 import Web3 from "@/utils/web3";
 import { ContractTransactionReceipt, parseUnits } from "ethers";
@@ -27,7 +27,7 @@ export const useCreatePaymentLink = () => {
       if (!address || !window) return;
       try {
         setIsPending(true);
-        const contract = await new Web3().contract(GLOBAL_PAYMENT_CONTRACT_ADDRESS, GLOBAL_PAYMENT_ABI, address);
+        const contract = await new Web3().contract(PAYLINK_CONTRACT_ADDRESS, PAYLINK_ABI, address);
 
         let tx: any;
         if (type === "global") {
@@ -96,7 +96,7 @@ export const useSendPayment = () => {
       if (!address || !window) return;
       try {
         setIsPending(true);
-        const contract = await new Web3().contract(GLOBAL_PAYMENT_CONTRACT_ADDRESS, GLOBAL_PAYMENT_ABI, address);
+        const contract = await new Web3().contract(PAYLINK_CONTRACT_ADDRESS, PAYLINK_ABI, address);
         let tx: any;
         if (type === "fixed") {
           tx = await contract.PayFixedPaymentLink(paymentLinkId);

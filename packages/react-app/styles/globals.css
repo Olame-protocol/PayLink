@@ -302,3 +302,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+.PhoneInputInput{
+  background: transparent !important;
+  outline: none !important;
+}
+
+.PhoneInputCountrySelect {
+  color: #0E3A36 !important;
+}
