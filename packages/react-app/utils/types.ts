@@ -5,3 +5,11 @@ export type Client = {
   service: string;
   owner: `0x${string}`;
 };
+
+export type Product = {
+  name: string;
+  quantity: number;
+  price: number;
+  description: string;
+  owner: `0x${string}`;
+};

@@ -8,11 +8,12 @@ import { useAccount } from "wagmi";
 import toast from "react-hot-toast";
 
 function AddClientForm() {
-  const [clientData, setClientData] = useState<Partial<Client>>({
+  const [clientData, setClientData] = useState<Client>({
     phone: "",
     name: "",
     email: "",
     service: "",
+    owner: "0x000",
   });
   const { address } = useAccount();
   const [saving, setSaving] = useState(false);
@@ -24,13 +25,9 @@ function AddClientForm() {
   const onSaveClient = async () => {
     if (!address) return;
     if (!clientData.name || !clientData.email || !clientData.service) return;
-    console.log({ clientData });
     setSaving(true);
     const { error } = await saveClient({
-      phone: clientData?.phone ?? "",
-      name: clientData.name,
-      service: clientData.service,
-      email: clientData.email,
+      ...clientData,
       owner: address,
     });
     if (error) {
@@ -43,6 +40,8 @@ function AddClientForm() {
       phone: "",
       name: "",
       email: "",
+      service: "",
+      owner: "0x000",
     });
     setSaving(false);
     toast.success("Client saved");
@@ -79,7 +78,7 @@ function AddClientForm() {
               value={clientData.phone}
               name="phone"
               defaultCountry="UG"
-              onChange={(value) => setClientData((prev) => ({ ...prev, phone: value }))}
+              onChange={(value) => setClientData((prev) => ({ ...prev, phone: value as string }))}
               className="rounded-lg bg-white/[6%] p-5 text-white outline-none"
             />
 
