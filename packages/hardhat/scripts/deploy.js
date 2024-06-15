@@ -26,3 +26,4 @@ main().catch((error) => {
 });
 
 // GlobalPayment deployed to 0x51A570E5E009D1b6BAd4891Cd8D0e28630140bA1
+// PayLink: 0x06B4637C35f7AA7220b6242BfBe89F8560dD30F2
