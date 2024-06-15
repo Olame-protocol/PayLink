@@ -105,6 +105,10 @@ export const saveClient = async (client: Client) => {
   return await supabase.from(CLIENT_TABLE_NAME).insert(client);
 };
 
+export const retreiveClients = async (address: `0x${string}`) => {
+  return await supabase.from(CLIENT_TABLE_NAME).select<any, Client & { id: string }>("*").eq("owner", address);
+};
+
 export const saveProduct = async (product: Product) => {
   return await supabase.from(PRODUCTS_TABLE_NAME).insert(product);
 };
