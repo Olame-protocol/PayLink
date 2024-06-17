@@ -67,7 +67,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
               <span className="font-semibold">Wallet address:</span> {address}
             </p>
           </InvoiceSectionWrapper>
-          <InvoiceSectionWrapper className="flex items-center justify-between rounded-b rounded-b-lg border-none bg-[#C2FD83] text-forest">
+          <InvoiceSectionWrapper className="flex items-center justify-between rounded-b-lg border-none bg-[#C2FD83] text-forest">
             <p>Amount to be paid</p>
             <p className="text-4xl font-bold">
               {invoice.amount} <small className="text-sm font-normal">cUSD</small>
