@@ -33,6 +33,8 @@ export type SaveInvoice = {
 };
 
 export type DetailedInvoice = {
+  id: string;
+  created_at: string;
   client: Client & { id: string };
   branding: Branding & { id: string };
   product: Product & { id: string };
