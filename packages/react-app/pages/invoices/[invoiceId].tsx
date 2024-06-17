@@ -36,7 +36,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
             </div>
             <div className="flex flex-col gap-1 leading-4 text-green-petrolium">
               <p>
-                <span className="font-semibold">Invoice date:</span> {invoice.created_at.split("T")[0]}
+                <span className="font-semibold">Invoice date:</span> {(invoice as any)?.["created_at"].split("T")[0]}
               </p>
               <p>
                 <span className="font-semibold">Payment due:</span> {invoice.due_date.split("T")[0]}
