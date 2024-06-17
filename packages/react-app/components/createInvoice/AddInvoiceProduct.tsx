@@ -36,7 +36,7 @@ function AddInvoiceProduct({ onSelectProduct }: AddInvoiceProductProps) {
         </Button>
         <div className="flex w-full items-center gap-3 rounded-lg bg-white/[6%] px-3">
           <Select onValueChange={(value) => onSelectProduct(products.filter(({ name }) => name.toLowerCase() === value.toLowerCase())[0])}>
-            <SelectTrigger className="w-full border-none bg-transparent px-0 py-5 text-white outline-none ring-transparent focus:border-none focus:outline-none focus:ring-transparent">
+            <SelectTrigger className="w-full border-none bg-transparent px-0 py-8 text-white outline-none ring-transparent focus:border-none focus:outline-none focus:ring-transparent">
               <SelectValue className="text-white/[6%]" placeholder="Search for products" />
             </SelectTrigger>
 
