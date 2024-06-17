@@ -123,7 +123,7 @@ function CreateInvoiceForm() {
   };
 
   const onProductQuantityChanges = (e: ChangeEvent<HTMLInputElement>) => {
-    setProduct((prev) => ({ ...prev, quantity: e.target.value }));
+    setProduct((prev: any) => ({ ...prev, quantity: e.target.value as string }));
   };
 
   const onSendInvoice = () => {};
