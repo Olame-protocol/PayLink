@@ -1,22 +1,74 @@
-import React from "react";
+import React, { ChangeEvent, useCallback, useState } from "react";
 import BusinessBranding from "./BusinessBranding";
 import AddInvoiceClient from "./AddInvoiceClient";
 import AddInvoiceProduct from "./AddInvoiceProduct";
 import { Button } from "../ui/button";
+import { Branding } from "@/utils/types";
+import { saveBrandingImage } from "@/utils/supabase";
+import toast from "react-hot-toast";
 
 function CreateInvoiceForm() {
+  const [brandingImageFile, setBrandingImageFile] = useState<File | null>(null);
+  const [invoiceDate, setInvoiceDate] = useState<Date>();
+  const [invoiceDueDate, setInvoiceDueDate] = useState<Date>();
+  const [brandingData, setBrandingData] = useState<Branding & { preview: string }>({
+    address: "",
+    contact: "",
+    description: "",
+    image: "",
+    name: "",
+    owner: "",
+    preview: "",
+  });
+  const onBrandingInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setBrandingData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    setBrandingImageFile(acceptedFiles[0]);
+    const reader = new FileReader();
+    reader.readAsDataURL(acceptedFiles[0]);
+    reader.onloadend = () => {
+      setBrandingData((prev) => ({ ...prev, preview: reader.result as string }));
+    };
+  }, []);
+
+  const onCancel = () => {
+    setBrandingImageFile(null);
+    setBrandingData({
+      address: "",
+      contact: "",
+      description: "",
+      image: "",
+      name: "",
+      owner: "",
+      preview: "",
+    });
+  };
+
+  const onSaveBranding = async () => {
+    if (!brandingImageFile) return;
+    const { data, error } = await saveBrandingImage(brandingImageFile);
+    if (error) {
+      return toast.error("Could not save the branding image");
+    }
+    console.log({ data: (data as any)?.["fullPath"] });
+    setBrandingData((prev) => ({ ...prev, image: (data as any)?.["fullPath"] ?? data?.path }));
+  };
+
   return (
-    <div className="flex flex-col gap-5">
-      <BusinessBranding />
-      <AddInvoiceClient />
+    <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-5">
+      <BusinessBranding brandingPreview={brandingData.preview} onBrandingChange={onBrandingInputChange} onDropFIle={onDrop} />
+      <AddInvoiceClient onSelectInvoiceDate={setInvoiceDate} onSelectInvoicePaymentDueDate={setInvoiceDueDate} />
       <AddInvoiceProduct />
       <div className="flex gap-5">
-        <Button className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">Save and continue</Button>
-        <Button className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white" variant="outline">
+        <Button onClick={onSaveBranding} className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">
+          Save and continue
+        </Button>
+        <Button onClick={onCancel} className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white" variant="outline">
           Cancel
         </Button>
       </div>
-    </div>
+    </form>
   );
 }
 

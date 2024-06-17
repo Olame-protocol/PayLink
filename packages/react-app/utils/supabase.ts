@@ -1,6 +1,7 @@
 import { GlobalPaymentData } from "@/hooks/usePaylink";
 import { createClient } from "@supabase/supabase-js";
-import { Client, Product } from "./types";
+import { Branding, Client, Product } from "./types";
+import { uuid } from "uuidv4";
 
 const FIXED_PAYMENT_LINKS_TABLE_NAME = "fixed_payment_links";
 const GLOBAL_PAYMENT_LINKS_TABLE_NAME = "global_payment_links";
@@ -8,6 +9,7 @@ const FIXED_PAYMENTS_TABLE_NAME = "fixed_payments";
 const GLOBAL_PAYMENTS_TABLE_NAME = "global_payments";
 const PRODUCTS_TABLE_NAME = "products";
 const CLIENT_TABLE_NAME = "clients";
+const BRANDINGS_TABLE_NAME = "brandings";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -105,10 +107,26 @@ export const saveClient = async (client: Client) => {
   return await supabase.from(CLIENT_TABLE_NAME).insert(client);
 };
 
-export const retreiveClients = async (address: `0x${string}`) => {
-  return await supabase.from(CLIENT_TABLE_NAME).select<any, Client & { id: string }>("*").eq("owner", address);
+export const retreiveClients = (address: `0x${string}`) => {
+  return supabase.from(CLIENT_TABLE_NAME).select<any, Client & { id: string }>("*").eq("owner", address);
 };
 
-export const saveProduct = async (product: Product) => {
-  return await supabase.from(PRODUCTS_TABLE_NAME).insert(product);
+export const saveProduct = (product: Product) => {
+  return supabase.from(PRODUCTS_TABLE_NAME).insert(product);
+};
+
+export const saveBranding = (branding: Branding) => {
+  return supabase.from(BRANDINGS_TABLE_NAME).insert(branding);
+};
+
+export const updateBranding = (branding: Branding) => {
+  return supabase.from(BRANDINGS_TABLE_NAME).update(branding).eq("owner", branding.owner);
+};
+
+export const retreiveBrandings = (address: `0x${string}`) => {
+  return supabase.from(BRANDINGS_TABLE_NAME).select("*").eq("owner", address);
+};
+
+export const saveBrandingImage = async (file: File) => {
+  return await supabase.storage.from("images/brandings").upload(`branding-${uuid()}`, file);
 };

@@ -13,3 +13,12 @@ export type Product = {
   description: string;
   owner: `0x${string}`;
 };
+
+export type Branding = {
+  name: string;
+  description: string;
+  address: string;
+  contact: string;
+  owner: string;
+  image: string;
+};
