@@ -1,6 +1,6 @@
 import { GlobalPaymentData } from "@/hooks/usePaylink";
 import { createClient } from "@supabase/supabase-js";
-import { Branding, Client, Product } from "./types";
+import { Branding, Client, Product, SaveInvoice } from "./types";
 import { uuid } from "uuidv4";
 
 const FIXED_PAYMENT_LINKS_TABLE_NAME = "fixed_payment_links";
@@ -10,6 +10,7 @@ const GLOBAL_PAYMENTS_TABLE_NAME = "global_payments";
 const PRODUCTS_TABLE_NAME = "products";
 const CLIENT_TABLE_NAME = "clients";
 const BRANDINGS_TABLE_NAME = "brandings";
+const INVOICES_TABLE_NAME = "invoices";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -129,4 +130,8 @@ export const retreiveBrandings = (address: `0x${string}`) => {
 
 export const saveBrandingImage = async (file: File) => {
   return await supabase.storage.from("images/brandings").upload(`branding-${uuid()}`, file);
+};
+
+export const saveInvoice = (invoice: SaveInvoice) => {
+  return supabase.from(INVOICES_TABLE_NAME).insert(invoice);
 };

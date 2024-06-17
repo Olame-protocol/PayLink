@@ -22,3 +22,10 @@ export type Branding = {
   owner: string;
   image: string;
 };
+
+export type SaveInvoice = {
+  client: string;
+  branding: string;
+  product: string;
+  due_date: string;
+};
