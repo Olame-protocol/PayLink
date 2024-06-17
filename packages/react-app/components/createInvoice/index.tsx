@@ -1,18 +1,23 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useLayoutEffect, useState } from "react";
 import BusinessBranding from "./BusinessBranding";
 import AddInvoiceClient from "./AddInvoiceClient";
 import AddInvoiceProduct from "./AddInvoiceProduct";
 import { Button } from "../ui/button";
 import { Branding, Client, Product } from "@/utils/types";
-import { saveBrandingImage } from "@/utils/supabase";
+import { saveBranding, saveBrandingImage, saveInvoice } from "@/utils/supabase";
 import toast from "react-hot-toast";
 import { Input } from "postcss";
+import { useRouter } from "next/router";
+import { SUPABASE_STORAGE_BASE_URL } from "@/utils/const";
+import { useAccount } from "wagmi";
 
 function CreateInvoiceForm() {
   const [brandingImageFile, setBrandingImageFile] = useState<File | null>(null);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [client, setClient] = useState<(Client & { id: string }) | null>(null);
   const [product, setProduct] = useState<(Product & { id: string }) | null>(null);
+  const [branding, setBranding] = useState<(Branding & { id: string }) | null>(null);
   const [invoiceDueDate, setInvoiceDueDate] = useState<Date>();
   const [brandingData, setBrandingData] = useState<Branding & { preview: string }>({
     address: "",
@@ -23,6 +28,8 @@ function CreateInvoiceForm() {
     owner: "",
     preview: "",
   });
+  const router = useRouter();
+  const { address } = useAccount();
 
   useEffect(() => {
     const calculateTheTotalAmount = () => {
@@ -56,19 +63,70 @@ function CreateInvoiceForm() {
     setProduct(product);
   };
 
+  const onSelectBranding = (branding: Branding & { id: string }) => {
+    console.log({ branding });
+    setBranding(branding);
+  };
+
   const onSaveBranding = async () => {
-    if (!brandingImageFile) return;
-    const { data, error } = await saveBrandingImage(brandingImageFile);
-    if (error) {
-      return toast.error("Could not save the branding image");
+    let savedImageUrl = "";
+    let savedBrandingId = "";
+    if (!brandingImageFile && !branding) {
+      toast.error("Please select an image for your branding", { duration: 3500 });
+      return;
     }
-    console.log({ data: (data as any)?.["fullPath"] });
-    setBrandingData((prev) => ({ ...prev, image: (data as any)?.["fullPath"] ?? data?.path }));
+    if (!branding && brandingImageFile && brandingData.name && brandingData.description && brandingData.contact && brandingData.address) {
+      const { data, error } = await saveBrandingImage(brandingImageFile);
+      if (error) {
+        toast.error("Could not save the branding image");
+        return;
+      }
+      setBrandingData((prev) => ({ ...prev, image: (data as any)?.["fullPath"] ?? data?.path }));
+      savedImageUrl = SUPABASE_STORAGE_BASE_URL + (data as any)?.["fullPath"] ?? data?.path;
+      const { data: savedBranding, error: saveBrandingError } = await saveBranding({
+        image: savedImageUrl,
+        name: brandingData.name,
+        description: brandingData.description,
+        owner: address as string,
+        contact: brandingData.contact,
+        address: brandingData.address,
+      });
+      if (saveBrandingError) {
+        toast.error("Could not save the branding");
+        return;
+      }
+      console.log({ savedBranding });
+      savedBrandingId = savedBranding[0].id;
+      setBranding(savedBranding[0]);
+    }
+
+    if (branding && product && client && invoiceDueDate) {
+      const { error: invoiceError, data: savedInvoice } = await saveInvoice({
+        branding: branding.id || savedBrandingId,
+        product: product.id,
+        client: client.id,
+        due_date: invoiceDueDate as unknown as any,
+        amount: totalAmount.toString(),
+        quantity: product.quantity.toString(),
+      });
+      if (invoiceError) {
+        toast.error("Could not save the branding");
+        return;
+      }
+      console.log({ savedInvoice });
+      router.push("/invoices/" + savedInvoice[0].id);
+    }
+  };
+
+  const onContinueToInvoicePreview = async () => {
+    await onSaveBranding();
   };
 
   const onProductQuantityChanges = (e: ChangeEvent<HTMLInputElement>) => {
     setProduct((prev) => ({ ...prev, quantity: e.target.value }));
   };
+
+  const onSendInvoice = () => {};
 
   const onCancel = () => {
     setBrandingImageFile(null);
@@ -85,7 +143,7 @@ function CreateInvoiceForm() {
 
   return (
     <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-5">
-      <BusinessBranding brandingPreview={brandingData.preview} onBrandingChange={onBrandingInputChange} onDropFIle={onDrop} />
+      <BusinessBranding onSelectBranding={onSelectBranding} brandingPreview={brandingData.preview} onBrandingChange={onBrandingInputChange} onDropFIle={onDrop} />
       <AddInvoiceClient onSelectClient={onSelectClient} onSelectInvoicePaymentDueDate={setInvoiceDueDate} />
       <AddInvoiceProduct onSelectProduct={onSelectProduct} />
       {product && (
@@ -113,8 +171,8 @@ function CreateInvoiceForm() {
         </div>
       )}
       <div className="flex gap-5">
-        <Button onClick={onSaveBranding} className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">
-          continue
+        <Button onClick={isPreviewMode ? onSendInvoice : onContinueToInvoicePreview} className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">
+          {isPreviewMode ? "Send Invoice" : "Save and continue"}
         </Button>
         <Button onClick={onCancel} className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white" variant="outline">
           Cancel

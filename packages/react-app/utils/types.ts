@@ -28,4 +28,15 @@ export type SaveInvoice = {
   branding: string;
   product: string;
   due_date: string;
+  amount: string;
+  quantity: string;
+};
+
+export type DetailedInvoice = {
+  client: Client & { id: string };
+  branding: Branding & { id: string };
+  product: Product & { id: string };
+  due_date: string;
+  amount: string;
+  quantity: string;
 };

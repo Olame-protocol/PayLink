@@ -1,21 +1,59 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { ChangeEvent, useCallback, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import Dropzone, { DropEvent, FileRejection } from "react-dropzone";
 import { FaCirclePlus } from "react-icons/fa6";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Branding, Client } from "@/utils/types";
+import { useAccount } from "wagmi";
+import { retreiveBrandings, retreiveClients } from "@/utils/supabase";
 
 type BusinessBrandingProps = {
   onBrandingChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onDropFIle: (acceptedFiles: File[], fileRejections: FileRejection[], event: DropEvent) => void;
   brandingPreview: string;
+  onSelectBranding: (branding: Branding & { id: string }) => void;
 };
-export default function BusinessBranding({ onBrandingChange, onDropFIle, brandingPreview }: BusinessBrandingProps) {
+
+export default function BusinessBranding({ onBrandingChange, onDropFIle, brandingPreview, onSelectBranding }: BusinessBrandingProps) {
   const [brandingUnwrapped, setBrandingUnwrapped] = useState(false);
+  const [brandings, setBrandings] = useState<Array<Branding & { id: string }>>([]);
+  const { address } = useAccount();
+
+  useEffect(() => {
+    if (!address) return;
+    const fetchBrandings = async () => {
+      const { data, error } = await retreiveBrandings(address);
+      if (data) setBrandings(data);
+      if (error) console.log({ error });
+    };
+    fetchBrandings();
+  }, [address]);
 
   return (
     <div className="rounded-lg bg-white/[8%] px-5 py-5">
-      <div className="flex items-center justify-between">
-        <p className="text-base text-white">Your business branding</p>
+      <div className="flex w-full items-center gap-3 rounded-lg bg-white/[6%] px-3">
+        <Select onValueChange={(value) => onSelectBranding(brandings.filter(({ name }) => name.toLowerCase() === value.toLowerCase())[0])}>
+          <SelectTrigger className="w-full border-none bg-transparent px-0 py-8 text-white outline-none ring-transparent focus:border-none focus:outline-none focus:ring-transparent">
+            <SelectValue className="text-white/[6%]" placeholder="Search for brandings" />
+          </SelectTrigger>
+
+          <SelectContent className="border-none bg-forest text-green-petrolium ring-transparent focus:outline-none focus:ring-transparent">
+            {brandings.length > 0 ? (
+              brandings.map((branding) => (
+                <SelectItem value={branding.name} key={branding.id}>
+                  {branding.name}
+                </SelectItem>
+              ))
+            ) : (
+              <div className="text-center text-sm">There is not branding found, please create branding for your business</div>
+            )}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="mt-5 flex items-center justify-between">
+        <p className="text-base text-white">Create business branding</p>
         <button onClick={() => setBrandingUnwrapped((prev) => !prev)}>
           <ChevronDownIcon className={`h-6 w-5 cursor-pointer text-green-petrolium transition-all ${brandingUnwrapped ? "rotate-180" : "rotate-0"}`} />
         </button>
@@ -59,7 +97,7 @@ export default function BusinessBranding({ onBrandingChange, onDropFIle, brandin
                   onChange={onBrandingChange}
                   type="text"
                   required
-                  placeholder="Invoice description"
+                  placeholder="Business description"
                   className="rounded-lg bg-white/[6%] p-5 text-white outline-none"
                 />
                 <input

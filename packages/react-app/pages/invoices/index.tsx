@@ -1,5 +1,5 @@
 import LinkCard from "@/components/ui/payLink/cards/LinkCard";
-import Section from "../components/Section";
+import Section from "../../components/Section";
 import Copy from "@/components/ui/payLink/icons/Copy";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
@@ -36,7 +36,7 @@ export type SupabaseLinksRecord = {
   transaction_hash: string;
 };
 
-export default function Invoices() {
+export default function Index() {
   const [copied, setCopied] = useState(false);
   const [copiedLink, setCopiedLink] = useState("");
   const [activeTab, setActiveTab] = useState<Tab>("fixed");

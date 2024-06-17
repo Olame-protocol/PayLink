@@ -121,7 +121,7 @@ export const retreiveProducts = (address: `0x${string}`) => {
 };
 
 export const saveBranding = (branding: Branding) => {
-  return supabase.from(BRANDINGS_TABLE_NAME).insert(branding);
+  return supabase.from(BRANDINGS_TABLE_NAME).insert(branding).select<any, Branding & { id: string }>();
 };
 
 export const updateBranding = (branding: Branding) => {
@@ -129,7 +129,7 @@ export const updateBranding = (branding: Branding) => {
 };
 
 export const retreiveBrandings = (address: `0x${string}`) => {
-  return supabase.from(BRANDINGS_TABLE_NAME).select("*").eq("owner", address);
+  return supabase.from(BRANDINGS_TABLE_NAME).select<any, Branding & { id: string }>("*").eq("owner", address);
 };
 
 export const saveBrandingImage = async (file: File) => {
@@ -137,5 +137,24 @@ export const saveBrandingImage = async (file: File) => {
 };
 
 export const saveInvoice = (invoice: SaveInvoice) => {
-  return supabase.from(INVOICES_TABLE_NAME).insert(invoice);
+  return supabase.from(INVOICES_TABLE_NAME).insert(invoice).select();
+};
+
+export const retrieveInvoicesByWalletAddress = (address: `0x${string}`) => {
+  return supabase.from(INVOICES_TABLE_NAME).select("*").eq("owner", address);
+};
+
+export const retreiveInvoiceByInvoiceId = (id: string) => {
+  console.log({ id });
+  return supabase
+    .from(INVOICES_TABLE_NAME)
+    .select(
+      `
+    *,
+    branding(*),
+    client(*),
+    product(*)
+  `,
+    )
+    .eq("id", id);
 };
