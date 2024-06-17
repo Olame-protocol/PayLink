@@ -3,13 +3,14 @@ import BusinessBranding from "./BusinessBranding";
 import AddInvoiceClient from "./AddInvoiceClient";
 import AddInvoiceProduct from "./AddInvoiceProduct";
 import { Button } from "../ui/button";
-import { Branding, Client } from "@/utils/types";
+import { Branding, Client, Product } from "@/utils/types";
 import { saveBrandingImage } from "@/utils/supabase";
 import toast from "react-hot-toast";
 
 function CreateInvoiceForm() {
   const [brandingImageFile, setBrandingImageFile] = useState<File | null>(null);
   const [client, setClient] = useState<(Client & { id: string }) | null>(null);
+  const [product, setProduct] = useState<(Product & { id: string }) | null>(null);
   const [invoiceDueDate, setInvoiceDueDate] = useState<Date>();
   const [brandingData, setBrandingData] = useState<Branding & { preview: string }>({
     address: "",
@@ -35,6 +36,11 @@ function CreateInvoiceForm() {
   const onSelectClient = (client: Client & { id: string }) => {
     console.log({ client });
     setClient(client);
+  };
+
+  const onSelectProduct = (product: Product & { id: string }) => {
+    console.log({ product });
+    setProduct(product);
   };
 
   const onCancel = () => {
@@ -64,7 +70,7 @@ function CreateInvoiceForm() {
     <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-5">
       <BusinessBranding brandingPreview={brandingData.preview} onBrandingChange={onBrandingInputChange} onDropFIle={onDrop} />
       <AddInvoiceClient onSelectClient={onSelectClient} onSelectInvoicePaymentDueDate={setInvoiceDueDate} />
-      <AddInvoiceProduct />
+      <AddInvoiceProduct onSelectProduct={onSelectProduct} />
       <div className="flex gap-5">
         <Button onClick={onSaveBranding} className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">
           Save and continue

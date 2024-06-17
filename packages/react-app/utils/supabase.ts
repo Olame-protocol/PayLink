@@ -116,6 +116,10 @@ export const saveProduct = (product: Product) => {
   return supabase.from(PRODUCTS_TABLE_NAME).insert(product);
 };
 
+export const retreiveProducts = (address: `0x${string}`) => {
+  return supabase.from(PRODUCTS_TABLE_NAME).select<any, Product & { id: string }>("*").eq("owner", address);
+};
+
 export const saveBranding = (branding: Branding) => {
   return supabase.from(BRANDINGS_TABLE_NAME).insert(branding);
 };
