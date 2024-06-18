@@ -41,4 +41,5 @@ export type DetailedInvoice = {
   due_date: string;
   amount: string;
   quantity: string;
+  sent: boolean;
 };

@@ -140,6 +140,10 @@ export const saveInvoice = (invoice: SaveInvoice) => {
   return supabase.from(INVOICES_TABLE_NAME).insert(invoice).select();
 };
 
+export const updateInvoiceSentStatus = (invoiceId: string) => {
+  return supabase.from(INVOICES_TABLE_NAME).update({ sent: true }).eq("id", invoiceId);
+};
+
 export const retrieveInvoicesByWalletAddress = (address: `0x${string}`) => {
   return supabase.from(INVOICES_TABLE_NAME).select("*").eq("owner", address);
 };

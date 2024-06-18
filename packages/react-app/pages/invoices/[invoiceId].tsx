@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useCallback } from "react";
 import { GetServerSidePropsContext } from "next";
 import { retreiveInvoiceByInvoiceId } from "@/utils/supabase";
 import { DetailedInvoice } from "@/utils/types";
@@ -8,6 +8,9 @@ import Image from "next/image";
 import { cn } from "@/utils/utils";
 import { Button } from "@/components/ui/button";
 import { useAccount } from "wagmi";
+import { useCreateInvoice } from "@/hooks/usePaylink";
+import { useApproveERC20Transaction } from "@/hooks/useErc20";
+import toast from "react-hot-toast";
 
 function InvoiceSectionWrapper({ children, className = "" }: { children: ReactNode; className?: string }) {
   return <div className={cn("border-b border-white/[6%] px-10 py-10 max-md:px-5", className)}>{children}</div>;
@@ -15,6 +18,19 @@ function InvoiceSectionWrapper({ children, className = "" }: { children: ReactNo
 
 function Invoice({ invoice }: { invoice: DetailedInvoice }) {
   const { address } = useAccount();
+  const { createInvoice, isPending } = useCreateInvoice();
+  const { approveER20, isPending: approveErc20Pending } = useApproveERC20Transaction();
+
+  const onSendInvoice = async () => {
+    try {
+      await approveER20(invoice.amount);
+      await createInvoice(invoice.id, invoice.product.id, invoice.client.id, invoice.amount);
+    } catch (err) {
+      toast.error("Error while processing the transaction");
+      console.log({ err });
+    }
+  };
+
   return (
     <Layout className="bg-green-petrolium">
       <Section className="my-32 min-h-96 rounded-2xl bg-forest px-5 py-5 lg:px-36 lg:py-16">
@@ -75,8 +91,14 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
           </InvoiceSectionWrapper>
         </div>
         <div className="mt-10 flex gap-5">
-          <Button className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">Send Invoice</Button>
-          <Button className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white" variant="outline">
+          <Button
+            onClick={onSendInvoice}
+            disabled={invoice.sent || approveErc20Pending || isPending}
+            className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest"
+          >
+            {isPending || approveErc20Pending ? "Creating the invoice..." : "Send Invoice"}
+          </Button>
+          <Button disabled={isPending || approveErc20Pending} className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white" variant="outline">
             Cancel
           </Button>
         </div>

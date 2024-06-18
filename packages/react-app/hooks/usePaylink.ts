@@ -1,6 +1,6 @@
 import { PAYLINK_ABI } from "@/abi/paylink";
 import { PAYLINK_CONTRACT_ADDRESS } from "@/utils/const";
-import { saveFixedPaymentLinks, saveGlobalPaymentLinks, savePaymentRecord } from "@/utils/supabase";
+import { saveFixedPaymentLinks, saveGlobalPaymentLinks, savePaymentRecord, updateInvoiceSentStatus } from "@/utils/supabase";
 import Web3 from "@/utils/web3";
 import { ContractTransactionReceipt, parseUnits } from "ethers";
 import { useCallback, useState } from "react";
@@ -140,6 +140,58 @@ export const useSendPayment = () => {
     isSuccess,
     reset,
     transfer,
+    error,
+    txhash: data,
+  };
+};
+
+export const useCreateInvoice = () => {
+  const [data, setData] = useState<any>(null);
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState<any>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const { address } = useAccount();
+
+  const createInvoice = useCallback(
+    async (invoiceId: string, productId: string, clientId: string, amount: string) => {
+      if (!address || !window) return;
+      try {
+        setIsPending(true);
+        const contract = await new Web3().contract(PAYLINK_CONTRACT_ADDRESS, PAYLINK_ABI, address);
+        const tx = await contract.createInvoice(invoiceId, productId, address, clientId, parseUnits(amount));
+
+        const txhash = await tx.wait();
+        // TODO: Should send the invoice email
+
+        updateInvoiceSentStatus(invoiceId);
+        setData(txhash.hash);
+        setError(null);
+        setIsSuccess(true);
+      } catch (e: any) {
+        console.log(e);
+        setData(null);
+        setIsSuccess(false);
+        setError({ message: e.shortMessage ?? e });
+        throw e;
+      } finally {
+        setIsPending(false);
+      }
+    },
+    [address],
+  );
+
+  const reset = useCallback(() => {
+    setData(null);
+    setIsSuccess(false);
+    setError(null);
+    setIsPending(false);
+  }, []);
+
+  return {
+    isPending,
+    isSuccess,
+    reset,
+    createInvoice,
     error,
     txhash: data,
   };
