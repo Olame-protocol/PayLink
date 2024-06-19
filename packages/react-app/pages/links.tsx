@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { SupabaseLinksRecord, Tab } from "./payments";
 import { truncateString } from "@/utils/utils";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
-import Copy from "@/components/ui/payLink/icons/Copy";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { MdContentCopy } from "react-icons/md";
 import { retreivePaymentLinks } from "@/utils/supabase";
 import { useAccount } from "wagmi";
 import Layout from "@/components/Layout";
@@ -63,7 +63,7 @@ export default function Links() {
                   {copied && `${origin}/payments/${link.payment_link_id}?type=${activeTab}`.toLowerCase() === copiedLink?.toLowerCase() ? (
                     <IoCheckmarkDoneSharp className="text-velix-primary dark:text-velix-icon-dark h-5 w-5" />
                   ) : (
-                    <Copy
+                    <MdContentCopy
                       role="button"
                       onClick={() => onCopyToClickboard(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
                       className="text-velix-primary dark:text-velix-icon-dark h-5 w-5 cursor-pointer"

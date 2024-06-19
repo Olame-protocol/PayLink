@@ -23,14 +23,25 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
 
   const onSendInvoice = async () => {
     try {
-      await approveER20(invoice.amount);
-      await createInvoice(invoice.id, invoice.product.id, invoice.client.id, invoice.amount);
-    } catch (err) {
-      toast.error("Error while processing the transaction");
-      console.log({ err });
+      const charge = ((Number(invoice.amount) * 5)/100).toFixed(1)
+      await approveER20(charge);
+      await createInvoice(invoice.id, invoice.product.id,invoice.amount);
+      toast.success("Invoice created successfully");
+    } catch (err:any) {
+      if (err.message.includes('_invoiceId already exists')) {
+        toast.error("Invoice ID already exists.");
+      } else {
+        toast.error("Error while processing the transaction");
+      }
+      console.log(err);
     }
   };
 
+  const buttonTitle = () => {
+    if (approveErc20Pending) return "Pending Approval...";
+    if (isPending) return " Creating invoice...";
+    return "Send Invoice";
+  };
   return (
     <Layout className="bg-green-petrolium">
       <Section className="my-32 min-h-96 rounded-2xl bg-forest px-5 py-5 lg:px-36 lg:py-16">
@@ -96,7 +107,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
             disabled={invoice.sent || approveErc20Pending || isPending}
             className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest"
           >
-            {isPending || approveErc20Pending ? "Creating the invoice..." : "Send Invoice"}
+            {buttonTitle()}
           </Button>
           <Button disabled={isPending || approveErc20Pending} className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white" variant="outline">
             Cancel

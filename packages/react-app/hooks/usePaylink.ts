@@ -153,12 +153,12 @@ export const useCreateInvoice = () => {
   const { address } = useAccount();
 
   const createInvoice = useCallback(
-    async (invoiceId: string, productId: string, clientId: string, amount: string) => {
+    async (invoiceId: string, productId: string, amount: string) => {
       if (!address || !window) return;
       try {
         setIsPending(true);
         const contract = await new Web3().contract(PAYLINK_CONTRACT_ADDRESS, PAYLINK_ABI, address);
-        const tx = await contract.createInvoice(invoiceId, productId, address, clientId, parseUnits(amount));
+        const tx = await contract.createInvoice(invoiceId, productId, parseUnits(amount));
 
         const txhash = await tx.wait();
         // TODO: Should send the invoice email

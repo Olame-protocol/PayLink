@@ -50,6 +50,7 @@ export default function Index() {
     description: "",
     amount: "",
   });
+  
   const [recentyGeneratedLinks, setRecentyGeneratedLinks] = useState<SupabaseLinksRecord[]>([]);
 
   return (
