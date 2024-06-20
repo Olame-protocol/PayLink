@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { SupabaseLinksRecord, Tab } from "./payments";
 import { truncateString } from "@/utils/utils";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
-import { FaArrowUpRightFromSquare } from "react-icons/fa6";
-import { MdContentCopy } from "react-icons/md";
+import { BsBoxArrowUpRight } from "react-icons/bs";
+import {MdContentCopy, MdLaunch} from "react-icons/md";
 import { retreivePaymentLinks } from "@/utils/supabase";
 import { useAccount } from "wagmi";
 import Layout from "@/components/Layout";
@@ -53,31 +53,33 @@ export default function Links() {
             <p className="font-normal text-white">Generate payment links effortlessly and simplify transactions.</p>
           </div>
 
+          <div className="flex flex-col gap-2 mt-10">
           {links.map((link) => {
             return (
-              <div key={link.id} className="boder-gray-400 flex justify-between gap-3 rounded-lg border-2 px-4 py-3">
-                <p className="text-velix-primary dark:text-velix-dark-white text-base text-blue-500 underline">
+              <div key={link.id} className="boder-gray-400 flex justify-between gap-3 rounded-lg bg-white/[6%] px-4 py-5">
+                <p className="text-green-petrolium dark:text-velix-dark-white text-base text-blue-500 underline">
                   {truncateString(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
                 </p>
                 <div className="flex gap-2">
                   {copied && `${origin}/payments/${link.payment_link_id}?type=${activeTab}`.toLowerCase() === copiedLink?.toLowerCase() ? (
-                    <IoCheckmarkDoneSharp className="text-velix-primary dark:text-velix-icon-dark h-5 w-5" />
+                    <IoCheckmarkDoneSharp className="text-[#4E837F] dark:text-velix-icon-dark h-5 w-5" />
                   ) : (
                     <MdContentCopy
                       role="button"
                       onClick={() => onCopyToClickboard(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
-                      className="text-velix-primary dark:text-velix-icon-dark h-5 w-5 cursor-pointer"
+                      className="text-[#4E837F] dark:text-velix-icon-dark h-5 w-5 cursor-pointer"
                     />
                   )}
-                  <FaArrowUpRightFromSquare
+                  <MdLaunch
                     onClick={() => onViewLink(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
                     role="button"
-                    className="text-velix-primary dark:text-velix-icon-dark h-5 w-5 cursor-pointer"
+                    className="text-[#4E837F] dark:text-velix-icon-dark h-5 w-5 cursor-pointer"
                   />
                 </div>
               </div>
             );
           })}
+          </div>
         </div>
       </Section>
     </Layout>
