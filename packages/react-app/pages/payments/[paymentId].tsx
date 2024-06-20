@@ -7,6 +7,7 @@ import { useApproveERC20Transaction } from "@/hooks/useErc20";
 import toast from "react-hot-toast";
 import { useSendPayment } from "@/hooks/usePaylink";
 import Layout from "@/components/Layout";
+import { LoaderCircle, LoaderIcon } from "lucide-react";
 
 const PaymentIdPage = ({ link, type }: { link: SupabaseLinksRecord; type: "fixed" | "global" }) => {
   const [amount, setAmount] = useState("");
@@ -39,34 +40,43 @@ const PaymentIdPage = ({ link, type }: { link: SupabaseLinksRecord; type: "fixed
   return (
     <Layout className="bg-green-petrolium">
       <Section className="mt-32 rounded-2xl bg-forest px-5 py-5 lg:px-36 lg:py-16">
-        <div>
-          <p className="text-xl font-black text-green-petrolium lg:text-[2.5rem]">You can kindly pay now</p>
-        </div>
-        <div className="mt-10 text-white">
-          <p>
-            <span className="font-semibold">Purpose:</span> {link.description}
-          </p>
-          <p>
-            <span className="font-semibold">Created on:</span> {link.created_at.split("T")[0]}
-          </p>
-        </div>
-        <form className="mt-10">
-          <div className="flex w-full gap-2 rounded-lg bg-white/[6%] p-3 max-md:flex-col">
-            {type !== "fixed" && (
-              <input
-                type="number"
-                name="amount"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="0.0cUSD"
-                className="boder-gray-400 w-full rounded-lg border-2 px-4 py-3 outline-none"
-              />
-            )}
-            <button onClick={(e) => onSendERC20(e)} className="w-full rounded-lg bg-white px-4 py-3 text-lg font-medium text-forest">
-              {buttonTitle()} <span>{link.amount} cUSD</span>
-            </button>
+        {isPending && (
+          <div className="flex flex-col items-center justify-center p-10">
+            <LoaderIcon className="h-20 w-20 animate-spin text-green-petrolium" />
           </div>
-        </form>
+        )}
+        {!isPending && (
+          <>
+            <div>
+              <p className="text-xl font-black text-green-petrolium lg:text-[2.5rem]">You can kindly pay now</p>
+            </div>
+            <div className="mt-10 text-white">
+              <p>
+                <span className="font-semibold">Purpose:</span> {link.description}
+              </p>
+              <p>
+                <span className="font-semibold">Created on:</span> {link.created_at.split("T")[0]}
+              </p>
+            </div>
+            <form className="mt-10">
+              <div className="flex w-full gap-2 rounded-lg bg-white/[6%] p-3 max-md:flex-col">
+                {type !== "fixed" && (
+                  <input
+                    type="number"
+                    name="amount"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    placeholder="0.0cUSD"
+                    className="boder-gray-400 w-full rounded-lg border-2 px-4 py-3 outline-none"
+                  />
+                )}
+                <button onClick={(e) => onSendERC20(e)} className="w-full rounded-lg bg-white px-4 py-3 text-lg font-medium text-forest">
+                  {buttonTitle()} <span>{link.amount} cUSD</span>
+                </button>
+              </div>
+            </form>
+          </>
+        )}
       </Section>
     </Layout>
   );
