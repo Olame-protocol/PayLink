@@ -33,25 +33,37 @@ const PaymentIdPage = ({ link, type }: { link: SupabaseLinksRecord; type: "fixed
   const buttonTitle = () => {
     if (isPending) return "Pending Approval...";
     if (transferPending) return "Transfer in process...";
-    return "Transfer";
+    return "Pay now";
   };
 
   return (
-    <Layout>
-      <Section>
-        <form className="flex flex-col gap-2 py-2">
-          <div className="mx-auto flex w-full flex-col gap-2 px-5 lg:w-1/2">
-            <input
-              type="number"
-              name="amount"
-              readOnly={type === "fixed"}
-              value={type === "fixed" ? link?.amount : amount}
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="0.0cUSD"
-              className="w-5/5 boder-gray-400 rounded-lg border-2 px-4 py-3 outline-none"
-            />
-            <button onClick={(e) => onSendERC20(e)} className="rounded-lg bg-prosperity px-4 py-3 text-lg font-medium text-gray-900">
-              {buttonTitle()}
+    <Layout className="bg-green-petrolium">
+      <Section className="mt-32 rounded-2xl bg-forest px-5 py-5 lg:px-36 lg:py-16">
+        <div>
+          <p className="text-xl font-black text-green-petrolium lg:text-[2.5rem]">You can kindly pay now</p>
+        </div>
+        <div className="mt-10 text-white">
+          <p>
+            <span className="font-semibold">Purpose:</span> {link.description}
+          </p>
+          <p>
+            <span className="font-semibold">Created on:</span> {link.created_at.split("T")[0]}
+          </p>
+        </div>
+        <form className="mt-10">
+          <div className="flex w-full gap-2 rounded-lg bg-white/[6%] p-3 max-md:flex-col">
+            {type !== "fixed" && (
+              <input
+                type="number"
+                name="amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                placeholder="0.0cUSD"
+                className="boder-gray-400 w-full rounded-lg border-2 px-4 py-3 outline-none"
+              />
+            )}
+            <button onClick={(e) => onSendERC20(e)} className="w-full rounded-lg bg-white px-4 py-3 text-lg font-medium text-forest">
+              {buttonTitle()} <span>{link.amount} cUSD</span>
             </button>
           </div>
         </form>
