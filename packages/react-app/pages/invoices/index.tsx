@@ -26,21 +26,7 @@ export type SupabaseLinksRecord = {
 };
 
 export default function Index() {
-  const [copied, setCopied] = useState(false);
-  const [copiedLink, setCopiedLink] = useState("");
-  const [activeTab, setActiveTab] = useState<Tab>("fixed");
-  const generatedLink = "https://react-icons.github.io/react-icons/search/#q=dash";
-  const { createPaymentLink, isPending } = useCreatePaymentLink();
   const { approveER20, isPending: ERC20ApprovalPending, isSuccess: ERC20ApprovalSuccess } = useApproveERC20Transaction();
-  const { address } = useAccount();
-  const [origin, setOrigin] = useState("");
-
-  const [formData, setFormData] = useState({
-    description: "",
-    amount: "",
-  });
-
-  const [recentyGeneratedLinks, setRecentyGeneratedLinks] = useState<SupabaseLinksRecord[]>([]);
 
   return (
     <Layout className="bg-green-petrolium pb-20">
