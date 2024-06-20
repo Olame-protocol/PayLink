@@ -3,7 +3,7 @@ import { SupabaseLinksRecord, Tab } from "./payments";
 import { truncateString } from "@/utils/utils";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { BsBoxArrowUpRight } from "react-icons/bs";
-import {MdContentCopy, MdLaunch} from "react-icons/md";
+import { MdContentCopy, MdLaunch } from "react-icons/md";
 import { retreivePaymentLinks } from "@/utils/supabase";
 import { useAccount } from "wagmi";
 import Layout from "@/components/Layout";
@@ -53,32 +53,46 @@ export default function Links() {
             <p className="font-normal text-white">Generate payment links effortlessly and simplify transactions.</p>
           </div>
 
-          <div className="flex flex-col gap-2 mt-10">
-          {links.map((link) => {
-            return (
-              <div key={link.id} className="boder-gray-400 flex justify-between gap-3 rounded-lg bg-white/[6%] px-4 py-5">
-                <p className="text-green-petrolium dark:text-velix-dark-white text-base text-blue-500 underline">
-                  {truncateString(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
-                </p>
-                <div className="flex gap-2">
-                  {copied && `${origin}/payments/${link.payment_link_id}?type=${activeTab}`.toLowerCase() === copiedLink?.toLowerCase() ? (
-                    <IoCheckmarkDoneSharp className="text-[#4E837F] dark:text-velix-icon-dark h-5 w-5" />
-                  ) : (
-                    <MdContentCopy
+          <div className="mt-10 flex justify-start rounded-lg bg-white/[8%] p-4 text-base font-semibold">
+            <button
+              className={`mr-4 rounded-lg px-4 py-2 lg:px-12 lg:py-5 ${activeTab === "fixed" ? "bg-green-petrolium text-forest" : "text-white"}`}
+              onClick={() => onSetActiveTab("fixed")}
+            >
+              Fixed
+            </button>
+            <button
+              className={`mr-4 rounded-lg px-4 py-2 lg:px-12 lg:py-5 ${activeTab === "global" ? "bg-green-petrolium text-forest" : "text-white"}`}
+              onClick={() => onSetActiveTab("global")}
+            >
+              Global
+            </button>
+          </div>
+          <div className="mt-10 flex flex-col gap-2">
+            {links.map((link) => {
+              return (
+                <div key={link.id} className="boder-gray-400 flex justify-between gap-3 rounded-lg bg-white/[6%] px-4 py-5">
+                  <p className="dark:text-velix-dark-white text-base text-blue-500 text-green-petrolium underline">
+                    {truncateString(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
+                  </p>
+                  <div className="flex gap-2">
+                    {copied && `${origin}/payments/${link.payment_link_id}?type=${activeTab}`.toLowerCase() === copiedLink?.toLowerCase() ? (
+                      <IoCheckmarkDoneSharp className="dark:text-velix-icon-dark h-5 w-5 text-[#4E837F]" />
+                    ) : (
+                      <MdContentCopy
+                        role="button"
+                        onClick={() => onCopyToClickboard(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
+                        className="dark:text-velix-icon-dark h-5 w-5 cursor-pointer text-[#4E837F]"
+                      />
+                    )}
+                    <MdLaunch
+                      onClick={() => onViewLink(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
                       role="button"
-                      onClick={() => onCopyToClickboard(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
-                      className="text-[#4E837F] dark:text-velix-icon-dark h-5 w-5 cursor-pointer"
+                      className="dark:text-velix-icon-dark h-5 w-5 cursor-pointer text-[#4E837F]"
                     />
-                  )}
-                  <MdLaunch
-                    onClick={() => onViewLink(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
-                    role="button"
-                    className="text-[#4E837F] dark:text-velix-icon-dark h-5 w-5 cursor-pointer"
-                  />
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
           </div>
         </div>
       </Section>

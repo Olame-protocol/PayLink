@@ -1,18 +1,24 @@
 import { retreivePaymentLinksById } from "@/utils/supabase";
 import { GetServerSidePropsContext } from "next";
-import React, { useState, MouseEvent } from "react";
+import React, { useState, MouseEvent, useMemo } from "react";
 import { SupabaseLinksRecord } from ".";
 import Section from "@/components/Section";
 import { useApproveERC20Transaction } from "@/hooks/useErc20";
 import toast from "react-hot-toast";
 import { useSendPayment } from "@/hooks/usePaylink";
 import Layout from "@/components/Layout";
-import { LoaderCircle, LoaderIcon } from "lucide-react";
+import { LoaderIcon } from "lucide-react";
+import classNames from "classnames";
+import { useAccount, useBalance } from "wagmi";
 
 const PaymentIdPage = ({ link, type }: { link: SupabaseLinksRecord; type: "fixed" | "global" }) => {
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState("0");
   const { approveER20, isPending } = useApproveERC20Transaction();
   const { transfer, isPending: transferPending } = useSendPayment();
+  const { address, isConnected } = useAccount();
+  const { data } = useBalance({ address });
+
+  const hasEnoughBalance = useMemo(() => Number(amount ?? 0) < Number(data?.formatted ?? 0), [amount, data?.formatted]);
 
   const onSendERC20 = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -59,7 +65,7 @@ const PaymentIdPage = ({ link, type }: { link: SupabaseLinksRecord; type: "fixed
               </p>
             </div>
             <form className="mt-10">
-              <div className="flex w-full gap-2 rounded-lg bg-white/[6%] p-3 max-md:flex-col">
+              <div className="flex w-full gap-2 rounded-lg bg-white/[6%] p-5 max-md:flex-col">
                 {type !== "fixed" && (
                   <input
                     type="number"
@@ -67,11 +73,18 @@ const PaymentIdPage = ({ link, type }: { link: SupabaseLinksRecord; type: "fixed
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="0.0cUSD"
-                    className="boder-gray-400 w-full rounded-lg border-2 px-4 py-3 outline-none"
+                    className="w-full rounded-lg bg-transparent bg-white/[7%] px-4 py-5 text-white outline-none"
                   />
                 )}
-                <button onClick={(e) => onSendERC20(e)} className="w-full rounded-lg bg-white px-4 py-3 text-lg font-medium text-forest">
-                  {buttonTitle()} <span>{link.amount} cUSD</span>
+                <button
+                  disabled={isPending || !hasEnoughBalance}
+                  onClick={(e) => onSendERC20(e)}
+                  className={classNames("rounded-lg bg-white px-4 py-3 text-lg font-medium text-forest disabled:opacity-50", {
+                    "w-52": type === "global",
+                    "w-full": type === "fixed",
+                  })}
+                >
+                  {buttonTitle()} {type === "fixed" && <span>{link.amount} cUSD</span>}
                 </button>
               </div>
             </form>
