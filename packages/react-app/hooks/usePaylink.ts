@@ -196,3 +196,55 @@ export const useCreateInvoice = () => {
     txhash: data,
   };
 };
+
+export const usePayInvoice = () => {
+  const [data, setData] = useState<any>(null);
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState<any>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const { address } = useAccount();
+
+  const payInvoice = useCallback(
+    async (invoiceId: string) => {
+      if (!address || !window) return;
+      try {
+        setIsPending(true);
+        const contract = await new Web3().contract(PAYLINK_CONTRACT_ADDRESS, PAYLINK_ABI, address);
+        const tx = await contract.payInvoice(invoiceId);
+
+        const txhash = await tx.wait();
+        // TODO: Should send the invoice email
+
+        updateInvoiceSentStatus(invoiceId);
+        setData(txhash.hash);
+        setError(null);
+        setIsSuccess(true);
+      } catch (e: any) {
+        console.log(e);
+        setData(null);
+        setIsSuccess(false);
+        setError({ message: e.shortMessage ?? e });
+        throw e;
+      } finally {
+        setIsPending(false);
+      }
+    },
+    [address],
+  );
+
+  const reset = useCallback(() => {
+    setData(null);
+    setIsSuccess(false);
+    setError(null);
+    setIsPending(false);
+  }, []);
+
+  return {
+    isPending,
+    isSuccess,
+    reset,
+    payInvoice,
+    error,
+    txhash: data,
+  };
+};

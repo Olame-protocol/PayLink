@@ -8,7 +8,7 @@ import Image from "next/image";
 import { cn } from "@/utils/utils";
 import { Button } from "@/components/ui/button";
 import { useAccount } from "wagmi";
-import { useCreateInvoice } from "@/hooks/usePaylink";
+import { useCreateInvoice, usePayInvoice } from "@/hooks/usePaylink";
 import { useApproveERC20Transaction } from "@/hooks/useErc20";
 import toast from "react-hot-toast";
 
@@ -18,14 +18,11 @@ function InvoiceSectionWrapper({ children, className = "" }: { children: ReactNo
 
 function Invoice({ invoice }: { invoice: DetailedInvoice }) {
   const { address } = useAccount();
-  const { createInvoice, isPending } = useCreateInvoice();
-  const { approveER20, isPending: approveErc20Pending } = useApproveERC20Transaction();
+  const { payInvoice, isPending } = usePayInvoice();
 
-  const onSendInvoice = async () => {
+  const onPayInvoice = async () => {
     try {
-      const charge = ((Number(invoice.amount) * 5) / 100).toFixed(1);
-      await approveER20(charge);
-      await createInvoice(invoice.id, invoice.product.id, invoice.amount);
+      await payInvoice(invoice.id);
       toast.success("Invoice created successfully");
     } catch (err: any) {
       if (err.message.includes("_invoiceId already exists")) {
@@ -38,9 +35,8 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
   };
 
   const buttonTitle = () => {
-    if (approveErc20Pending) return "Pending Approval...";
-    if (isPending) return " Creating invoice...";
-    return "Send Invoice";
+    if (isPending) return "Paying invoice...";
+    return "Pay invoice now";
   };
   return (
     <Layout className="bg-green-petrolium">
@@ -103,15 +99,8 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
         </div>
         {!invoice.paid && (
           <div className="mt-10 flex gap-5">
-            <Button
-              onClick={onSendInvoice}
-              disabled={invoice.sent || approveErc20Pending || isPending}
-              className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest"
-            >
+            <Button onClick={onPayInvoice} disabled={invoice.sent || isPending} className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">
               {buttonTitle()}
-            </Button>
-            <Button disabled={isPending || approveErc20Pending} className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white" variant="outline">
-              Cancel
             </Button>
           </div>
         )}
