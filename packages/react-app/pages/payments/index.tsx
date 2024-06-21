@@ -146,7 +146,7 @@ export default function Payments() {
                         name="description"
                         onChange={onFormtInputChange}
                         placeholder="Service"
-                        className="w-full rounded-lg bg-white/30 px-5 py-8 text-white outline-none"
+                        className="w-full rounded-lg bg-white/5 px-5 py-8 text-white outline-none placeholder:text-[#4E837F]"
                       />
                       <input
                         type="number"
@@ -154,7 +154,7 @@ export default function Payments() {
                         value={formData.amount}
                         onChange={onFormtInputChange}
                         placeholder="0.0cUSD"
-                        className="w-5/5 rounded-lg bg-white/30 px-4 py-3 text-white outline-none"
+                        className="w-5/5 rounded-lg bg-white/5 px-4 py-3 text-white outline-none placeholder:text-[#4E837F]"
                       />
                     </div>
                     <button onClick={(e) => onGeneratePaymentLink(e, "fixed")} className="w-full rounded-lg bg-white px-5 py-5 text-lg font-medium text-forest lg:py-8">
@@ -172,7 +172,7 @@ export default function Payments() {
                       value={formData.description}
                       onChange={onFormtInputChange}
                       placeholder="Purpose"
-                      className="rounded-lg bg-white/30 px-5 py-8 text-white outline-none"
+                      className="rounded-lg bg-white/5 px-5 py-8 text-white outline-none placeholder:text-[#4E837F]"
                     />
                     <button onClick={(e) => onGeneratePaymentLink(e, "global")} className="w-full rounded-lg bg-white px-5 py-5 text-lg font-medium text-forest lg:py-8">
                       {buttonTitle()}

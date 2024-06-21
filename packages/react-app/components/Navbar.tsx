@@ -21,6 +21,13 @@ export default function Navbar() {
   const { connect } = useConnect();
   const { asPath, pathname } = useRouter();
   const isHome = pathname === "/";
+  const menuItems = [
+    { name: 'Payments', path: '/payments', icon: <WalletIcon /> },
+    { name: 'Links', path: '/links', icon: <LinkIcon /> },
+    { name: 'Invoices', path: '/invoices', icon: <PaperLineIcon /> },
+    { name: 'Dashboard', path: '/#', icon: <ChartIcon /> },
+  ];
+  
 
   useEffect(() => {
     if (window.ethereum && window.ethereum.isMiniPay) {
@@ -33,53 +40,46 @@ export default function Navbar() {
     <Disclosure className={clsx(isHome ? "bg-forest" : "bg-green-petrolium", "fixed top-0 z-50 w-full !px-0")} as="nav">
       {({ open }) => (
         <>
-          <Section>
-            <div className="relative flex justify-between">
-              {/* <div className="absolute inset-y-0 left-0 flex items-center sm:hidden"></div> */}
-              <div className="flex justify-center gap-20 py-5 sm:items-stretch sm:justify-start lg:py-10">
-                <Link href="/">
-                  <PayLinkLogo className={clsx(isHome ? "text-green-petrolium" : "text-forest", "h-[45px] w-[171px] max-lg:w-[100px]")} />
-                </Link>
-
-                <div
+              <Section>
+      <div className="relative flex justify-between">
+        <div className="flex justify-center gap-20 py-5 sm:items-stretch sm:justify-start lg:py-10">
+          <Link href="/">
+            <PayLinkLogo className={clsx(isHome ? 'text-green-petrolium' : 'text-forest', 'h-[45px] w-[171px] max-lg:w-[100px]')} />
+          </Link>
+          <div
+            className={clsx(
+              isHome
+                ? 'hidden text-green-petrolium'
+                : 'bottom-0 left-0 right-0 z-10 w-full bg-green-petrolium text-forest max-lg:justify-between max-lg:px-5 max-lg:py-4 max-md:fixed max-md:bg-[#C9F27E]',
+              'flex items-center gap-10'
+            )}
+          >
+            {menuItems.map((item) => (
+              <Link key={item.path} href={item.path} passHref>
+                <p
                   className={clsx(
-                    isHome
-                      ? "hidden text-green-petrolium"
-                      : "bottom-0 left-0 right-0 z-10 w-full bg-green-petrolium text-forest max-lg:justify-between max-lg:px-5 max-lg:py-4 max-md:fixed max-md:bg-[#C9F27E]",
-                    "flex items-center gap-10",
+                    'inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col pb-2',
+                    asPath === item.path ? 'font-extrabold border-b-8 rounded-lg border-[#0E3A36] ' : 'font-normal'
                   )}
                 >
-                  <Link href="/payments" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
-                    <WalletIcon />
-                    Payments
-                  </Link>
-                  <Link href="/links" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
-                    <LinkIcon />
-                    Links
-                  </Link>
-
-                  <Link href="/invoices" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
-                    <PaperLineIcon />
-                    Invoices
-                  </Link>
-
-                  <Link href="/#" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
-                    <ChartIcon />
-                    Dashboard
-                  </Link>
-                </div>
-              </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {isHome ? (
-                  <Link href="/payments" className="rounded-lg bg-white px-6 py-4 font-semibold text-forest">
-                    Launch app
-                  </Link>
-                ) : (
-                  <ConnectWalletButton />
-                )}
-              </div>
-            </div>
-          </Section>
+                  {item.icon}
+                  {item.name}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          {isHome ? (
+            <Link href="/payments" className="rounded-lg bg-white px-6 py-4 font-semibold text-forest">
+              Launch app
+            </Link>
+          ) : (
+            <ConnectWalletButton />
+          )}
+        </div>
+      </div>
+    </Section>
 
           <Disclosure.Panel className="sm:hidden">
             <div className="flex flex-col gap-3 space-y-1 pb-4 pt-2">
