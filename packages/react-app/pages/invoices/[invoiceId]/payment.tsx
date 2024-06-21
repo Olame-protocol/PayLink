@@ -11,6 +11,7 @@ import { useAccount } from "wagmi";
 import { useCreateInvoice, usePayInvoice } from "@/hooks/usePaylink";
 import { useApproveERC20Transaction } from "@/hooks/useErc20";
 import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 function InvoiceSectionWrapper({ children, className = "" }: { children: ReactNode; className?: string }) {
   return <div className={cn("border-b border-white/[6%] px-10 py-10 max-md:px-5", className)}>{children}</div>;
@@ -19,11 +20,13 @@ function InvoiceSectionWrapper({ children, className = "" }: { children: ReactNo
 function Invoice({ invoice }: { invoice: DetailedInvoice }) {
   const { address } = useAccount();
   const { payInvoice, isPending } = usePayInvoice();
+  const router = useRouter();
 
   const onPayInvoice = async () => {
     try {
       await payInvoice(invoice.id);
       toast.success("Invoice created successfully");
+      router.push(`invoices/${invoice.id}`);
     } catch (err: any) {
       if (err.message.includes("_invoiceId already exists")) {
         toast.error("Invoice ID already exists.");
