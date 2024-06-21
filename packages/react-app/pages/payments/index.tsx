@@ -89,7 +89,7 @@ export default function Payments() {
     if (type === "fixed" && !formData.amount && !formData.description) return;
 
     try {
-      const charge = ((Number(formData.amount) * 5)/100).toFixed(1)
+      const charge = ((Number(formData.amount) * 5) / 100).toFixed(1);
       await approveER20(type === "global" ? "2" : charge);
       await createPaymentLink(type, {
         amount: formData.amount,
