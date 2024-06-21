@@ -8,14 +8,10 @@ import { IoRocket } from "react-icons/io5";
 const ContentSection = () => {
   return (
     <Section className="mb-[-80px]">
-      <div className="mt-16 flex flex-col items-center justify-between md:min-h-[600px] lg:flex-row">
-        <div className="hidden items-center justify-center md:flex md:h-[400px] md:w-[400px]">
-          <div className="z-20 hidden md:flex">
-            <Image width={400} height={400} alt="Lock icon" className="" src="./Pinklinkpadlock.svg" />
-          </div>
-        </div>
-        <div className="flex flex-col gap-y-4 text-center lg:gap-y-8 lg:text-start">
-          <p className="font-sans text-[24px] font-black lg:text-[60px] lg:leading-[70px]">
+      <div className="mt-16 grid items-center justify-center lg:justify-normal md:min-h-[600px] lg:grid-cols-2">
+        <img alt="Lock icon" className="h-full w-[200px] lg:w-[300px] mx-auto lg:mx-0" src="./Pinklinkpadlock.svg" />
+        <div className="flex flex-col gap-y-4 pb-10 text-center lg:gap-y-8 lg:text-start">
+          <p className="mt-12 font-sans text-[24px] font-black md:mt-0 lg:text-[60px] lg:leading-[70px]">
             Secured way to <br />
             send money{" "}
           </p>
@@ -68,7 +64,7 @@ const WhyPayLink = () => {
   return (
     <div className="mt-44 flex flex-col lg:mt-0">
       <div className="relative z-20 -mt-[30px] flex flex-col justify-between gap-x-10 rounded-[20px] bg-[#EFF7FF] px-6 py-10 text-forest lg:min-h-[666px] lg:flex-row lg:px-10 xl:px-20">
-        <div className="mt-[-60px] flex flex-col justify-evenly gap-y-5 lg:mt-0 lg:gap-y-9">
+        <div className="mt-[-200px] flex flex-col justify-evenly gap-y-5 lg:mt-0 lg:gap-y-9">
           <h1 className="text-[24px] font-bold lg:text-[64px]">Why PayLink</h1>
           <div>
             <div className="space-y-4 lg:space-y-8">
@@ -78,12 +74,12 @@ const WhyPayLink = () => {
             </div>
           </div>
         </div>
-        <div className="relative order-first flex h-[400px] w-full rounded-r-xl md:order-last md:h-[722px] lg:h-[500px] lg:basis-2/5">
+        <div className="relative order-first flex h-[400px] w-full justify-center rounded-r-xl md:order-last md:h-[722px] lg:h-[500px] lg:basis-2/5">
           <Image
             src="PaylinkPhone.svg"
             width={400}
             height={900}
-            className="absolute bottom-2 block h-[600px] w-full scale-x-100 lg:hidden"
+            className="scale-x-80 absolute bottom-20 block h-[600px] w-[200Px] lg:hidden"
             alt="Image of a person holding a phone"
           />
           <img src="PaylinkPhone.svg" className="absolute left-[90px] mt-14 hidden h-full w-full lg:flex xl:left-[160px]" alt="Image of a person holding a phone" />

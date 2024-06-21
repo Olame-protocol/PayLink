@@ -70,7 +70,7 @@ export default function Navbar() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {isHome ? (
-                  <Link href="/payments" className="rounded-lg bg-white px-6 py-4 font-semibold text-forest">
+                  <Link href="/payments" className="rounded-lg bg-white px-8 py-3 text-sm font-medium text-forest md:px-10 md:py-4 md:text-base md:font-semibold">
                     Launch app
                   </Link>
                 ) : (

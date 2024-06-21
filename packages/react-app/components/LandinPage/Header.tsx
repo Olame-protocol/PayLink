@@ -11,11 +11,11 @@ const Header = () => {
           <div>
             <h1 className="font-fontsprint text-[28px] font-bold uppercase text-white lg:text-[80px]">Linking the love of money transfer</h1>
           </div>
-          <div>
-            <p className="text-xs text-green-petrolium md:text-xl">Simplifying digital payments, one click at a time</p>
+          <div> 
+            <p className="text-xs text-green-petrolium md:text-xl mt-[-20px] lg:mt-[-40px]">Simplifying digital payments, one click at a time</p>
           </div>
           <div>
-            <Link href="/payments" className="rounded-lg bg-white px-10 py-4 text-sm font-semibold text-forest md:text-xl">
+            <Link href="/payments" className="rounded-lg bg-white text-sm md:text-base px-8 py-3 md:px-10 md:py-4 font-medium md:font-semibold text-forest ">
               Generate a link
             </Link>
           </div>
