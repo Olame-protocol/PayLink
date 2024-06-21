@@ -78,7 +78,7 @@ const WhyPayLink = () => {
             </div>
           </div>
         </div>
-        <div className="relative order-first flex h-[400px] w-full  rounded-r-xl md:order-last md:h-[722px] lg:h-[500px] lg:basis-2/5">
+        <div className="relative order-first flex h-[400px] w-full rounded-r-xl md:order-last md:h-[722px] lg:h-[500px] lg:basis-2/5">
           <Image
             src="PaylinkPhone.svg"
             width={400}
@@ -86,7 +86,7 @@ const WhyPayLink = () => {
             className="absolute bottom-2 block h-[600px] w-full scale-x-100 lg:hidden"
             alt="Image of a person holding a phone"
           />
-          <img src="PaylinkPhone.svg" className="absolute mt-14 left-[90px] xl:left-[160px] hidden w-full h-full lg:flex" alt="Image of a person holding a phone" />
+          <img src="PaylinkPhone.svg" className="absolute left-[90px] mt-14 hidden h-full w-full lg:flex xl:left-[160px]" alt="Image of a person holding a phone" />
         </div>
       </div>
     </div>

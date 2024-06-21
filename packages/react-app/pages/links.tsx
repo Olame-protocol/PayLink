@@ -3,7 +3,7 @@ import { SupabaseLinksRecord, Tab } from "./payments";
 import { truncateString } from "@/utils/utils";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { BsCopy } from "react-icons/bs";
-import { BsArrowUpRightSquare } from "react-icons/bs"
+import { BsArrowUpRightSquare } from "react-icons/bs";
 import { retreivePaymentLinks } from "@/utils/supabase";
 import { useAccount } from "wagmi";
 import Layout from "@/components/Layout";
@@ -52,46 +52,49 @@ export default function Links() {
             <p className="text-xl font-black text-green-petrolium lg:text-[2.5rem]">Generated links</p>
             <p className="font-normal text-white">Generate payment links effortlessly and simplify transactions.</p>
           </div>
+
           <div className="mb-5 flex justify-start rounded-lg bg-white/[8%] p-4 text-base font-semibold">
-                <button
-                  className={`mr-4 rounded-lg px-4 py-2 lg:px-12 lg:py-5 ${activeTab === "fixed" ? "bg-green-petrolium text-forest" : "text-white"}`}
-                  onClick={() => onSetActiveTab("fixed")}
-                >
-                  Fixed
-                </button>
-                <button
-                  className={`mr-4 rounded-lg px-4 py-2 lg:px-12 lg:py-5 ${activeTab === "global" ? "bg-green-petrolium text-forest" : "text-white"}`}
-                  onClick={() => onSetActiveTab("global")}
-                >
-                  Global
-                </button>
-              </div>
+            <button
+              className={`mr-4 rounded-lg px-4 py-2 lg:px-12 lg:py-5 ${activeTab === "fixed" ? "bg-green-petrolium text-forest" : "text-white"}`}
+              onClick={() => onSetActiveTab("fixed")}
+            >
+              Fixed
+            </button>
+            <button
+              className={`mr-4 rounded-lg px-4 py-2 lg:px-12 lg:py-5 ${activeTab === "global" ? "bg-green-petrolium text-forest" : "text-white"}`}
+              onClick={() => onSetActiveTab("global")}
+            >
+              Global
+            </button>
+          </div>
 
           {links.map((link) => {
             return (
-              <div key={link.id} className=" bg-white/5 flex justify-between gap-3 rounded-lg py-6 px-4 ">
+              <div key={link.id} className="flex justify-between gap-3 rounded-lg bg-white/5 px-4 py-6">
                 <p className="text-velix-primary dark:text-velix-dark-white text-base text-blue-500 underline">
                   {truncateString(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
                 </p>
                 <div className="flex gap-3 text-[#4E837F]">
                   {copied && `${origin}/payments/${link.payment_link_id}?type=${activeTab}`.toLowerCase() === copiedLink?.toLowerCase() ? (
-                    <IoCheckmarkDoneSharp className="text-velix-primary dark:text-velix-icon-dark " size={24} />
+                    <IoCheckmarkDoneSharp className="text-velix-primary dark:text-velix-icon-dark" size={24} />
                   ) : (
                     <BsCopy
                       role="button"
                       onClick={() => onCopyToClickboard(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
-                      className="text-velix-primary dark:text-velix-icon-dark  cursor-pointer" size={22}
+                      className="text-velix-primary dark:text-velix-icon-dark cursor-pointer"
+                      size={22}
                     />
                   )}
                   <BsArrowUpRightSquare
                     onClick={() => onViewLink(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
                     role="button"
-                    className="text-velix-primary dark:text-velix-icon-dark  cursor-pointer" size={22}
+                    className="text-velix-primary dark:text-velix-icon-dark cursor-pointer"
+                    size={22}
                   />
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
       </Section>
     </Layout>
