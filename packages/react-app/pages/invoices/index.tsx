@@ -1,8 +1,5 @@
 import Section from "../../components/Section";
-import { useState } from "react";
-import { useCreatePaymentLink } from "@/hooks/usePaylink";
 import { useApproveERC20Transaction } from "@/hooks/useErc20";
-import { useAccount } from "wagmi";
 import Layout from "@/components/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AddClientForm from "@/components/AddClientForm";
