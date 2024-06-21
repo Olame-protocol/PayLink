@@ -99,7 +99,7 @@ export const useSendPayment = () => {
         const contract = await new Web3().contract(PAYLINK_CONTRACT_ADDRESS, PAYLINK_ABI, address);
         let tx: any;
         if (type === "fixed") {
-          tx = await contract.PayFixedPaymentLink(paymentLinkId);
+          tx = await contract.payFixedPaymentLink(paymentLinkId);
         } else {
           tx = await contract.contributeToGlobalPaymentLink(paymentLinkId, parseUnits(amount));
         }

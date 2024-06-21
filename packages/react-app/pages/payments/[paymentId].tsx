@@ -1,17 +1,24 @@
 import { retreivePaymentLinksById } from "@/utils/supabase";
 import { GetServerSidePropsContext } from "next";
-import React, { useState, MouseEvent } from "react";
+import React, { useState, MouseEvent, useMemo } from "react";
 import { SupabaseLinksRecord } from ".";
 import Section from "@/components/Section";
 import { useApproveERC20Transaction } from "@/hooks/useErc20";
 import toast from "react-hot-toast";
 import { useSendPayment } from "@/hooks/usePaylink";
 import Layout from "@/components/Layout";
+import { LoaderIcon } from "lucide-react";
+import classNames from "classnames";
+import { useAccount, useBalance } from "wagmi";
 
 const PaymentIdPage = ({ link, type }: { link: SupabaseLinksRecord; type: "fixed" | "global" }) => {
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState("0");
   const { approveER20, isPending } = useApproveERC20Transaction();
   const { transfer, isPending: transferPending } = useSendPayment();
+  const { address, isConnected } = useAccount();
+  const { data } = useBalance({ address });
+
+  const hasEnoughBalance = useMemo(() => Number(amount ?? 0) < Number(data?.formatted ?? 0), [amount, data?.formatted]);
 
   const onSendERC20 = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -33,28 +40,56 @@ const PaymentIdPage = ({ link, type }: { link: SupabaseLinksRecord; type: "fixed
   const buttonTitle = () => {
     if (isPending) return "Pending Approval...";
     if (transferPending) return "Transfer in process...";
-    return "Transfer";
+    return "Pay now";
   };
 
   return (
-    <Layout>
-      <Section>
-        <form className="flex flex-col gap-2 py-2">
-          <div className="mx-auto flex w-full flex-col gap-2 px-5 lg:w-1/2">
-            <input
-              type="number"
-              name="amount"
-              readOnly={type === "fixed"}
-              value={type === "fixed" ? link?.amount : amount}
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="0.0cUSD"
-              className="w-5/5 boder-gray-400 rounded-lg border-2 px-4 py-3 outline-none"
-            />
-            <button onClick={(e) => onSendERC20(e)} className="rounded-lg bg-prosperity px-4 py-3 text-lg font-medium text-gray-900">
-              {buttonTitle()}
-            </button>
+    <Layout className="bg-green-petrolium">
+      <Section className="mt-32 rounded-2xl bg-forest px-5 py-5 lg:px-36 lg:py-16">
+        {isPending && (
+          <div className="flex flex-col items-center justify-center p-10">
+            <LoaderIcon className="h-20 w-20 animate-spin text-green-petrolium" />
           </div>
-        </form>
+        )}
+        {!isPending && (
+          <>
+            <div>
+              <p className="text-xl font-black text-green-petrolium lg:text-[2.5rem]">You can kindly pay now</p>
+            </div>
+            <div className="mt-10 text-white">
+              <p>
+                <span className="font-semibold">Purpose:</span> {link.description}
+              </p>
+              <p>
+                <span className="font-semibold">Created on:</span> {link.created_at.split("T")[0]}
+              </p>
+            </div>
+            <form className="mt-10">
+              <div className="flex w-full gap-2 rounded-lg bg-white/[6%] p-5 max-md:flex-col">
+                {type !== "fixed" && (
+                  <input
+                    type="number"
+                    name="amount"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    placeholder="0.0cUSD"
+                    className="w-full rounded-lg bg-transparent bg-white/[7%] px-4 py-5 text-white outline-none"
+                  />
+                )}
+                <button
+                  disabled={isPending || !hasEnoughBalance}
+                  onClick={(e) => onSendERC20(e)}
+                  className={classNames("rounded-lg bg-white px-4 py-3 text-lg font-medium text-forest disabled:opacity-50", {
+                    "w-52": type === "global",
+                    "w-full": type === "fixed",
+                  })}
+                >
+                  {buttonTitle()} {type === "fixed" && <span>{link.amount} cUSD</span>}
+                </button>
+              </div>
+            </form>
+          </>
+        )}
       </Section>
     </Layout>
   );

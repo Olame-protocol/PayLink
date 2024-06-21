@@ -52,7 +52,6 @@ export default function Links() {
             <p className="text-xl font-black text-green-petrolium lg:text-[2.5rem]">Generated links</p>
             <p className="font-normal text-white">Generate payment links effortlessly and simplify transactions.</p>
           </div>
-
           <div className="mb-5 flex justify-start rounded-lg bg-white/[8%] p-4 text-base font-semibold">
                 <button
                   className={`mr-4 rounded-lg px-4 py-2 lg:px-12 lg:py-5 ${activeTab === "fixed" ? "bg-green-petrolium text-forest" : "text-white"}`}
@@ -90,9 +89,9 @@ export default function Links() {
                     className="text-velix-primary dark:text-velix-icon-dark  cursor-pointer" size={22}
                   />
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </Section>
     </Layout>

@@ -149,7 +149,6 @@ export const retrieveInvoicesByWalletAddress = (address: `0x${string}`) => {
 };
 
 export const retreiveInvoiceByInvoiceId = (id: string) => {
-  console.log({ id });
   return supabase
     .from(INVOICES_TABLE_NAME)
     .select(

@@ -1,19 +1,5 @@
-import LinkCard from "@/components/ui/payLink/cards/LinkCard";
 import Section from "../../components/Section";
-import Copy from "@/components/ui/payLink/icons/Copy";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { FaArrowUpRightFromSquare } from "react-icons/fa6";
-import { IoCheckmarkDoneSharp } from "react-icons/io5";
-import { truncateString } from "@/utils/utils";
-import { useCreatePaymentLink } from "@/hooks/usePaylink";
-import { ulid } from "ulid";
-import { MouseEvent } from "react";
 import { useApproveERC20Transaction } from "@/hooks/useErc20";
-import { format } from "path";
-import { retreivePaymentLinks } from "@/utils/supabase";
-import { useAccount } from "wagmi";
-import { useRouter } from "next/router";
-import toast from "react-hot-toast";
 import Layout from "@/components/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AddClientForm from "@/components/AddClientForm";
@@ -37,21 +23,7 @@ export type SupabaseLinksRecord = {
 };
 
 export default function Index() {
-  const [copied, setCopied] = useState(false);
-  const [copiedLink, setCopiedLink] = useState("");
-  const [activeTab, setActiveTab] = useState<Tab>("fixed");
-  const generatedLink = "https://react-icons.github.io/react-icons/search/#q=dash";
-  const { createPaymentLink, isPending } = useCreatePaymentLink();
   const { approveER20, isPending: ERC20ApprovalPending, isSuccess: ERC20ApprovalSuccess } = useApproveERC20Transaction();
-  const { address } = useAccount();
-  const [origin, setOrigin] = useState("");
-
-  const [formData, setFormData] = useState({
-    description: "",
-    amount: "",
-  });
-  
-  const [recentyGeneratedLinks, setRecentyGeneratedLinks] = useState<SupabaseLinksRecord[]>([]);
 
   return (
     <Layout className="bg-green-petrolium pb-20">

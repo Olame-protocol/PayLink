@@ -42,4 +42,5 @@ export type DetailedInvoice = {
   amount: string;
   quantity: string;
   sent: boolean;
+  paid: boolean;
 };
