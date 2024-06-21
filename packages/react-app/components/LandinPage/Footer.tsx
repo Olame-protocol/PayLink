@@ -11,17 +11,15 @@ const Footer = () => {
     <Section>
       <div className="mt-[9rem] flex items-center justify-between rounded-t-[20px] bg-forest px-4 py-6 text-green-petrolium lg:px-10 lg:py-10">
         <div>
-          <p className="flex items-center gap-x-1 text-[10px] lg:gap-x-2 lg:text-base">
-            © 2023 - {currentYear} Paylink
-          </p>
+          <p className="flex items-center gap-x-1 text-[10px] lg:gap-x-2 lg:text-base">© 2023 - {currentYear} Paylink</p>
         </div>
         <div className="flex items-center gap-x-2 lg:gap-x-7">
-          <div>
+          <a className="cursor-pointer " href="https://x.com/paylinkdapp?s=11" target="_blank">
             <FaXTwitter className="lg:h-6 lg:w-6" />
-          </div>
-          <div>
+          </a>
+          <a className="cursor-pointer " href="/">
             <BsGithub className="lg:h-6 lg:w-6" />
-          </div>
+          </a>
         </div>
       </div>
     </Section>
