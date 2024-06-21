@@ -59,7 +59,7 @@ function AddClientForm() {
               placeholder="Client’s name"
               value={clientData.name}
               onChange={onChange}
-              className="rounded-lg bg-white/[6%] p-5 text-white outline-none"
+              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
             />
             <input
               name="email"
@@ -68,7 +68,7 @@ function AddClientForm() {
               placeholder="johndoe@gmail.com"
               value={clientData.email}
               onChange={onChange}
-              className="rounded-lg bg-white/[6%] p-5 text-white outline-none"
+              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
             />
           </div>
           <div className="flex w-full flex-col gap-5">
@@ -79,7 +79,7 @@ function AddClientForm() {
               name="phone"
               defaultCountry="UG"
               onChange={(value) => setClientData((prev) => ({ ...prev, phone: value as string }))}
-              className="rounded-lg bg-white/[6%] p-5 text-white outline-none"
+              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
             />
 
             <input
@@ -89,7 +89,7 @@ function AddClientForm() {
               required
               placeholder="Service"
               onChange={onChange}
-              className="rounded-lg bg-white/[6%] p-5 text-white outline-none"
+              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
             />
           </div>
         </div>
