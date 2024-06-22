@@ -102,7 +102,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
         </div>
         {!invoice.paid && (
           <div className="mt-10 flex gap-5">
-            <Button onClick={onPayInvoice} disabled={invoice.sent || isPending} className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">
+            <Button onClick={onPayInvoice} disabled={invoice.paid || isPending} className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">
               {buttonTitle()}
             </Button>
           </div>

@@ -97,3 +97,22 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 };
+
+// {
+//   "clientName": "Jonathan Zihindula",
+//   "clientEmail": "jonthanzihindula@gmail.com",
+//   "invoiceDate": "23-12-2024",
+//   "productName": "Wed dev",
+//   "brandingName": "Ogopa Studio",
+//   "productPrice": "1000",
+//   "brandingImage": "https://rmjqlmzwqclqjhzfjigi.supabase.co/storage/v1/object/public/images/brandings/branding-b2dc1f78-3c6d-4c1c-b819-554134b41d58",
+//   "invoiceAmount": "1000",
+//   "walletAddress": "0x0000000000000000",
+//   "paymentDueDate": "26-6-2024",
+//   "brandingAddress": "KG 375 st",
+//   "brandingContact": "info@ogopastudio.com",
+//   "invoiceQuantity": "1",
+//   "invoiceDescription": "Bulding a web landing page",
+//   "invoicePaymentLink": "https://00000000000000000000",
+//   "productDescription": "Web development"
+// }
