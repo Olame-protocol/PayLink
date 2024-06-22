@@ -108,6 +108,7 @@ function CreateInvoiceForm() {
         due_date: invoiceDueDate as unknown as any,
         amount: totalAmount.toString(),
         quantity: product.quantity.toString(),
+        owner: address as string,
       });
       if (invoiceError) {
         toast.error("Could not save the branding");

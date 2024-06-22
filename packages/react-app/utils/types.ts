@@ -30,6 +30,7 @@ export type SaveInvoice = {
   due_date: string;
   amount: string;
   quantity: string;
+  owner: string;
 };
 
 export type DetailedInvoice = {
@@ -43,4 +44,5 @@ export type DetailedInvoice = {
   quantity: string;
   sent: boolean;
   paid: boolean;
+  owner: string;
 };
