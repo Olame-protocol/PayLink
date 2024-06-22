@@ -12,7 +12,8 @@ type Data = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const body = req.body as Data;
+  const body = JSON.parse(req.body) as Data;
+  console.log({ body });
   const recipients = [new Recipient(body.invoice.client.email, body.invoice.client.name)];
 
   const variables = [

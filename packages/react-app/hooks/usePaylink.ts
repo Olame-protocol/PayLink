@@ -1,6 +1,6 @@
 import { PAYLINK_ABI } from "@/abi/paylink";
 import { PAYLINK_CONTRACT_ADDRESS } from "@/utils/const";
-import { saveFixedPaymentLinks, saveGlobalPaymentLinks, savePaymentRecord, updateInvoiceSentStatus } from "@/utils/supabase";
+import { saveFixedPaymentLinks, saveGlobalPaymentLinks, savePaymentRecord, updateInvoicePaidStatus, updateInvoiceSentStatus } from "@/utils/supabase";
 import Web3 from "@/utils/web3";
 import { ContractTransactionReceipt, parseUnits } from "ethers";
 import { useCallback, useState } from "react";
@@ -163,7 +163,6 @@ export const useCreateInvoice = () => {
         const txhash = await tx.wait();
         // TODO: Should send the invoice email
 
-        updateInvoiceSentStatus(invoiceId);
         setData(txhash.hash);
         setError(null);
         setIsSuccess(true);
@@ -213,9 +212,7 @@ export const usePayInvoice = () => {
         const tx = await contract.payInvoice(invoiceId);
 
         const txhash = await tx.wait();
-        // TODO: Should send the invoice email
-
-        updateInvoiceSentStatus(invoiceId);
+        updateInvoicePaidStatus(invoiceId);
         setData(txhash.hash);
         setError(null);
         setIsSuccess(true);

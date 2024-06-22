@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { GetServerSidePropsContext } from "next";
-import { retreiveInvoiceByInvoiceId } from "@/utils/supabase";
+import { retreiveInvoiceByInvoiceId, updateInvoiceSentStatus } from "@/utils/supabase";
 import { DetailedInvoice } from "@/utils/types";
 import Section from "@/components/Section";
 import Layout from "@/components/Layout";
@@ -21,12 +21,19 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
   const { address } = useAccount();
   const { createInvoice, isPending } = useCreateInvoice();
   const { approveER20, isPending: approveErc20Pending } = useApproveERC20Transaction();
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
 
   const onSendInvoice = async () => {
     try {
       const charge = ((Number(invoice.amount) * 5) / 100).toFixed(1);
       await approveER20(charge);
       await createInvoice(invoice.id, invoice.product.id, invoice.amount);
+      setIsSendingEmail(true);
+      await fetch("/api/sendMail", {
+        method: "POST",
+        body: JSON.stringify({ invoice }),
+      });
+      updateInvoiceSentStatus(invoice.id);
       toast.success("Invoice created successfully");
     } catch (err: any) {
       if (err.message.includes("_invoiceId already exists")) {
@@ -35,12 +42,15 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
         toast.error("Error while processing the transaction");
       }
       console.log(err);
+    } finally {
+      setIsSendingEmail(false);
     }
   };
 
   const buttonTitle = () => {
     if (approveErc20Pending) return "Pending Approval...";
-    if (isPending) return " Creating invoice...";
+    if (isPending) return "Creating invoice...";
+    if (isSendingEmail) return "Sending Email...";
     return "Send Invoice";
   };
   return (
@@ -106,12 +116,16 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
           <div className="mt-10 flex gap-5">
             <Button
               onClick={onSendInvoice}
-              disabled={invoice.sent || approveErc20Pending || isPending}
+              disabled={invoice.sent || approveErc20Pending || isPending || isSendingEmail}
               className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest"
             >
               {buttonTitle()}
             </Button>
-            <Button disabled={isPending || approveErc20Pending} className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white" variant="outline">
+            <Button
+              disabled={isPending || approveErc20Pending || isSendingEmail}
+              className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white"
+              variant="outline"
+            >
               Cancel
             </Button>
           </div>
