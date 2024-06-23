@@ -155,18 +155,18 @@ function CreateInvoiceForm() {
               <p className="text-white/40 max-md:text-sm">Quantity:</p>
               <input
                 type="number"
-                className="w-32 rounded-md bg-white/[6%] p-3 text-center font-semibold text-green-petrolium outline-none"
+                className="w-32 rounded-md bg-white/[2%] p-3 text-center font-semibold text-green-petrolium outline-none placeholder:text-[#4E837F]"
                 onChange={onProductQuantityChanges}
                 value={product.quantity}
               />
             </div>
             <div className="flex items-center gap-2">
               <p className="text-white/40 max-md:text-sm">Price</p>
-              <div className="rounded-md bg-white/[6%] p-3 font-semibold text-green-petrolium">{product.price}</div>
+              <div className="rounded-md bg-white/[2%] p-3 font-semibold text-green-petrolium">{product.price}</div>
             </div>
             <div className="flex items-center gap-2">
               <p className="text-white/40 max-md:text-sm">Amount</p>
-              <p className="rounded-md bg-white/[6%] p-3 font-semibold text-green-petrolium">{totalAmount}</p>
+              <p className="rounded-md bg-white/[2%] p-3 font-semibold text-green-petrolium">{totalAmount}</p>
             </div>
           </div>
         </div>

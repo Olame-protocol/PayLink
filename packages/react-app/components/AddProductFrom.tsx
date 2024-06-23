@@ -50,12 +50,40 @@ function AddProductFrom() {
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="flex w-full gap-5 max-md:flex-col">
           <div className="flex w-full flex-col gap-5">
-            <input name="name" type="text" required placeholder="Product name" onChange={onChange} className="rounded-lg bg-white/[6%] p-5 text-white outline-none" />
-            <input name="quantity" type="number" required placeholder="Quantity" onChange={onChange} className="rounded-lg bg-white/[6%] p-5 text-white outline-none" />
+            <input
+              name="name"
+              type="text"
+              required
+              placeholder="Product name"
+              onChange={onChange}
+              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
+            />
+            <input
+              name="quantity"
+              type="number"
+              required
+              placeholder="Quantity"
+              onChange={onChange}
+              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
+            />
           </div>
           <div className="flex w-full flex-col gap-5">
-            <input name="price" type="number" required placeholder="Price" onChange={onChange} className="rounded-lg bg-white/[6%] p-5 text-white outline-none" />
-            <input name="description" type="text" required placeholder="Description" onChange={onChange} className="rounded-lg bg-white/[6%] p-5 text-white outline-none" />
+            <input
+              name="price"
+              type="number"
+              required
+              placeholder="Price"
+              onChange={onChange}
+              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
+            />
+            <input
+              name="description"
+              type="text"
+              required
+              placeholder="Description"
+              onChange={onChange}
+              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
+            />
           </div>
         </div>
         <div className="mt-5 flex gap-5">

@@ -21,6 +21,12 @@ export default function Navbar() {
   const { connect } = useConnect();
   const { asPath, pathname } = useRouter();
   const isHome = pathname === "/";
+  const menuItems = [
+    { name: "Payments", path: "/payments", icon: <WalletIcon /> },
+    { name: "Links", path: "/links", icon: <LinkIcon /> },
+    { name: "Invoices", path: "/invoices", icon: <PaperLineIcon /> },
+    { name: "Dashboard", path: "/#", icon: <ChartIcon /> },
+  ];
 
   useEffect(() => {
     if (window.ethereum && window.ethereum.isMiniPay) {
@@ -35,12 +41,10 @@ export default function Navbar() {
         <>
           <Section>
             <div className="relative flex justify-between">
-              {/* <div className="absolute inset-y-0 left-0 flex items-center sm:hidden"></div> */}
               <div className="flex justify-center gap-20 py-5 sm:items-stretch sm:justify-start lg:py-10">
                 <Link href="/">
                   <PayLinkLogo className={clsx(isHome ? "text-green-petrolium" : "text-forest", "h-[45px] w-[171px] max-lg:w-[100px]")} />
                 </Link>
-
                 <div
                   className={clsx(
                     isHome
@@ -49,29 +53,24 @@ export default function Navbar() {
                     "flex items-center gap-10",
                   )}
                 >
-                  <Link href="/payments" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
-                    <WalletIcon />
-                    Payments
-                  </Link>
-                  <Link href="/links" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
-                    <LinkIcon />
-                    Links
-                  </Link>
-
-                  <Link href="/invoices" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
-                    <PaperLineIcon />
-                    Invoices
-                  </Link>
-
-                  <Link href="/#" className="inline-flex items-center gap-2 font-normal max-lg:flex max-lg:flex-col">
-                    <ChartIcon />
-                    Dashboard
-                  </Link>
+                  {menuItems.map((item) => (
+                    <Link key={item.path} href={item.path} passHref>
+                      <p
+                        className={clsx(
+                          "inline-flex items-center gap-2 pb-2 font-normal max-lg:flex max-lg:flex-col",
+                          asPath === item.path ? "rounded-lg border-b-8 border-[#0E3A36] font-extrabold" : "font-normal",
+                        )}
+                      >
+                        {item.icon}
+                        {item.name}
+                      </p>
+                    </Link>
+                  ))}
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {isHome ? (
-                  <Link href="/payments" className="rounded-lg bg-white px-6 py-4 font-semibold text-forest">
+                  <Link href="/payments" className="rounded-lg bg-white px-8 py-3 text-sm font-medium text-forest md:px-10 md:py-4 md:text-base md:font-semibold">
                     Launch app
                   </Link>
                 ) : (
