@@ -1,5 +1,4 @@
 import { Disclosure } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { useConnect } from "wagmi";
 import { injected } from "wagmi/connectors";
@@ -11,22 +10,21 @@ import PayLinkLogo from "./ui/payLink/icons/PayLinkLogo";
 import WalletIcon from "./ui/payLink/icons/WalletIcon";
 import PaperLineIcon from "./ui/payLink/icons/PaperLineIcon";
 import LinkIcon from "./ui/payLink/icons/LinkIcon";
-import ChartIcon from "./ui/payLink/icons/ChartIcon";
 import Section from "./Section";
 import clsx from "clsx";
 import ConnectWalletButton from "@/components/ui/payLink/ConnectWalletButton";
+
+const menuItems = [
+  { name: "Payments", path: "/payments", icon: <WalletIcon /> },
+  { name: "Links", path: "/links", icon: <LinkIcon /> },
+  { name: "Invoices", path: "/invoices", icon: <PaperLineIcon /> },
+];
 
 export default function Navbar() {
   const [hideConnectBtn, setHideConnectBtn] = useState(false);
   const { connect } = useConnect();
   const { asPath, pathname } = useRouter();
   const isHome = pathname === "/";
-  const menuItems = [
-    { name: "Payments", path: "/payments", icon: <WalletIcon /> },
-    { name: "Links", path: "/links", icon: <LinkIcon /> },
-    { name: "Invoices", path: "/invoices", icon: <PaperLineIcon /> },
-    { name: "Dashboard", path: "/#", icon: <ChartIcon /> },
-  ];
 
   useEffect(() => {
     if (window.ethereum && window.ethereum.isMiniPay) {
