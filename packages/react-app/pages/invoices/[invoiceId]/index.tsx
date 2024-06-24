@@ -35,7 +35,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
         method: "POST",
         body: JSON.stringify({ invoice: { ...invoice, invoicePaymentLink: `${origin}/invoices/${invoice.id}/payment` } }),
       });
-      updateInvoiceSentStatus(invoice.id);
+      await updateInvoiceSentStatus(invoice.id);
       toast.success("Invoice created successfully");
     } catch (err: any) {
       if (err.message.includes("_invoiceId already exists")) {
@@ -108,7 +108,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
             </p>
           </InvoiceSectionWrapper>
           <InvoiceSectionWrapper className="flex flex-col justify-between border-none bg-green-petrolium text-forest">
-            <a href={`${origin}/invoices/${invoice.id}/payment`}>
+            <a href={`${typeof origin !== "undefined" ? origin : ""}/invoices/${invoice.id}/payment`}>
               <span className="font-semibold">Payment link:</span> {`${invoice.id}`}
             </a>
             <p>
@@ -122,7 +122,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
             </p>
           </InvoiceSectionWrapper>
         </div>
-        {!invoice.paid && (
+        {!invoice.paid ? (
           <div className="mt-10 flex gap-5">
             <Button
               onClick={onSendInvoice}
@@ -140,6 +140,8 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
               {isCanceling ? "Canceling..." : "Cancel"}
             </Button>
           </div>
+        ) : (
+          <div className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">Paid invoice</div>
         )}
       </Section>
     </Layout>

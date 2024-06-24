@@ -212,7 +212,7 @@ export const usePayInvoice = () => {
         const tx = await contract.payInvoice(invoiceId);
 
         const txhash = await tx.wait();
-        updateInvoicePaidStatus(invoiceId);
+        await updateInvoicePaidStatus(invoiceId);
         setData(txhash.hash);
         setError(null);
         setIsSuccess(true);
