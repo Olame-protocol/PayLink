@@ -27,8 +27,8 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
     try {
       await approveER20(invoice.amount);
       await payInvoice(invoice.id);
-      toast.success("Invoice created successfully");
-      router.push(`invoices/${invoice.id}`);
+      toast.success("Invoice paid successfully");
+      router.push(`/invoices/${invoice.id}`);
     } catch (err: any) {
       if (err.message.includes("_invoiceId already exists")) {
         toast.error("Invoice ID already exists.");
@@ -103,7 +103,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
             </p>
           </InvoiceSectionWrapper>
         </div>
-        {!invoice.paid && (
+        {!invoice.paid ? (
           <div className="mt-10 flex gap-5">
             <Button
               onClick={onPayInvoice}
@@ -113,6 +113,8 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
               {buttonTitle()}
             </Button>
           </div>
+        ) : (
+          <div className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">Paid invoice</div>
         )}
       </Section>
     </Layout>
