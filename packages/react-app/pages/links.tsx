@@ -71,7 +71,7 @@ export default function Links() {
           {links.map((link) => {
             return (
               <div key={link.id} className="flex justify-between gap-3 rounded-lg bg-white/5 px-4 py-6">
-                <p className="text-velix-primary dark:text-velix-dark-white text-base text-blue-500 underline">
+                <p className="text-velix-primary dark:text-velix-dark-white text-base text-green-petrolium underline">
                   {truncateString(`${origin}/payments/${link.payment_link_id}?type=${activeTab}`)}
                 </p>
                 <div className="flex gap-3 text-[#4E837F]">
