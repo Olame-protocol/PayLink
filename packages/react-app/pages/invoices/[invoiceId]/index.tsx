@@ -133,7 +133,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
             </Button>
             <Button
               onClick={oncancelInvoice}
-              disabled={isPending || approveErc20Pending || isSendingEmail}
+              disabled={isPending || approveErc20Pending || isSendingEmail || invoice.sent}
               className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white"
               variant="outline"
             >
