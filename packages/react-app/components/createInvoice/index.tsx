@@ -154,6 +154,7 @@ function CreateInvoiceForm() {
               <p className="text-white/40 max-md:text-sm">Quantity:</p>
               <input
                 type="number"
+                min={1}
                 className="w-32 rounded-md bg-white/[2%] p-3 text-center font-semibold text-green-petrolium outline-none placeholder:text-[#4E837F]"
                 onChange={onProductQuantityChanges}
                 value={product.quantity}

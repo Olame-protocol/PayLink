@@ -37,7 +37,7 @@ function AddProductFrom() {
     setProductData({
       name: "",
       description: "",
-      quantity: 0,
+      quantity: 1,
       price: 0,
       owner: "0x00",
     });
@@ -48,33 +48,24 @@ function AddProductFrom() {
   return (
     <div className="w-full rounded-lg bg-white/[8%] p-5">
       <form onSubmit={(e) => e.preventDefault()}>
-        <div className="flex w-full gap-5 max-md:flex-col">
-          <div className="flex w-full flex-col gap-5">
-            <input
-              name="name"
-              type="text"
-              required
-              placeholder="Product name"
-              onChange={onChange}
-              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
-            />
-            <input
-              name="quantity"
-              type="number"
-              required
-              placeholder="Quantity"
-              onChange={onChange}
-              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
-            />
-          </div>
-          <div className="flex w-full flex-col gap-5">
+        <div className="flex w-full flex-col gap-5 max-md:flex-col">
+          <input
+            name="name"
+            type="text"
+            required
+            placeholder="Product name"
+            onChange={onChange}
+            className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:placeholder:text-base"
+          />
+          <div className="flex w-full flex-col gap-5 lg:flex-row">
             <input
               name="price"
               type="number"
+              min={1}
               required
               placeholder="Price"
               onChange={onChange}
-              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
+              className="w-full rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:placeholder:text-base"
             />
             <input
               name="description"
@@ -82,7 +73,7 @@ function AddProductFrom() {
               required
               placeholder="Description"
               onChange={onChange}
-              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
+              className="w-full rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:placeholder:text-base"
             />
           </div>
         </div>

@@ -33,7 +33,7 @@ export default function Index() {
             <div className="flex flex-col">
               <div className="mb-14 flex flex-col gap-5 max-md:mb-5 max-md:gap-2">
                 <h2 className="text-xl font-black text-green-petrolium lg:text-[2.5rem]">Add a client</h2>
-                <p className="font-normal text-white">Manage and track all your clients</p>
+                <p className="text-xs font-normal text-white md:text-base">Track your clients and invoices</p>
               </div>
 
               <div>
@@ -43,7 +43,7 @@ export default function Index() {
                       <TabsTrigger
                         key={tab}
                         value={tab.toLowerCase()}
-                        className="mr-4 rounded-lg px-4 py-2 text-base text-white data-[state=active]:bg-green-petrolium data-[state=active]:text-forest lg:px-12 lg:py-5"
+                        className="mr-[-6px] rounded-sm px-4 py-2 text-xs text-white data-[state=active]:bg-green-petrolium data-[state=active]:text-forest md:mr-4 md:rounded-lg md:text-base lg:px-12 lg:py-5"
                       >
                         {tab}
                       </TabsTrigger>
