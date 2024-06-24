@@ -33,7 +33,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
       setIsSendingEmail(true);
       await fetch("/api/sendMail", {
         method: "POST",
-        body: JSON.stringify({ ...invoice, invoicePaymentLink: `${origin}/invoices/${invoice.id}/payment` }),
+        body: JSON.stringify({ invoice: { ...invoice, invoicePaymentLink: `${origin}/invoices/${invoice.id}/payment` } }),
       });
       updateInvoiceSentStatus(invoice.id);
       toast.success("Invoice created successfully");
