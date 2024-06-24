@@ -1,9 +1,11 @@
+import { ERC20_ABI } from "@/abi/ERC20";
 import { PAYLINK_ABI } from "@/abi/paylink";
-import { PAYLINK_CONTRACT_ADDRESS } from "@/utils/const";
+import { useBalanceStore } from "@/store/balanceState";
+import { ERC20_CONTRACT_ADDRESS, PAYLINK_CONTRACT_ADDRESS } from "@/utils/const";
 import { saveFixedPaymentLinks, saveGlobalPaymentLinks, savePaymentRecord, updateInvoicePaidStatus, updateInvoiceSentStatus } from "@/utils/supabase";
 import Web3 from "@/utils/web3";
-import { ContractTransactionReceipt, parseUnits } from "ethers";
-import { useCallback, useState } from "react";
+import { ContractTransactionReceipt, formatUnits, parseUnits } from "ethers";
+import { useCallback, useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
 type PaymentLinkType = "global" | "fixed";
@@ -244,4 +246,25 @@ export const usePayInvoice = () => {
     error,
     txhash: data,
   };
+};
+export const usecUSDBalance = () => {
+   const { setcUSDBalance } = useBalanceStore();
+  const { address } = useAccount();
+
+  const getBalances = useCallback(async () => {
+    if (!address || !window) return;
+    try {
+      const contract = await new Web3().contract(ERC20_CONTRACT_ADDRESS, ERC20_ABI, address);
+      const balance = await Promise.all([contract.balanceOf(address)]);
+      setcUSDBalance(formatUnits(balance.toString()));
+    } catch (err) {
+      console.log(err);
+    }
+  }, [address, setcUSDBalance]);
+
+  useEffect(() => {
+    if (address) getBalances();
+  }, [address, getBalances, setcUSDBalance]);
+
+  return { getBalances };
 };

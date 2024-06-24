@@ -40,7 +40,8 @@
     "ulid": "^2.3.0",
     "uuidv4": "^6.2.13",
     "viem": "2.8.18",
-    "wagmi": "2.5.12"
+    "wagmi": "2.5.12",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/node": "^20.2.1",
