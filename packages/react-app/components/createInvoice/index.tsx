@@ -30,6 +30,7 @@ function CreateInvoiceForm() {
   });
   const router = useRouter();
   const { address } = useAccount();
+  const [savingInvoice, setSavingInvoice] = useState(false);
 
   useEffect(() => {
     const calculateTheTotalAmount = () => {
@@ -75,6 +76,7 @@ function CreateInvoiceForm() {
       toast.error("Please select an image for your branding", { duration: 3500 });
       return;
     }
+    setSavingInvoice(true);
     if (!branding && brandingImageFile && brandingData.name && brandingData.description && brandingData.contact && brandingData.address) {
       const { data, error } = await saveBrandingImage(brandingImageFile);
       if (error) {
@@ -91,11 +93,11 @@ function CreateInvoiceForm() {
         contact: brandingData.contact,
         address: brandingData.address,
       });
+      setSavingInvoice(false);
       if (saveBrandingError) {
         toast.error("Could not save the branding");
         return;
       }
-      console.log({ savedBranding });
       savedBrandingId = savedBranding[0].id;
       setBranding(savedBranding[0]);
     }
@@ -114,7 +116,6 @@ function CreateInvoiceForm() {
         toast.error("Could not save the branding");
         return;
       }
-      console.log({ savedInvoice });
       router.push("/invoices/" + savedInvoice[0].id);
     }
   };
@@ -126,8 +127,6 @@ function CreateInvoiceForm() {
   const onProductQuantityChanges = (e: ChangeEvent<HTMLInputElement>) => {
     setProduct((prev: any) => ({ ...prev, quantity: e.target.value as string }));
   };
-
-  const onSendInvoice = () => {};
 
   const onCancel = () => {
     setBrandingImageFile(null);
@@ -172,10 +171,19 @@ function CreateInvoiceForm() {
         </div>
       )}
       <div className="flex gap-5">
-        <Button onClick={isPreviewMode ? onSendInvoice : onContinueToInvoicePreview} className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">
-          {isPreviewMode ? "Send Invoice" : "Save and continue"}
+        <Button
+          disabled={savingInvoice}
+          onClick={onContinueToInvoicePreview}
+          className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest disabled:opacity-90"
+        >
+          {savingInvoice ? "Saving invoice..." : "Save and continue"}
         </Button>
-        <Button onClick={onCancel} className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white" variant="outline">
+        <Button
+          disabled={savingInvoice}
+          onClick={onCancel}
+          className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white disabled:opacity-90"
+          variant="outline"
+        >
           Cancel
         </Button>
       </div>

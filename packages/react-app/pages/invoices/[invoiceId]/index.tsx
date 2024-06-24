@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import { GetServerSidePropsContext } from "next";
-import { retreiveInvoiceByInvoiceId, updateInvoiceSentStatus } from "@/utils/supabase";
+import { deleteInvoice, retreiveInvoiceByInvoiceId, updateInvoiceSentStatus } from "@/utils/supabase";
 import { DetailedInvoice } from "@/utils/types";
 import Section from "@/components/Section";
 import Layout from "@/components/Layout";
@@ -12,6 +12,7 @@ import { useCreateInvoice } from "@/hooks/usePaylink";
 import { useApproveERC20Transaction } from "@/hooks/useErc20";
 import toast from "react-hot-toast";
 import { FRONTEND_URL } from "@/utils/const";
+import { useRouter } from "next/router";
 
 function InvoiceSectionWrapper({ children, className = "" }: { children: ReactNode; className?: string }) {
   return <div className={cn("border-b border-white/[6%] px-10 py-10 max-md:px-5", className)}>{children}</div>;
@@ -22,6 +23,8 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
   const { createInvoice, isPending } = useCreateInvoice();
   const { approveER20, isPending: approveErc20Pending } = useApproveERC20Transaction();
   const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [isCanceling, setIsCanceling] = useState(false);
+  const router = useRouter();
 
   const onSendInvoice = async () => {
     try {
@@ -53,6 +56,14 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
     if (isSendingEmail) return "Sending Email...";
     return "Send Invoice";
   };
+
+  const oncancelInvoice = async () => {
+    setIsCanceling(true);
+    await deleteInvoice(invoice.id);
+    setIsCanceling(false);
+    router.replace("/invoices");
+  };
+
   return (
     <Layout className="bg-green-petrolium">
       <Section className="my-32 min-h-96 rounded-2xl bg-forest px-5 py-5 lg:px-36 lg:py-16">
@@ -122,11 +133,12 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
               {buttonTitle()}
             </Button>
             <Button
+              onClick={oncancelInvoice}
               disabled={isPending || approveErc20Pending || isSendingEmail}
               className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white"
               variant="outline"
             >
-              Cancel
+              {isCanceling ? "Canceling..." : "Cancel"}
             </Button>
           </div>
         )}
