@@ -153,7 +153,17 @@ export const deleteInvoice = (invoiceId: string) => {
 };
 
 export const retrieveInvoicesByWalletAddress = (address: `0x${string}`) => {
-  return supabase.from(INVOICES_TABLE_NAME).select("*").eq("owner", address);
+  return supabase
+    .from(INVOICES_TABLE_NAME)
+    .select(
+      `
+  *,
+  branding(*),
+  client(*),
+  product(*)
+`,
+    )
+    .eq("owner", address);
 };
 
 export const retreiveInvoiceByInvoiceId = (id: string) => {

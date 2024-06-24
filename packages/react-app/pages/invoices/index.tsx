@@ -7,6 +7,7 @@ import CreateInvoiceForm from "@/components/createInvoice";
 import ClientList from "@/components/ClientList";
 import { useState } from "react";
 import ProductsList from "@/components/ProductList";
+import InvoiceList from "@/components/InvoiceList";
 
 export type Tab = "fixed" | "global";
 
@@ -66,18 +67,17 @@ export default function Index() {
         </div>
       </Section>
 
-      {currentTab.toLowerCase() !== tabList[2].toLowerCase() && (
-        <Section className="mb-10 mt-16 rounded-2xl bg-forest">
-          <div className="flex justify-between gap-8 px-5 py-5 lg:px-36 lg:py-16">
-            <div className="mx-auto w-full text-left">
-              <div className="w-full overflow-x-auto">
-                {currentTab.toLowerCase() === tabList[0].toLowerCase() && <ClientList />}
-                {currentTab.toLowerCase() === tabList[1].toLowerCase() && <ProductsList />}
-              </div>
+      <Section className="mb-10 mt-16 rounded-2xl bg-forest">
+        <div className="flex justify-between gap-8 px-5 py-5 lg:px-36 lg:py-16">
+          <div className="mx-auto w-full text-left">
+            <div className="w-full overflow-x-auto">
+              {currentTab.toLowerCase() === tabList[0].toLowerCase() && <ClientList />}
+              {currentTab.toLowerCase() === tabList[1].toLowerCase() && <ProductsList />}
+              {currentTab.toLowerCase() === tabList[2].toLowerCase() && <InvoiceList />}
             </div>
           </div>
-        </Section>
-      )}
+        </div>
+      </Section>
     </Layout>
   );
 }
