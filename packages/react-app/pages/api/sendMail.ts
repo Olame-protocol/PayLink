@@ -8,7 +8,7 @@ const mailersend = new MailerSend({
 });
 
 type Data = {
-  invoice: DetailedInvoice;
+  invoice: DetailedInvoice & { invoicePaymentLink: string };
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -77,7 +77,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
         {
           var: "invoicePaymentLink",
-          value: FRONTEND_URL + "invoices/" + body.invoice.id + "/payment",
+          value: body.invoice.invoicePaymentLink,
         },
         {
           var: "productDescription",

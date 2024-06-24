@@ -11,7 +11,6 @@ import { useAccount } from "wagmi";
 import { useCreateInvoice } from "@/hooks/usePaylink";
 import { useApproveERC20Transaction } from "@/hooks/useErc20";
 import toast from "react-hot-toast";
-import { FRONTEND_URL } from "@/utils/const";
 import { useRouter } from "next/router";
 
 function InvoiceSectionWrapper({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -34,7 +33,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
       setIsSendingEmail(true);
       await fetch("/api/sendMail", {
         method: "POST",
-        body: JSON.stringify({ invoice }),
+        body: JSON.stringify({ ...invoice, invoicePaymentLink: `${origin}/invoices/${invoice.id}/payment` }),
       });
       updateInvoiceSentStatus(invoice.id);
       toast.success("Invoice created successfully");
@@ -109,7 +108,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
             </p>
           </InvoiceSectionWrapper>
           <InvoiceSectionWrapper className="flex flex-col justify-between border-none bg-green-petrolium text-forest">
-            <a href={`${FRONTEND_URL}invoices/${invoice.id}/payment`}>
+            <a href={`${origin}/invoices/${invoice.id}/payment`}>
               <span className="font-semibold">Payment link:</span> {`${invoice.id}`}
             </a>
             <p>
