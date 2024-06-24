@@ -20,10 +20,12 @@ function InvoiceSectionWrapper({ children, className = "" }: { children: ReactNo
 function Invoice({ invoice }: { invoice: DetailedInvoice }) {
   const { address } = useAccount();
   const { payInvoice, isPending } = usePayInvoice();
+  const { approveER20, isPending: approvalPending } = useApproveERC20Transaction();
   const router = useRouter();
 
   const onPayInvoice = async () => {
     try {
+      await approveER20(invoice.amount);
       await payInvoice(invoice.id);
       toast.success("Invoice created successfully");
       router.push(`invoices/${invoice.id}`);
@@ -38,6 +40,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
   };
 
   const buttonTitle = () => {
+    if (approvalPending) return "Approval pending...";
     if (isPending) return "Paying invoice...";
     return "Pay invoice now";
   };
@@ -102,7 +105,11 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
         </div>
         {!invoice.paid && (
           <div className="mt-10 flex gap-5">
-            <Button onClick={onPayInvoice} disabled={invoice.paid || isPending} className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">
+            <Button
+              onClick={onPayInvoice}
+              disabled={invoice.paid || isPending || approvalPending}
+              className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest"
+            >
               {buttonTitle()}
             </Button>
           </div>
