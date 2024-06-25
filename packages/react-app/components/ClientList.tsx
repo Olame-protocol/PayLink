@@ -39,9 +39,22 @@ function  ClientList() {
               <BsThreeDotsVertical />
             </TableCell>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {clients.map((client) => (
+            <TableRow key={client.id} className="cursor-pointer border-b border-white/30 text-green-petrolium hover:bg-white/[8%]">
+              <TableCell className="font-medium">{client.name}</TableCell>
+              <TableCell>{client.email}</TableCell>
+              <TableCell className="line-clamp-1">{client.service}</TableCell>
+              <TableCell>{client.phone.length > 4 ? client.phone : "--"}</TableCell>
+              <TableCell className="flex items-center justify-center">
+                <BsThreeDotsVertical />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }
 
