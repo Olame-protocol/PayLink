@@ -114,7 +114,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
             </Button>
           </div>
         ) : (
-          <div className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">Paid invoice</div>
+          <div className="t mt-2 w-full rounded-md bg-green-500 py-6 text-center text-base text-white">Invoice paid</div>
         )}
       </Section>
     </Layout>

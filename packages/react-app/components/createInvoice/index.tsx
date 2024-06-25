@@ -172,7 +172,7 @@ function CreateInvoiceForm() {
         </div>
       )}
       <div className="flex gap-5">
-        <Button disabled={savingInvoice} onClick={onContinueToInvoicePreview} className="w-full rounded-md bg-white px-5 py-4 text-xs text-forest lg:py-7 lg:text-lg">
+        <Button disabled={savingInvoice} onClick={onContinueToInvoicePreview} className="w-full rounded-md hover:bg-white bg-white px-5 py-4 text-xs text-forest lg:py-7 lg:text-lg">
           {savingInvoice ? "Saving invoice..." : "Save and continue"}
         </Button>
         <Button
