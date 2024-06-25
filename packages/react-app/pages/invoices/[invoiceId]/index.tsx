@@ -5,7 +5,7 @@ import { DetailedInvoice } from "@/utils/types";
 import Section from "@/components/Section";
 import Layout from "@/components/Layout";
 import Image from "next/image";
-import { cn, truncateString } from "@/utils/utils";
+import { cn } from "@/utils/utils";
 import { Button } from "@/components/ui/button";
 import { useAccount } from "wagmi";
 import { useCreateInvoice } from "@/hooks/usePaylink";
