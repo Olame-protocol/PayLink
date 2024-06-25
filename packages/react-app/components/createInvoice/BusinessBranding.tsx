@@ -31,14 +31,14 @@ export default function BusinessBranding({ onBrandingChange, onDropFIle, brandin
   }, [address]);
 
   return (
-    <div className="rounded-lg bg-white/[8%] px-5 py-5">
+    <div className="rounded-lg bg-white/[8%] px-5 py-5 font-thin">
       <div className="flex w-full items-center gap-3 rounded-lg bg-white/[6%] px-3">
         <Select onValueChange={(value) => onSelectBranding(brandings.filter(({ name }) => name.toLowerCase() === value.toLowerCase())[0])}>
-          <SelectTrigger className="w-full border-none bg-transparent px-0 py-8 text-white outline-none ring-transparent focus:border-none focus:outline-none focus:ring-transparent">
-            <SelectValue className="text-white/[6%]" placeholder="Search for brandings" />
+          <SelectTrigger className="palceholder:text-[#62a6a1] w-full border-none bg-transparent px-0 py-6 text-sm font-thin text-white outline-none ring-transparent focus:border-none focus:outline-none focus:ring-transparent">
+            <SelectValue className="border-none text-sm text-white/[6%] outline-none" placeholder="Search for brandings" />
           </SelectTrigger>
 
-          <SelectContent className="border-none bg-forest text-green-petrolium ring-transparent focus:outline-none focus:ring-transparent">
+          <SelectContent className="w-full border-none bg-forest text-green-petrolium ring-transparent focus:outline-none focus:ring-transparent">
             {brandings.length > 0 ? (
               brandings.map((branding) => (
                 <SelectItem value={branding.name} key={branding.id}>
@@ -53,15 +53,15 @@ export default function BusinessBranding({ onBrandingChange, onDropFIle, brandin
       </div>
 
       <div className="mt-5 flex items-center justify-between">
-        <p className="text-base text-white">Create business branding</p>
+        <p className="text-sm font-thin text-white">Create business branding</p>
         <button onClick={() => setBrandingUnwrapped((prev) => !prev)}>
-          <ChevronDownIcon className={`h-6 w-5 cursor-pointer text-green-petrolium transition-all ${brandingUnwrapped ? "rotate-180" : "rotate-0"}`} />
+          <ChevronDownIcon className={`h-4 w-5 cursor-pointer text-green-petrolium transition-all ${brandingUnwrapped ? "rotate-180" : "rotate-0"}`} />
         </button>
       </div>
       {brandingUnwrapped && (
         <div className="mt-5 flex gap-2 max-md:flex-col">
           <div className="relative flex w-[15%] items-center justify-center overflow-hidden rounded-lg max-md:h-56 max-md:w-full">
-            <Image src={brandingPreview || "/brand-logo-placeholder.png"} alt="" fill className="scale-110 object-contain" />
+            <Image src={brandingPreview || "/brand-logo-placeholder.png"} alt="" fill className="scale-10 w-full object-contain" />
             <Dropzone onDrop={onDropFIle}>
               {({ getRootProps, getInputProps }) => (
                 <section className="z-10">
@@ -87,9 +87,15 @@ export default function BusinessBranding({ onBrandingChange, onDropFIle, brandin
                   type="text"
                   required
                   placeholder="Enter your business name"
-                  className="rounded-lg bg-white/[6%] p-5 text-white outline-none"
+                  className="w-full rounded-sm bg-white/5 px-5 py-4 text-sm text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:py-8 md:placeholder:text-base"
                 />
-                <input name="address" onChange={onBrandingChange} type="text" placeholder="Business address" className="rounded-lg bg-white/[6%] p-5 text-white outline-none" />
+                <input
+                  name="address"
+                  onChange={onBrandingChange}
+                  type="text"
+                  placeholder="Business address"
+                  className="w-full rounded-sm bg-white/5 px-5 py-4 text-sm text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:py-8 md:placeholder:text-base"
+                />
               </div>
               <div className="flex w-full flex-col gap-2">
                 <input
@@ -98,7 +104,7 @@ export default function BusinessBranding({ onBrandingChange, onDropFIle, brandin
                   type="text"
                   required
                   placeholder="Business description"
-                  className="rounded-lg bg-white/[6%] p-5 text-white outline-none"
+                  className="w-full rounded-sm bg-white/5 px-5 py-4 text-sm text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:py-8 md:placeholder:text-base"
                 />
                 <input
                   name="contact"
@@ -106,7 +112,7 @@ export default function BusinessBranding({ onBrandingChange, onDropFIle, brandin
                   onChange={onBrandingChange}
                   type="text"
                   placeholder="Contact number"
-                  className="rounded-lg bg-white/[6%] p-5 text-white outline-none"
+                  className="w-full rounded-sm bg-white/5 px-5 py-4 text-sm text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:py-8 md:placeholder:text-base"
                 />
               </div>
             </div>

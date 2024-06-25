@@ -106,7 +106,7 @@ export default function Payments() {
     e.preventDefault();
     try {
       if (type === "global" && !formData.description) return setErrorMessage("Enter purpose");
-      else if (type === "fixed" && formData.amount.length === 0 || formData.description.length === 0) return setErrorMessage("All inputs are required");
+      else if ((type === "fixed" && formData.amount.length === 0) || formData.description.length === 0) return setErrorMessage("All inputs are required");
       else {
         await approveER20(type === "global" ? "2" : linkCharge);
         await createPaymentLink(type, {
@@ -132,24 +132,24 @@ export default function Payments() {
 
   return (
     <Layout className="bg-green-petrolium">
-      <Section className="mb-24 mt-32 rounded-2xl bg-forest">
+      <Section className="mb-24 mt-24 rounded-lg bg-forest lg:mt-32">
         <div className="flex justify-between gap-8 px-5 py-5 lg:px-36 lg:py-16">
           <div className="mx-auto w-full text-left">
             <div className="flex flex-col">
               <div className="mb-14 flex flex-col gap-5">
-                <h2 className="text-xl font-black text-green-petrolium lg:text-[2.5rem]">Create a payment link</h2>
-                <p className="font-normal text-white">Generate payment links effortlessly and simplify transactions.</p>
+                <h2 className="text-xl font-semibold text-green-petrolium md:font-black lg:text-[2.5rem]">Create a payment link</h2>
+                <p className="-mt-3 text-sm font-thin text-white md:-mt-0 md:text-base md:font-normal">Generate payment links effortlessly and simplify transactions.</p>
               </div>
 
-              <div className="mb-5 flex justify-start rounded-lg bg-white/[8%] p-4 text-base font-semibold">
+              <div className="-mt-7 mb-4 flex justify-start rounded-md bg-white/[8%] p-2 py-3 text-base font-semibold md:-mt-0 md:p-4 lg:mb-5">
                 <button
-                  className={`mr-4 rounded-lg px-4 py-2 lg:px-12 lg:py-5 ${activeTab === "fixed" ? "bg-green-petrolium text-forest" : "text-white"}`}
+                  className={`mr-4 rounded-sm px-3 py-2 text-xs font-normal md:text-base lg:px-12 lg:py-5 ${activeTab === "fixed" ? "bg-green-petrolium text-forest" : "text-white"}`}
                   onClick={() => onSetActiveTab("fixed")}
                 >
                   Fixed
                 </button>
                 <button
-                  className={`mr-4 rounded-lg px-4 py-2 lg:px-12 lg:py-5 ${activeTab === "global" ? "bg-green-petrolium text-forest" : "text-white"}`}
+                  className={`mr-4 rounded-sm px-4 py-2 text-xs font-normal md:text-base lg:px-12 lg:py-5 ${activeTab === "global" ? "bg-green-petrolium text-forest" : "text-white"}`}
                   onClick={() => onSetActiveTab("global")}
                 >
                   Global
@@ -158,15 +158,15 @@ export default function Payments() {
               {activeTab === "fixed" && (
                 <>
                   <form className="flex flex-col gap-5 py-2">
-                    <div className="flex w-full flex-row gap-5 max-md:flex-col">
+                    <div className="-mb-1.5 flex w-full flex-row gap-3 max-md:flex-col md:mb-2 md:gap-6">
                       <input
                         required={true}
                         type="text"
                         value={formData.description}
                         name="description"
                         onChange={onFormInputChange}
-                        placeholder="Service"
-                        className="w-full rounded-lg bg-white/5 px-5 py-8 text-white outline-none placeholder:text-[#4E837F]"
+                        placeholder="What's your service"
+                        className="w-full rounded-md bg-white/5 px-5 py-4 text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:py-8 md:placeholder:text-base"
                       />
                       <input
                         required
@@ -176,14 +176,14 @@ export default function Payments() {
                         onChange={onFormInputChange}
                         placeholder="0.0cUSD"
                         min={1}
-                        className={`w-5/5 rounded-lg bg-white/5 px-4 py-3 text-white outline-none placeholder:text-[#4E837F] ${!errorMessage?.startsWith("All") ? "" : "border-2 border-red-600"}`}
+                        className={`w-5/5 rounded-md bg-white/5 px-5 py-4 text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:py-8 md:placeholder:text-base ${!errorMessage?.startsWith("All") ? "" : "border-2 border-red-600"}`}
                       />
                     </div>
                     {errorMessage && <div className="font-space-grotesk -mt-3 w-fit rounded-md bg-red-600 px-2 py-1 text-sm text-white">{errorMessage}</div>}
                     <button
                       disabled={Number(linkCharge) > Number(cUSDBalance)}
                       onClick={(e) => onGeneratePaymentLink(e, "fixed")}
-                      className="w-full rounded-lg bg-white px-5 py-5 text-lg font-medium text-forest lg:py-8"
+                      className="w-full rounded-md bg-white px-5 py-4 text-xs text-forest lg:py-7 lg:text-lg lg:font-medium"
                     >
                       {buttonTitle()}
                     </button>
@@ -192,7 +192,7 @@ export default function Payments() {
               )}
               {activeTab === "global" && (
                 <>
-                  <form className="flex flex-col gap-5 py-2">
+                  <form className="md:mb- flex flex-col gap-3 py-2 md:mb-2 md:gap-6">
                     <input
                       required
                       type="text"
@@ -200,9 +200,12 @@ export default function Payments() {
                       value={formData.description}
                       onChange={onFormInputChange}
                       placeholder="Purpose"
-                      className="rounded-lg bg-white/5 px-5 py-8 text-white outline-none placeholder:text-[#4E837F]"
+                      className="w-full rounded-md bg-white/5 px-5 py-4 text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:py-8 md:placeholder:text-base"
                     />
-                    <button onClick={(e) => onGeneratePaymentLink(e, "global")} className="w-full rounded-lg bg-white px-5 py-5 text-lg font-medium text-forest lg:py-8">
+                    <button
+                      onClick={(e) => onGeneratePaymentLink(e, "global")}
+                      className="w-full rounded-md bg-white px-5 py-4 text-xs text-forest lg:py-7 lg:text-lg lg:font-medium"
+                    >
                       {buttonTitle()}
                     </button>
                   </form>
