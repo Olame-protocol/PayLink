@@ -36,6 +36,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
         body: JSON.stringify({ invoice: { ...invoice, invoicePaymentLink: `${origin}/invoices/${invoice.id}/payment` } }),
       });
       await updateInvoiceSentStatus(invoice.id);
+      router.reload();
       toast.success("Invoice created successfully");
     } catch (err: any) {
       if (err.message.includes("_invoiceId already exists")) {
