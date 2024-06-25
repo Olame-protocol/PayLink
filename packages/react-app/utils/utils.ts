@@ -1,6 +1,6 @@
 import { ClassNameValue, twMerge } from "tailwind-merge";
 
-export const truncateString = (address?: string, startingCharacters = 20, endingCharacters = 20): string => {
+export const truncateString = (address?: string, startingCharacters = 15, endingCharacters = 15): string => {
   if (!address) return "";
   return `${address.slice(0, startingCharacters)}...${address.slice(address.length - endingCharacters)}`;
 };

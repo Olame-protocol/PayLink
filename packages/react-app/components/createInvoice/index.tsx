@@ -147,23 +147,24 @@ function CreateInvoiceForm() {
       <AddInvoiceClient onSelectClient={onSelectClient} onSelectInvoicePaymentDueDate={setInvoiceDueDate} />
       <AddInvoiceProduct onSelectProduct={onSelectProduct} />
       {product && (
-        <div className="flex w-full items-center justify-between rounded-lg bg-white/[8%] p-5">
-          <h2 className="w-fit font-semibold text-green-petrolium">{product.name}</h2>
-          <div className="flex w-fit items-center gap-5">
-            <div className="flex items-center gap-2">
-              <p className="text-white/40 max-md:text-sm">Quantity:</p>
+        <div className="flex w-full flex-col items-center justify-between rounded-lg bg-white/[8%] p-5 md:flex-row">
+          <h2 className="w-full text-sm text-green-petrolium md:w-fit font-thin">{product.name}</h2>
+          <div className="flex w-full flex-col items-center gap-3 md:gap-5 md:w-fit md:flex-row">
+            <div className="flex w-full flex-col md:items-center gap-2 md:w-auto md:flex-row mt-3">
+              <p className="text-left text-xs font-thin text-white/40 max-md:text-sm">Quantity:</p>
               <input
                 type="number"
-                className="w-32 rounded-md bg-white/[2%] p-3 text-center font-semibold text-green-petrolium outline-none placeholder:text-[#4E837F]"
+                min={1}
+                className="w-full rounded-sm bg-white/[2%] p-3 text-sm md:text-base md:font-semibold text-green-petrolium outline-none placeholder:text-[#4E837F] md:w-32"
                 onChange={onProductQuantityChanges}
                 value={product.quantity}
               />
             </div>
-            <div className="flex items-center gap-2">
-              <p className="text-white/40 max-md:text-sm">Price</p>
-              <div className="rounded-md bg-white/[2%] p-3 font-semibold text-green-petrolium">{product.price}</div>
+            <div className="flex flex-col md:flex-row justify-start md:items-center gap-2 w-full md:w-auto">
+              <p className="text-white/40 max-md:text-sm ">Price</p>
+              <div className="rounded-sm bg-white/[2%] p-3 text-sm md:font-semibold text-green-petrolium">{product.price}</div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col md:flex-row w-full md:w-auto md:items-center gap-2">
               <p className="text-white/40 max-md:text-sm">Amount</p>
               <p className="rounded-md bg-white/[2%] p-3 font-semibold text-green-petrolium">{totalAmount}</p>
             </div>
@@ -171,17 +172,13 @@ function CreateInvoiceForm() {
         </div>
       )}
       <div className="flex gap-5">
-        <Button
-          disabled={savingInvoice}
-          onClick={onContinueToInvoicePreview}
-          className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest disabled:opacity-90"
-        >
+        <Button disabled={savingInvoice} onClick={onContinueToInvoicePreview} className="w-full rounded-md bg-white px-5 py-4 text-xs text-forest lg:py-7 lg:text-lg">
           {savingInvoice ? "Saving invoice..." : "Save and continue"}
         </Button>
         <Button
           disabled={savingInvoice}
           onClick={onCancel}
-          className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white disabled:opacity-90"
+          className="w-full cursor-pointer rounded-sm bg-transparent px-5 py-4 text-xs font-normal text-white hover:bg-transparent hover:text-white disabled:!cursor-not-allowed disabled:opacity-50 lg:py-7 lg:text-lg lg:font-medium"
           variant="outline"
         >
           Cancel

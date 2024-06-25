@@ -37,7 +37,7 @@ function AddProductFrom() {
     setProductData({
       name: "",
       description: "",
-      quantity: 0,
+      quantity: 1,
       price: 0,
       owner: "0x00",
     });
@@ -48,33 +48,24 @@ function AddProductFrom() {
   return (
     <div className="w-full rounded-lg bg-white/[8%] p-5">
       <form onSubmit={(e) => e.preventDefault()}>
-        <div className="flex w-full gap-5 max-md:flex-col">
-          <div className="flex w-full flex-col gap-5">
-            <input
-              name="name"
-              type="text"
-              required
-              placeholder="Product name"
-              onChange={onChange}
-              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
-            />
-            <input
-              name="quantity"
-              type="number"
-              required
-              placeholder="Quantity"
-              onChange={onChange}
-              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
-            />
-          </div>
-          <div className="flex w-full flex-col gap-5">
+        <div className="flex w-full flex-col gap-2 max-md:flex-col">
+          <input
+            name="name"
+            type="text"
+            required
+            placeholder="Product name"
+            onChange={onChange}
+            className="w-full rounded-sm bg-white/5 px-5 py-4 text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:py-8 md:placeholder:text-base"
+          />
+          <div className="flex w-full flex-col gap-2 lg:flex-row">
             <input
               name="price"
               type="number"
+              min={1}
               required
               placeholder="Price"
               onChange={onChange}
-              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
+              className="w-full rounded-sm bg-white/5 px-5 py-4 text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:py-8 md:placeholder:text-base"
             />
             <input
               name="description"
@@ -82,15 +73,23 @@ function AddProductFrom() {
               required
               placeholder="Description"
               onChange={onChange}
-              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
+              className="w-full rounded-sm bg-white/5 px-5 py-4 text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:py-8 md:placeholder:text-base"
             />
           </div>
         </div>
         <div className="mt-5 flex gap-5">
-          <Button onClick={onSaveProduct} disabled={saving} className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">
+          <Button
+            onClick={onSaveProduct}
+            disabled={saving}
+            className="hover:bg-tranparent w-full cursor-pointer rounded-sm bg-white px-5 py-4 text-xs font-normal text-forest lg:py-7 lg:text-lg lg:font-medium"
+          >
             Save
           </Button>
-          <Button disabled={saving} className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white" variant="outline">
+          <Button
+            disabled={saving}
+            variant="outline"
+            className="w-full cursor-pointer rounded-sm bg-transparent px-5 py-4 text-xs font-normal text-white hover:bg-transparent hover:text-white disabled:!cursor-not-allowed disabled:opacity-50 lg:py-7 lg:text-lg lg:font-medium"
+          >
             Cancel
           </Button>
         </div>

@@ -36,7 +36,7 @@ export default function Navbar() {
   return (
     <Disclosure className={clsx(isHome ? "bg-forest" : "bg-green-petrolium", "fixed top-0 z-50 w-full !px-0")} as="nav">
       {({ open }) => (
-        <>
+        <div className={`${pathname === "/links" && "px-3"}`}>
           <Section>
             <div className="relative flex justify-between">
               <div className="flex justify-center gap-20 py-5 sm:items-stretch sm:justify-start lg:py-10">
@@ -55,8 +55,8 @@ export default function Navbar() {
                     <Link key={item.path} href={item.path} passHref>
                       <p
                         className={clsx(
-                          "inline-flex items-center gap-2 pb-2 font-normal max-lg:flex max-lg:flex-col",
-                          asPath === item.path ? "rounded-lg border-b-8 border-[#0E3A36] font-extrabold" : "font-normal",
+                          "inline-flex md:text-base text-xs items-center gap-2 pb-1  max-lg:flex max-lg:flex-col",
+                          asPath === item.path ? "font-semibold rounded-lg border-b-8 border-[#0E3A36]" : "font-normal",
                         )}
                       >
                         {item.icon}
@@ -98,11 +98,11 @@ export default function Navbar() {
                 }`}
               >
                 <FaLink className="mr-1" />
-                Links
+                Link
               </Disclosure.Button>
             </div>
           </Disclosure.Panel>
-        </>
+        </div>
       )}
     </Disclosure>
   );

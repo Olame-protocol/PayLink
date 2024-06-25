@@ -29,13 +29,13 @@ export default function Index() {
 
   return (
     <Layout className="bg-green-petrolium pb-20">
-      <Section className="mt-32 rounded-2xl bg-forest">
+      <Section className="mt-32 rounded-lg bg-forest">
         <div className="flex justify-between gap-8 px-5 py-5 lg:px-36 lg:py-16">
           <div className="mx-auto w-full text-left">
             <div className="flex flex-col">
-              <div className="mb-14 flex flex-col gap-5 max-md:mb-5 max-md:gap-2">
-                <h2 className="text-xl font-black text-green-petrolium lg:text-[2.5rem]">Add a client</h2>
-                <p className="font-normal text-white">Manage and track all your clients</p>
+              <div className="mb-12 flex flex-col gap-5">
+                <h2 className="text-xl font-semibold text-green-petrolium md:font-black lg:text-[2.5rem]">Add a client</h2>
+                <p className="-mt-3 text-sm font-thin text-white md:-mt-0 md:text-base md:font-normal">Track your clients and invoices</p>
               </div>
 
               <div>
@@ -45,7 +45,7 @@ export default function Index() {
                       <TabsTrigger
                         key={tab}
                         value={tab.toLowerCase()}
-                        className="mr-4 rounded-lg px-4 py-2 text-base text-white data-[state=active]:bg-green-petrolium data-[state=active]:text-forest lg:px-12 lg:py-5"
+                        className="rounded-sm px-3 py-2 text-xs font-normal text-white data-[state=active]:bg-green-petrolium data-[state=active]:text-forest md:mr-4 md:rounded-lg md:text-base lg:px-12 lg:py-5"
                       >
                         {tab}
                       </TabsTrigger>

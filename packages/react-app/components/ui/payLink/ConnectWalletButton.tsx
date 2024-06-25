@@ -1,7 +1,7 @@
 import React from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-function ConnectWalletButton() {
+function ConnectWalletButton() {  
   return (
     <ConnectButton.Custom>
       {({ account, chain, openAccountModal, openChainModal, openConnectModal, authenticationStatus, mounted }) => {
@@ -40,7 +40,7 @@ function ConnectWalletButton() {
 
               return (
                 <div style={{ display: "flex", gap: 12 }}>
-                  <button onClick={openChainModal} style={{ display: "flex", alignItems: "center" }} type="button" className="rounded-lg bg-forest/20 p-4 text-sm text-forest">
+                  <button onClick={openChainModal} style={{ display: "flex", alignItems: "center" }} type="button" className="rounded-md bg-forest/20 p-3 lg:p-4 text-sm text-forest">
                     {chain.hasIcon && (
                       <div
                         style={{
@@ -58,7 +58,7 @@ function ConnectWalletButton() {
                     {chain.name}
                   </button>
 
-                  <button onClick={openAccountModal} type="button" className="rounded-lg bg-forest/20 p-4 text-sm font-semibold text-forest">
+                  <button onClick={openAccountModal} type="button" className="rounded-md bg-forest/20 p-2 md:p-4 text-sm font-semibold text-forest">
                     {/*{account.displayName}*/}
                     <span>{account.displayBalance ? ` (${account.displayBalance})` : ""}</span>
                   </button>

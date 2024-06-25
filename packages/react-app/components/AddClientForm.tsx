@@ -48,10 +48,10 @@ function AddClientForm() {
   };
 
   return (
-    <div className="w-full rounded-lg bg-white/[8%] p-5">
+    <div className="w-full rounded-sm bg-white/[8%] p-4">
       <form onSubmit={(e) => e.preventDefault()}>
-        <div className="flex w-full gap-5 max-md:flex-col">
-          <div className="flex w-full flex-col gap-5">
+        <div className="flex w-full gap-2 max-md:flex-col">
+          <div className="flex w-full flex-col gap-2">
             <input
               name="name"
               type="text"
@@ -59,7 +59,7 @@ function AddClientForm() {
               placeholder="Client’s name"
               value={clientData.name}
               onChange={onChange}
-              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
+              className="w-full rounded-sm bg-white/5 px-5 py-4 text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:py-8 md:placeholder:text-base"
             />
             <input
               name="email"
@@ -68,10 +68,10 @@ function AddClientForm() {
               placeholder="johndoe@gmail.com"
               value={clientData.email}
               onChange={onChange}
-              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
+              className="w-full rounded-sm bg-white/5 px-5 py-4 text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:py-8 md:placeholder:text-base"
             />
           </div>
-          <div className="flex w-full flex-col gap-5">
+          <div className="flex w-full flex-col gap-2">
             <PhoneInput
               international={true}
               placeholder="Phone number (optional)"
@@ -79,7 +79,7 @@ function AddClientForm() {
               name="phone"
               defaultCountry="UG"
               onChange={(value) => setClientData((prev) => ({ ...prev, phone: value as string }))}
-              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
+              className="w-full rounded-sm bg-white/5 px-5 py-4 text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:py-8 md:placeholder:text-base"
             />
 
             <input
@@ -89,21 +89,21 @@ function AddClientForm() {
               required
               placeholder="Service"
               onChange={onChange}
-              className="rounded-lg bg-white/[2%] p-5 text-white outline-none placeholder:text-[#4E837F]"
+              className="w-full rounded-sm bg-white/5 px-5 py-4 text-white outline-none placeholder:text-xs placeholder:text-[#4E837F] md:py-8 md:placeholder:text-base"
             />
           </div>
         </div>
-        <div className="mt-5 flex gap-5">
+        <div className="mt-5 flex gap-2">
           <Button
             disabled={saving}
             onClick={onSaveClient}
-            className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest disabled:!cursor-not-allowed disabled:opacity-50"
+            className="hover:bg-tranparent w-full rounded-sm bg-white px-5 py-4 text-xs font-normal text-forest lg:py-7 lg:text-lg lg:font-medium"
           >
             Save
           </Button>
           <Button
             disabled={saving}
-            className="w-full bg-transparent py-6 text-base text-white hover:bg-transparent hover:text-white disabled:!cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-sm bg-transparent px-5 py-4 text-xs font-normal text-white hover:bg-transparent hover:text-white disabled:!cursor-not-allowed disabled:opacity-50 lg:py-7 lg:text-lg lg:font-medium"
             variant="outline"
           >
             Cancel

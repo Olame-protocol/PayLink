@@ -12,10 +12,10 @@ export function DatePicker({ placeholder = "Pick a date", onSelect }: { placehol
 
   return (
     <Popover>
-      <PopoverTrigger className="w-full border-none bg-white/[6%] py-8 hover:bg-white/[6%]" asChild>
-        <Button variant={"outline"} className={cn("flex w-full justify-between text-left font-normal text-white hover:text-white", !date && "text-gray-300/70")}>
-          {date ? format(date, "PPP") : <span>{placeholder}</span>}
-          <CalendarIcon className="mr-2 h-4 w-4" />
+      <PopoverTrigger className="w-full border-none bg-white/[6%] py-7" asChild>
+        <Button variant={"outline"} className={cn("flex w-full justify-between text-left text-xs font-normal text-white md:text-base", !date && "text-gray-300/70")}>
+          {date ? format(date, "PPP") : <span className="text-sm font-thin text-[#ffff] md:text-base">{placeholder}</span>}
+          <CalendarIcon className="w- mr-2 h-4 opacity-60" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
