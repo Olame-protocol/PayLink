@@ -5,7 +5,7 @@ import { DetailedInvoice } from "@/utils/types";
 import Section from "@/components/Section";
 import Layout from "@/components/Layout";
 import Image from "next/image";
-import { cn } from "@/utils/utils";
+import { cn, truncateString } from "@/utils/utils";
 import { Button } from "@/components/ui/button";
 import { useAccount } from "wagmi";
 import { useCreateInvoice } from "@/hooks/usePaylink";
@@ -70,49 +70,49 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
           <InvoiceSectionWrapper className="flex items-center justify-between max-md:flex-col max-md:items-start">
             <Image src={invoice.branding.image} alt={invoice.branding.name} width={100} height={100} className="rounded-md" />
             <div className="flex flex-col gap-2 max-md:mt-4">
-              <h1 className="font-seminbold text-4xl text-white max-md:text-2xl">{invoice.branding.name}</h1>
-              <p className="text-green-petrolium">{invoice.branding.contact}</p>
-              <p className="text-green-petrolium">{invoice.branding.address}</p>
+              <h1 className="md: font-seminbold text-lg font-medium text-white max-md:text-2xl">{invoice.branding.name}</h1>
+              <p className="text-xs text-green-petrolium md:text-base">{invoice.branding.contact}</p>
+              <p className="text-xs text-green-petrolium md:text-base">{invoice.branding.address}</p>
             </div>
           </InvoiceSectionWrapper>
           <InvoiceSectionWrapper className="flex flex-col gap-7">
             <div className="flex flex-col gap-1 leading-4">
-              <p className="mb-4 text-white">Bill to:</p>
-              <p className="font-semibold text-green-petrolium">{invoice.client.name}</p>
-              {invoice.client.phone.length > 4 && <p className="text-green-petrolium">{invoice.client.phone}</p>}
-              <p className="text-green-petrolium">
+              <p className="mb-4 text-sm text-white">Bill to:</p>
+              <p className="text-sm font-medium text-green-petrolium md:font-semibold">{invoice.client.name}</p>
+              {invoice.client.phone.length > 4 && <p className="text-sm text-green-petrolium">{invoice.client.phone}</p>}
+              <p className="text-sm text-green-petrolium">
                 {invoice.client.email}, {invoice.client.service}
               </p>
             </div>
-            <div className="flex flex-col gap-1 leading-4 text-green-petrolium">
-              <p>
-                <span className="font-semibold">Invoice date:</span> {invoice.created_at.split("T")[0]}
+            <div className="flex flex-col gap-1 text-sm leading-4 text-green-petrolium">
+              <p className="text-sm">
+                <span className="font-medium md:font-semibold">Invoice date:</span> {invoice.created_at.split("T")[0]}
               </p>
-              <p>
-                <span className="font-semibold">Payment due:</span> {invoice.due_date.split("T")[0]}
+              <p className="text-sm">
+                <span className="font-medium md:font-semibold">Payment due:</span> {invoice.due_date.split("T")[0]}
               </p>
-              <p>
-                <span className="font-semibold">Invoice description:</span> {invoice.product.description}
+              <p className="text-xs md:text-base">
+                <span className="font-medium md:font-semibold">Invoice description:</span> {invoice.product.description}
               </p>
             </div>
           </InvoiceSectionWrapper>
           <InvoiceSectionWrapper className="flex flex-col gap-1 leading-4 text-green-petrolium">
-            <p>
-              <span className="font-semibold">Item:</span> {invoice.product.name}
+            <p className="text-xs md:text-base">
+              <span className="font-medium md:font-semibold">Item:</span> {invoice.product.name}
             </p>
-            <p>
-              <span className="font-semibold">Price:</span> {invoice.product.price}
+            <p className="text-xs md:text-base">
+              <span className="font-medium md:font-semibold">Price:</span> {invoice.product.price}
             </p>
-            <p>
-              <span className="font-semibold">Quantity:</span> {invoice.quantity}
+            <p className="text-xs md:text-base">
+              <span className="font-medium md:font-semibold">Quantity:</span> {invoice.quantity}
             </p>
           </InvoiceSectionWrapper>
           <InvoiceSectionWrapper className="flex flex-col justify-between border-none bg-green-petrolium text-forest">
-            <a href={`${typeof origin !== "undefined" ? origin : ""}/invoices/${invoice.id}/payment`}>
-              <span className="font-semibold">Payment link:</span> {`${invoice.id}`}
+            <a className="text-xs font-thin md:text-base" href={`${typeof origin !== "undefined" ? origin : ""}/invoices/${invoice.id}/payment`}>
+              <span className="font-medium md:font-semibold">Payment link:</span> {invoice.id}
             </a>
-            <p>
-              <span className="font-semibold">Wallet address:</span> {address}
+            <p className="md:text-basefont-thin text-xs">
+              <span className="font-medium md:font-semibold">Wallet address:</span> {address}
             </p>
           </InvoiceSectionWrapper>
           <InvoiceSectionWrapper className="flex items-center justify-between rounded-b-lg border-none bg-[#C2FD83] text-forest">
@@ -141,7 +141,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
             </Button>
           </div>
         ) : (
-          <div className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest">Paid invoice</div>
+          <div className="w-full text-white py-6 text-base bg-green-600 text-center rounded-md mt-2">Invoice paid</div>
         )}
       </Section>
     </Layout>

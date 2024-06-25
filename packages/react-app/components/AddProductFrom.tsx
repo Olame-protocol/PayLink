@@ -8,8 +8,8 @@ import toast from "react-hot-toast";
 function AddProductFrom() {
   const [productData, setProductData] = useState<Product>({
     name: "",
-    description: "",
-    quantity: 0,
+    description: "No need to add",
+    quantity: 1,
     price: 0,
     owner: "0x00",
   });
@@ -20,7 +20,8 @@ function AddProductFrom() {
     setProductData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const onSaveProduct = async () => {
+  const onSaveProduct = async () => {console.log("What's going on here");
+  
     if (!address) return;
     if (!productData.description || !productData.price || !productData.quantity || !productData.name) return;
     setSaving(true);
