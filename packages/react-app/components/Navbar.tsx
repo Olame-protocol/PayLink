@@ -13,11 +13,13 @@ import LinkIcon from "./ui/payLink/icons/LinkIcon";
 import Section from "./Section";
 import clsx from "clsx";
 import ConnectWalletButton from "@/components/ui/payLink/ConnectWalletButton";
+import DashboardIcon from "./ui/payLink/icons/DashboardIcon";
 
 const menuItems = [
   { name: "Payments", path: "/payments", icon: <WalletIcon /> },
   { name: "Links", path: "/links", icon: <LinkIcon /> },
   { name: "Invoices", path: "/invoices", icon: <PaperLineIcon /> },
+  { name: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
 ];
 
 export default function Navbar() {
@@ -55,8 +57,8 @@ export default function Navbar() {
                     <Link key={item.path} href={item.path} passHref>
                       <p
                         className={clsx(
-                          "inline-flex md:text-base text-xs items-center gap-2 pb-1  max-lg:flex max-lg:flex-col",
-                          asPath === item.path ? "font-semibold rounded-lg border-b-8 border-[#0E3A36]" : "font-normal",
+                          "inline-flex items-center gap-2 pb-1 text-xs max-lg:flex max-lg:flex-col md:text-base",
+                          asPath === item.path ? "rounded-lg border-b-8 border-[#0E3A36] font-semibold" : "font-normal",
                         )}
                       >
                         {item.icon}

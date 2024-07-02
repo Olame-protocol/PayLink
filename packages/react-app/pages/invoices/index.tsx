@@ -7,7 +7,6 @@ import CreateInvoiceForm from "@/components/createInvoice";
 import ClientList from "@/components/ClientList";
 import { useState } from "react";
 import ProductsList from "@/components/ProductList";
-import InvoiceList from "@/components/InvoiceList";
 
 export type Tab = "fixed" | "global";
 
@@ -73,7 +72,6 @@ export default function Index() {
             <div className="w-full overflow-x-auto">
               {currentTab.toLowerCase() === tabList[0].toLowerCase() && <ClientList />}
               {currentTab.toLowerCase() === tabList[1].toLowerCase() && <ProductsList />}
-              {currentTab.toLowerCase() === tabList[2].toLowerCase() && <InvoiceList />}
             </div>
           </div>
         </div>
