@@ -6,6 +6,13 @@ export type Client = {
   owner: `0x${string}`;
 };
 
+export type PaymentLink = {
+  id: string;
+  payment_link_id: string;
+  description: string;
+  amount?: number;
+};
+
 export type Product = {
   name: string;
   quantity: number;
