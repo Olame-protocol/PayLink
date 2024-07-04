@@ -8,7 +8,7 @@ import Image from "next/image";
 import { cn } from "@/utils/utils";
 import { Button } from "@/components/ui/button";
 import { useAccount } from "wagmi";
-import { useCreateInvoice, usePayInvoice } from "@/hooks/usePaylink";
+import { usePayInvoice } from "@/hooks/usePaylink";
 import { useApproveERC20Transaction } from "@/hooks/useErc20";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
