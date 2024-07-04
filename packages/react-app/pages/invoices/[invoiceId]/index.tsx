@@ -40,7 +40,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
       router.reload();
       toast.success("Invoice created successfully");
     } catch (err: any) {
-      if (err.message.includes("InvoiceId already exists")) {
+      if (err.message.includes("_invoiceId already exists")) {
         toast.error("Invoice ID already exists.");
       } else {
         toast.error("Error while processing the transaction");
