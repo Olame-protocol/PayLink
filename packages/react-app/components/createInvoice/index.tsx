@@ -65,7 +65,6 @@ function CreateInvoiceForm() {
   };
 
   const onSelectBranding = (branding: Branding & { id: string }) => {
-    console.log({ branding });
     setBranding(branding);
   };
 
@@ -76,8 +75,9 @@ function CreateInvoiceForm() {
       toast.error("Please select an image for your branding", { duration: 3500 });
       return;
     }
-    setSavingInvoice(true);
+
     if (!branding && brandingImageFile && brandingData.name && brandingData.description && brandingData.contact && brandingData.address) {
+      setSavingInvoice(true);
       const { data, error } = await saveBrandingImage(brandingImageFile);
       if (error) {
         toast.error("Could not save the branding image");
@@ -103,6 +103,7 @@ function CreateInvoiceForm() {
     }
 
     if (branding && product && client && invoiceDueDate) {
+      setSavingInvoice(true);
       const { error: invoiceError, data: savedInvoice } = await saveInvoice({
         branding: branding.id || savedBrandingId,
         product: product.id,
@@ -148,23 +149,23 @@ function CreateInvoiceForm() {
       <AddInvoiceProduct onSelectProduct={onSelectProduct} />
       {product && (
         <div className="flex w-full flex-col items-center justify-between rounded-lg bg-white/[8%] p-5 md:flex-row">
-          <h2 className="w-full text-sm text-green-petrolium md:w-fit font-thin">{product.name}</h2>
-          <div className="flex w-full flex-col items-center gap-3 md:gap-5 md:w-fit md:flex-row">
-            <div className="flex w-full flex-col md:items-center gap-2 md:w-auto md:flex-row mt-3">
+          <h2 className="w-full text-sm font-thin text-green-petrolium md:w-fit">{product.name}</h2>
+          <div className="flex w-full flex-col items-center gap-3 md:w-fit md:flex-row md:gap-5">
+            <div className="mt-3 flex w-full flex-col gap-2 md:w-auto md:flex-row md:items-center">
               <p className="text-left text-xs font-thin text-white/40 max-md:text-sm">Quantity:</p>
               <input
                 type="number"
                 min={1}
-                className="w-full rounded-sm bg-white/[2%] p-3 text-sm md:text-base md:font-semibold text-green-petrolium outline-none placeholder:text-[#4E837F] md:w-32"
+                className="w-full rounded-sm bg-white/[2%] p-3 text-sm text-green-petrolium outline-none placeholder:text-[#4E837F] md:w-32 md:text-base md:font-semibold"
                 onChange={onProductQuantityChanges}
                 value={product.quantity}
               />
             </div>
-            <div className="flex flex-col md:flex-row justify-start md:items-center gap-2 w-full md:w-auto">
-              <p className="text-white/40 max-md:text-sm ">Price</p>
-              <div className="rounded-sm bg-white/[2%] p-3 text-sm md:font-semibold text-green-petrolium">{product.price}</div>
+            <div className="flex w-full flex-col justify-start gap-2 md:w-auto md:flex-row md:items-center">
+              <p className="text-white/40 max-md:text-sm">Price</p>
+              <div className="rounded-sm bg-white/[2%] p-3 text-sm text-green-petrolium md:font-semibold">{product.price}</div>
             </div>
-            <div className="flex flex-col md:flex-row w-full md:w-auto md:items-center gap-2">
+            <div className="flex w-full flex-col gap-2 md:w-auto md:flex-row md:items-center">
               <p className="text-white/40 max-md:text-sm">Amount</p>
               <p className="rounded-md bg-white/[2%] p-3 font-semibold text-green-petrolium">{totalAmount}</p>
             </div>
@@ -172,7 +173,11 @@ function CreateInvoiceForm() {
         </div>
       )}
       <div className="flex gap-5">
-        <Button disabled={savingInvoice} onClick={onContinueToInvoicePreview} className="w-full rounded-md hover:bg-white bg-white px-5 py-4 text-xs text-forest lg:py-7 lg:text-lg">
+        <Button
+          disabled={savingInvoice}
+          onClick={onContinueToInvoicePreview}
+          className="w-full rounded-md bg-white px-5 py-4 text-xs text-forest hover:bg-white lg:py-7 lg:text-lg"
+        >
           {savingInvoice ? "Saving invoice..." : "Save and continue"}
         </Button>
         <Button

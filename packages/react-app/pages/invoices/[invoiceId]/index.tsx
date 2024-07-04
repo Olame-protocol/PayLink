@@ -12,6 +12,7 @@ import { useCreateInvoice } from "@/hooks/usePaylink";
 import { useApproveERC20Transaction } from "@/hooks/useErc20";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import LoadingModal from "@/components/ui/LoadingModal";
 
 function InvoiceSectionWrapper({ children, className = "" }: { children: ReactNode; className?: string }) {
   return <div className={cn("border-b border-white/[6%] px-10 py-10 max-md:px-5", className)}>{children}</div>;
@@ -19,8 +20,8 @@ function InvoiceSectionWrapper({ children, className = "" }: { children: ReactNo
 
 function Invoice({ invoice }: { invoice: DetailedInvoice }) {
   const { address } = useAccount();
-  const { createInvoice, isPending } = useCreateInvoice();
-  const { approveER20, isPending: approveErc20Pending } = useApproveERC20Transaction();
+  const { createInvoice, isPending, isSuccess: hasCreatedTheInvoice } = useCreateInvoice();
+  const { approveER20, isPending: approveErc20Pending, reset } = useApproveERC20Transaction();
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isCanceling, setIsCanceling] = useState(false);
   const router = useRouter();
@@ -39,7 +40,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
       router.reload();
       toast.success("Invoice created successfully");
     } catch (err: any) {
-      if (err.message.includes("_invoiceId already exists")) {
+      if (err.message.includes("InvoiceId already exists")) {
         toast.error("Invoice ID already exists.");
       } else {
         toast.error("Error while processing the transaction");
@@ -50,7 +51,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
     }
   };
 
-  const buttonTitle = () => {
+  const ModalTitle = () => {
     if (approveErc20Pending) return "Pending Approval...";
     if (isPending) return "Creating invoice...";
     if (isSendingEmail) return "Sending Email...";
@@ -66,7 +67,11 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
 
   return (
     <Layout className="bg-green-petrolium">
-      <Section className="my-32 min-h-96 rounded-2xl bg-forest px-5 py-5 lg:px-36 lg:py-16">
+      <Section
+        isLoading={approveErc20Pending || isPending}
+        loadingElement={<LoadingModal isSuccess={hasCreatedTheInvoice} title={ModalTitle()} disabled={isPending} onCLoseModal={reset} />}
+        className="my-32 min-h-96 rounded-2xl bg-forest px-5 py-5 lg:px-36 lg:py-16"
+      >
         <div className="rounded-lg bg-white/[8%]">
           <InvoiceSectionWrapper className="flex items-center justify-between max-md:flex-col max-md:items-start">
             <Image src={invoice.branding.image} alt={invoice.branding.name} width={100} height={100} className="rounded-md" />
@@ -130,7 +135,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
               disabled={invoice.sent || approveErc20Pending || isPending || isSendingEmail}
               className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest"
             >
-              {buttonTitle()}
+              Send Invoice
             </Button>
             <Button
               onClick={oncancelInvoice}

@@ -1,19 +1,16 @@
 import Section from "../../components/Section";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { useCreatePaymentLink, usecUSDBalance } from "@/hooks/usePaylink";
+import { ChangeEvent, useState } from "react";
+import { useCreatePaymentLink } from "@/hooks/usePaylink";
 import { ulid } from "ulid";
 import { MouseEvent } from "react";
 import { useApproveERC20Transaction } from "@/hooks/useErc20";
-import { retreivePaymentLinks } from "@/utils/supabase";
-import { useAccount } from "wagmi";
+import { useAccount, useBalance } from "wagmi";
 import toast from "react-hot-toast";
 import Layout from "@/components/Layout";
 import { useBalanceStore } from "@/store/balanceState";
-import { parseUnits } from "ethers";
-import { Ambulance } from "lucide-react";
+import LoadingModal from "@/components/ui/LoadingModal";
 
 export type Tab = "fixed" | "global";
-type Tab2 = "Paid" | "Unpaid";
 
 export type SupabaseLinksRecord = {
   amount?: string;
@@ -27,41 +24,18 @@ export type SupabaseLinksRecord = {
 };
 
 export default function Payments() {
-  const [copied, setCopied] = useState(false);
-  const [copiedLink, setCopiedLink] = useState("");
   const [activeTab, setActiveTab] = useState<Tab>("fixed");
-  const [activeLinkTab, setActiveLinkTab] = useState<Tab2>("Paid");
-  const generatedLink = "https://react-icons.github.io/react-icons/search/#q=dash";
-  const { createPaymentLink, isPending } = useCreatePaymentLink();
-  const { approveER20, isPending: ERC20ApprovalPending, isSuccess: ERC20ApprovalSuccess, error } = useApproveERC20Transaction();
-  const { address } = useAccount();
-  const [origin, setOrigin] = useState("");
+  const { createPaymentLink, isPending, isSuccess: hasCreatedPaymentLinkSuccessfully, reset, error: createPaymentLinkError } = useCreatePaymentLink();
+  const { approveER20, isPending: ERC20ApprovalPending, error: ECR20ApprovalError } = useApproveERC20Transaction();
   const [linkCharge, setLinkCharge] = useState("");
-  const { getBalances } = usecUSDBalance();
-  const { cUSDBalance } = useBalanceStore();
+  const { address } = useAccount();
+  const { data } = useBalance({ address });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     description: "",
     amount: "",
   });
-  const [recentyGeneratedLinks, setRecentyGeneratedLinks] = useState<SupabaseLinksRecord[]>([]);
-
-  const retreiveGeneratedLinks = useCallback(async () => {
-    if (!address) return;
-    const { data } = await retreivePaymentLinks(activeTab, address);
-    setRecentyGeneratedLinks([...(data ? data.slice(0, 4).reverse() : [])]);
-  }, [activeTab, address]);
-
-  useEffect(() => {
-    void retreiveGeneratedLinks();
-  }, [retreiveGeneratedLinks]);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setOrigin(window.location.origin);
-    }
-  }, []);
 
   const onFormInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -69,7 +43,8 @@ export default function Payments() {
       const charge = ((Number(value) * 5) / 100).toFixed(1);
       setLinkCharge(charge);
 
-      if (Number(charge) > Number(cUSDBalance)) {
+      if (!data) return;
+      if (Number(charge) > Number(data?.formatted)) {
         setErrorMessage(`The link fee (${charge}) exceeds your balance`);
       } else {
         setErrorMessage(null);
@@ -88,20 +63,6 @@ export default function Payments() {
     cleanUpFormData();
   };
 
-  const onCopyToClickboard = async (link: string) => {
-    setCopied(true);
-    setCopiedLink(link);
-    await navigator.clipboard.writeText(link);
-    setTimeout(() => {
-      setCopied(false);
-      setCopiedLink("");
-    }, 1500);
-  };
-
-  const onViewLink = (endPoint: string) => {
-    window.open(`${endPoint}`);
-  };
-
   const onGeneratePaymentLink = async (e: MouseEvent<HTMLButtonElement>, type: "global" | "fixed") => {
     e.preventDefault();
     try {
@@ -114,25 +75,29 @@ export default function Payments() {
           description: formData.description,
           paymentLinkId: ulid(),
         });
-        await retreiveGeneratedLinks();
         toast.success("Link generated successfully");
         cleanUpFormData();
       }
     } catch (err) {
-      toast.error("Failed to generate a link");
+      toast.error(createPaymentLinkError?.message || ECR20ApprovalError?.message || "Failed to create Payment Link");
       cleanUpFormData();
     }
   };
 
-  const buttonTitle = () => {
+  const ModalTitle = () => {
     if (ERC20ApprovalPending) return "Pending Approval...";
     if (isPending) return "Generating Link...";
-    return "Generate Link";
+    if (hasCreatedPaymentLinkSuccessfully) return "Link created successfully";
+    return "";
   };
 
   return (
     <Layout className="bg-green-petrolium">
-      <Section className="mb-24 mt-24 rounded-lg bg-forest lg:mt-32">
+      <Section
+        isLoading={ERC20ApprovalPending || isPending}
+        loadingElement={<LoadingModal isSuccess={hasCreatedPaymentLinkSuccessfully} title={ModalTitle()} disabled={isPending} onCLoseModal={reset} />}
+        className="mb-24 mt-24 rounded-lg bg-forest lg:mt-32"
+      >
         <div className="flex justify-between gap-8 px-5 py-5 lg:px-36 lg:py-16">
           <div className="mx-auto w-full text-left">
             <div className="flex flex-col">
@@ -181,11 +146,11 @@ export default function Payments() {
                     </div>
                     {errorMessage && <div className="font-space-grotesk -mt-3 w-fit rounded-md bg-red-600 px-2 py-1 text-sm text-white">{errorMessage}</div>}
                     <button
-                      disabled={Number(linkCharge) > Number(cUSDBalance)}
+                      disabled={Number(linkCharge) > Number(data?.formatted ?? "0")}
                       onClick={(e) => onGeneratePaymentLink(e, "fixed")}
                       className="w-full rounded-md bg-white px-5 py-4 text-xs text-forest lg:py-7 lg:text-lg lg:font-medium"
                     >
-                      {buttonTitle()}
+                      Generate Link
                     </button>
                   </form>
                 </>
@@ -206,7 +171,7 @@ export default function Payments() {
                       onClick={(e) => onGeneratePaymentLink(e, "global")}
                       className="w-full rounded-md bg-white px-5 py-4 text-xs text-forest lg:py-7 lg:text-lg lg:font-medium"
                     >
-                      {buttonTitle()}
+                      Generate Link
                     </button>
                   </form>
                 </>

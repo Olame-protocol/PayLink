@@ -66,16 +66,18 @@ export default function Index() {
         </div>
       </Section>
 
-      <Section className="mb-10 mt-16 rounded-2xl bg-forest">
-        <div className="flex justify-between gap-8 px-5 py-5 lg:px-36 lg:py-16">
-          <div className="mx-auto w-full text-left">
-            <div className="w-full overflow-x-auto">
-              {currentTab.toLowerCase() === tabList[0].toLowerCase() && <ClientList />}
-              {currentTab.toLowerCase() === tabList[1].toLowerCase() && <ProductsList />}
+      {currentTab.toLowerCase() !== tabList[2].toLocaleLowerCase() && (
+        <Section className="mb-10 mt-16 rounded-2xl bg-forest">
+          <div className="flex justify-between gap-8 px-5 py-5 lg:px-36 lg:py-16">
+            <div className="mx-auto w-full text-left">
+              <div className="w-full overflow-x-auto">
+                {currentTab.toLowerCase() === tabList[0].toLowerCase() && <ClientList />}
+                {currentTab.toLowerCase() === tabList[1].toLowerCase() && <ProductsList />}
+              </div>
             </div>
           </div>
-        </div>
-      </Section>
+        </Section>
+      )}
     </Layout>
   );
 }

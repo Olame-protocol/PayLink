@@ -20,7 +20,7 @@ type PaymentLinkData<T extends PaymentLinkType> = T extends "global" ? GlobalPay
 export const useCreatePaymentLink = () => {
   const [data, setData] = useState<any>(null);
   const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<{ message?: string | any }>();
   const [isSuccess, setIsSuccess] = useState(false);
   const { address } = useAccount();
 
@@ -54,11 +54,11 @@ export const useCreatePaymentLink = () => {
               walletAddress: address,
             });
         setData(txhash.hash);
-        setError(null);
+        setError(undefined);
         setIsSuccess(true);
       } catch (e: any) {
         console.log(e);
-        setData(null);
+        setData(undefined);
         setIsSuccess(false);
         setError({ message: e.shortMessage ?? e });
         throw e;
@@ -72,7 +72,7 @@ export const useCreatePaymentLink = () => {
   const reset = useCallback(() => {
     setData(null);
     setIsSuccess(false);
-    setError(null);
+    setError(undefined);
     setIsPending(false);
   }, []);
 
@@ -248,7 +248,7 @@ export const usePayInvoice = () => {
   };
 };
 export const usecUSDBalance = () => {
-   const { setcUSDBalance } = useBalanceStore();
+  const { setcUSDBalance } = useBalanceStore();
   const { address } = useAccount();
 
   const getBalances = useCallback(async () => {

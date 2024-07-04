@@ -12,6 +12,7 @@ import { useCreateInvoice, usePayInvoice } from "@/hooks/usePaylink";
 import { useApproveERC20Transaction } from "@/hooks/useErc20";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import LoadingModal from "@/components/ui/LoadingModal";
 
 function InvoiceSectionWrapper({ children, className = "" }: { children: ReactNode; className?: string }) {
   return <div className={cn("border-b border-white/[6%] px-10 py-10 max-md:px-5", className)}>{children}</div>;
@@ -19,8 +20,8 @@ function InvoiceSectionWrapper({ children, className = "" }: { children: ReactNo
 
 function Invoice({ invoice }: { invoice: DetailedInvoice }) {
   const { address } = useAccount();
-  const { payInvoice, isPending } = usePayInvoice();
-  const { approveER20, isPending: approvalPending } = useApproveERC20Transaction();
+  const { payInvoice, isPending, isSuccess: hasPayedInvoice } = usePayInvoice();
+  const { approveER20, isPending: approvalPending, reset } = useApproveERC20Transaction();
   const router = useRouter();
 
   const onPayInvoice = async () => {
@@ -39,14 +40,19 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
     }
   };
 
-  const buttonTitle = () => {
+  const ModalTitle = () => {
     if (approvalPending) return "Approval pending...";
     if (isPending) return "Paying invoice...";
     return "Pay invoice now";
   };
+
   return (
     <Layout className="bg-green-petrolium">
-      <Section className="my-32 min-h-96 rounded-2xl bg-forest px-5 py-5 lg:px-36 lg:py-16">
+      <Section
+        isLoading={approvalPending || isPending}
+        loadingElement={<LoadingModal isSuccess={hasPayedInvoice} title={ModalTitle()} disabled={isPending} onCLoseModal={reset} />}
+        className="my-32 min-h-96 rounded-2xl bg-forest px-5 py-5 lg:px-36 lg:py-16"
+      >
         <div className="rounded-lg bg-white/[8%]">
           <InvoiceSectionWrapper className="flex items-center justify-between max-md:flex-col max-md:items-start">
             <Image src={invoice.branding.image} alt={invoice.branding.name} width={100} height={100} className="rounded-md" />
@@ -110,7 +116,7 @@ function Invoice({ invoice }: { invoice: DetailedInvoice }) {
               disabled={invoice.paid || isPending || approvalPending}
               className="w-full bg-white py-6 text-base text-forest hover:bg-white hover:text-forest"
             >
-              {buttonTitle()}
+              Pay invoice now
             </Button>
           </div>
         ) : (

@@ -8,7 +8,7 @@ import { ContractTransactionReceipt, parseUnits } from "ethers";
 export const useApproveERC20Transaction = () => {
   const [data, setData] = useState<any>(null);
   const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<{ message?: string | any }>();
   const [isSuccess, setIsSuccess] = useState(false);
   const { address } = useAccount();
 
@@ -16,17 +16,15 @@ export const useApproveERC20Transaction = () => {
     async (amount: string) => {
       if (!address || !window) return;
       try {
-        console.log({ address });
         setIsPending(true);
         const contract = await new Web3().contract(ERC20_CONTRACT_ADDRESS, ERC20_ABI, address);
-        console.log({ contract });
+
         const tx = await contract.approve(PAYLINK_CONTRACT_ADDRESS, parseUnits(amount));
         const txhash = (await tx.wait()) as ContractTransactionReceipt;
         setData(txhash.hash);
-        setError(null);
+        setError(undefined);
         setIsSuccess(true);
       } catch (e: any) {
-        console.log(e);
         setData(null);
         setIsSuccess(false);
         setError({ message: e.shortMessage ?? e });
@@ -41,7 +39,7 @@ export const useApproveERC20Transaction = () => {
   const reset = useCallback(() => {
     setData(null);
     setIsSuccess(false);
-    setError(null);
+    setError(undefined);
     setIsPending(false);
   }, []);
 
