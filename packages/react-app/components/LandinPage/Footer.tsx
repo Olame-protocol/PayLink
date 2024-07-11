@@ -14,7 +14,7 @@ const Footer = () => {
           <p className="flex items-center gap-x-1 text-[10px] lg:gap-x-2 lg:text-base">© 2023 - {currentYear} Paylink</p>
         </div>
         <div className="flex items-center gap-x-2 lg:gap-x-7">
-          <a className="cursor-pointer" href="https://x.com/paylinkme" target="_blank">
+          <a className="cursor-pointer" href="https://t.me/+cGsrC65Rkqo5OWI0" target="_blank">
             <FaTelegram className="lg:h-6 lg:w-6" />
           </a>
           <a className="cursor-pointer" href="https://x.com/paylinkme" target="_blank">
